@@ -3,7 +3,7 @@ name: Build LaTeX
 on:
   push:
     paths:
-      - "files/**/*.tex"  # Trigger only when .tex files in the files directory are modified
+      - "files/cv.tex"  # Trigger only when .tex files in the files directory are modified
 
 jobs:
   build-pdf:
