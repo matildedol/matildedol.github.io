@@ -27,8 +27,11 @@ jobs:
         with:
           root_file: tex/cv/cv.tex
           args: -r tex/.latexmkrc              # use your shared rc
-          pre_compile: tlmgr install subfiles  # ensure subfiles is present if needed
-          # set latexmk_shell_escape: true only if you actually need it
+          tlmgr_repo: https://mirror.ctan.org/systems/texlive/tlnet
+          pre_compile: |
+            tlmgr update --self --all
+            tlmgr install subfiles
+
 
       # --- Project: Visiting Ricci ---
       - name: Compile Visiting_Ricci
@@ -36,7 +39,10 @@ jobs:
         with:
           root_file: tex/Visiting_Ricci/main.tex
           args: -r tex/.latexmkrc
-          pre_compile: tlmgr install subfiles
+          tlmgr_repo: https://mirror.ctan.org/systems/texlive/tlnet
+          pre_compile: |
+            tlmgr update --self --all
+            tlmgr install subfiles
           latexmk_shell_escape: true           # only if required by your doc
 
       # --- Project: Sliding Ricci ---
@@ -45,7 +51,10 @@ jobs:
         with:
           root_file: tex/Sliding_Ricci/main.tex
           args: -r tex/.latexmkrc
-          pre_compile: tlmgr install subfiles
+          tlmgr_repo: https://mirror.ctan.org/systems/texlive/tlnet
+          pre_compile: |
+            tlmgr update --self --all
+            tlmgr install subfiles
 
       # --- Project: Sliding Sobolev ---
       - name: Compile Sliding_Sobolev
@@ -53,7 +62,10 @@ jobs:
         with:
           root_file: tex/Sliding_Sobolev/main.tex
           args: -r tex/.latexmkrc
-          pre_compile: tlmgr install subfiles
+          tlmgr_repo: https://mirror.ctan.org/systems/texlive/tlnet
+          pre_compile: |
+            tlmgr update --self --all
+            tlmgr install subfiles
 
       # --- Collect PDFs for Pages ---
       - name: Prepare Pages artifact

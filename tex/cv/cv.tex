@@ -1,32 +1,49 @@
 % This resumé template is taken  from Benjamin Manning (benjaminmanning.io) 
 
-\documentclass[margin,line,pifont,palatino,courier, 9pt]{res}
-\usepackage{pifont}
-\usepackage[latin1]{inputenc}
-\topmargin -.5in
-\oddsidemargin -.35in      % Reduce left margin
-\evensidemargin -.35in     % Reduce right margin for even pages (if any)
-\textwidth=5.75in 
-\textheight=9.5in 
-\usepackage{hyperref}
-\usepackage[svgnames]{xcolor} 
-\usepackage{fancyhdr}
+\documentclass[margin,line]{res}
+\usepackage[T1]{fontenc}
+\usepackage{mathpazo}        % Palatino text & math
+\usepackage{courier} 
+\usepackage[margin=1in]{geometry}
 \usepackage{setspace}
-\usepackage{amsmath}
+\setstretch{1.0}
+% \topmargin -.5in
+% \oddsidemargin -.35in      % Reduce left margin
+% \evensidemargin -.35in     % Reduce right margin for even pages (if any)
+% \textwidth=5.75in 
+% \textheight=9.5in 
+% \usepackage{hyperref}
+% \usepackage[svgnames]{xcolor} 
+% \usepackage{fancyhdr}
+% \usepackage{setspace}
+% \usepackage{amsmath}
+% \pagestyle{fancy}
+% \renewcommand{\headrulewidth}{0pt}
+% \fancyhf{}
+% \hypersetup{
+% colorlinks=true, % Set to true to color the text of the links and false to create colored boxes around the text
+% linkcolor=blue,  % Color for internal links
+% filecolor=magenta, % Color for URLs which open local files
+% urlcolor=magenta    % Color for URL links
+% }
+% \linespread{1} 
+\usepackage[svgnames]{xcolor}
+\usepackage{hyperref}
+\hypersetup{
+  colorlinks=true,
+  linkcolor=Blue,
+  urlcolor=Magenta
+}
+\usepackage{fancyhdr}
 \pagestyle{fancy}
 \renewcommand{\headrulewidth}{0pt}
 \fancyhf{}
-\hypersetup{
-colorlinks=true, % Set to true to color the text of the links and false to create colored boxes around the text
-linkcolor=blue,  % Color for internal links
-filecolor=magenta, % Color for URLs which open local files
-urlcolor=magenta    % Color for URL links
-}
-\linespread{1} 
+\usepackage{amsmath}
+\usepackage{pifont}
 
 \begin{document}
 
-\name{\text Matilde Dolfato \vspace*{.05in}}
+\name{Matilde Dolfato \vspace*{.05in}}
 \address{\small \href{mailto:matilde.dolfato@studbocconi.it}{matilde (dot) dolfato (at) studbocconi.it} \,\,  $|$ \,\,\href{https://github.com/matildedol}{github.com/matildedol} \,\,$|$ \,\, \href{https://linkedin.com/in/matilde-dolfato-556304177}{linkedin.com/in/matilde-dolfato}}
 
 \begin{resume}
