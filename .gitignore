@@ -1,0 +1,18 @@
+# LaTeX build artifacts (anywhere)
+**/*.aux
+**/*.bbl
+**/*.bcf
+**/*.blg
+**/*.fdb_latexmk
+**/*.fls
+**/*.log
+**/*.out
+**/*.run.xml
+**/*.synctex.gz
+**/*.toc
+**/*.nav
+**/*.snm
+**/*.vrb
+
+# VS Code
+.vscode/

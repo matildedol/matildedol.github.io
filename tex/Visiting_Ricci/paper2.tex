@@ -1,0 +1,454 @@
+\chapter{Paper: \textit{
+%Poincaré, Modified Logarithmic Sobolev and Isoperimetric 
+Inequalities for Markov Chains with Non-Negative Ricci Curvature}}
+
+\section{Keywords and sumup}
+
+Spectral graph, Cheeger isoperimetric constant, modified logarithmic Sobolev constant \textit{of the chain}
+
+Bound depends only on the \textbf{diameter of the space}
+
+I think this makes sense because Markov chains are finite so we can play with a bounded space (?)
+\\
+
+We talk about an \textit{entropic} Ricci curvature bound, i.e. based on entropy
+\[\]
+\textcolor{magenta}{From the previous paper}: a positive entropic Ricci curvature lower bound implies 
+
+\begin{itemize}
+    \item a spectral gap estimate, 
+    \item a modified logarithmic Sobolev inequality,
+    \item and an analogue of Talagrand’s transport cost inequality
+\end{itemize}
+\[\]
+\textcolor{magenta}{Here:} $\Ric$ bounded by below, not necessarily $\Ric > 0$ $\longrightarrow$ only weak additional information is needed, e.g. on a bound on the diameter of the space, to still establish strong functional inequalities.
+
+Results (on $\Ric \ge 0$):
+\begin{itemize}
+    \item isoperimetric inequality (bound on the Cheeger constant, discrete analogous to Buser theorem),
+    \item estimate on the spectral gap (negative bound generalization is expressed in terms of Poincaré inequality)
+    \item modified logarithmic Sobolev inequality (implies Talagrand)
+\end{itemize}
+
+Additionally:
+\begin{itemize}
+\item Section 5 $\rightarrow$ troubles with high dimensions, so they try using measure concentration bounds
+
+\item New technical tool $\rightarrow$ equivalent characterization
+of entropic Ricci curvature lower bounds in terms of gradient estimates 
+
+\item Application: interacting particle system, namely the zero-range process on the complete graph with constant rates
+\end{itemize}
+% \begin{enumerate}
+%     \item guardare le parti di introduzione e setting del paper nuovo 
+%     \item capire cosa mi dicono quelle inequalities anche nel caso continuo o generico 
+%     \item vederle nel caso discreto. bound su $\Ric$ non viene fuori perché assumiamo sia 0, come capire il link con $\Ric$?
+% \end{enumerate}
+
+\section{Recap and additions}
+The setup is the same as the last paper. In this section we discuss the divergences or new things this paper introduces.
+
+Something new is how they introduce the Markov generator, as an operator $L$  acting on functions $\psi :\X\to \R$ defined by
+\begin{equation}\label{eq: gen}
+    L(\psi(x))=\sum_{y\in\X}(\psi(y)-\psi(x)) Q(x,y)
+\end{equation}
+where $Q$ is ``a collection of transition rates", i.e. our Markov kernel, previously $K$. 
+% Recall other relationships and definition regarding the Markov kernel and generator:
+% \begin{equation}
+%     \text{Markov oprator/semigroup:\quad }P_t := e^{tL} = e^{t(Q-I)}
+% \end{equation}
+% where the second equality is what we had before. 
+This gives us the chance to do the following recap.
+
+\subsection{Markov kernel, semigroup and generator} The \textbf{Markov kernel} is the matrix in $\R ^{\X \times \X}$ with transition probabilities describing the discrete-time evolution of our Markov chain. Previously it was $K$, here we'll use $\mathbf{Q}$. Its properties are that it describes an homogeneous Markov chain (does not depend on time), it is irreducible and reversible (see more below). Moreover, $Q$ has a unique steady state $\pi$, which is such that $\pi Q = \pi$.
+
+\begin{remark}
+    We right multiply probability measures by $Q$. It can be shown that this gives the right result. The intuitive reason is that $K_{ij}$ is the probability of moving $x_i \to x_j$, and we care about the arriving position $x_j$ when updating the Markov chain. Indeed, $\rho_{t+1}(x_j)$ will be a weighted average of the probability of transiting to $x_j$. 
+\end{remark}
+
+We can look at our Markov chain as a continuous-time evolution of probability measures in the space of measures $\mP(\X)$(curves of measures/densities parametrized by $t$), describing the evolution of the distribution of points in $\X$. Recall that if there is a reference measure on $\X$, which in our case is the invariant measure $\pi$, we can work with probability densities instead of measures, which is what we do here. Then, the operator describing the evolution of our chain is called \textbf{Markov operator} and we refer to them as $\mathbf{P_t}$. The family of operators they form is called \textbf{Markov semigroup}, indicated as $\mathbf{(P_t)_{t\ge 0}}$. Often, we will use the term semigroup to refer to a generic element of the family $P_t$. The Markov semigroup has the main property that $P_{t+s}= P_t \circ P_s$.
+
+There is an exponential form for the Markov operator which is generally used as a definition, and which relates it to the discrete kernel. This is 
+\begin{equation}\label{eq: Markovexp}
+    P_t:=e^{t(Q-I)}
+\end{equation}
+Next, we show how this is obtained. 
+% write it 
+
+
+The matrix defining this matrix exponential is called \textbf{Markov generator}, it is $Q-I$ from the previous paper, and indicated as $\mathbf{L}$ in this paper. 
+% connection ?????????
+
+Now, we recall some properties of the Markov kernel. We have irreducibility that implies uniqueness of the steady state. 
+% state & show
+And we have reversibility, also called detailed balance. 
+% state
+
+
+\subsection{Induced distance on $\X$} Restriction of $\W$ to Dirac masses gives rise to a new distance on $\X$, 
+\begin{equation}
+    d_\W(x,y) := \W(\delta_x, \delta_y)
+\end{equation}
+and also an upper bound on $d_\W$ is given, in terms of a weighted graph distance $d_Q$. 
+
+\subsection{Ricci in terms of $\A$ and $\B$} This is not new, but I disregarded it in the last paper. 
+
+\subsection{Gradient estimates}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+% appunti incontro:
+
+% cheeger constant: se applichi nei grafi riesci ad avere un bound su un autovalore piuttosto sharp, con implicazioni sul problema dei tagli dei grafi, cosa molto importante per applicazione in cs tipo clustering 
+
+% log sobolev ineq: in  mondo continuo encoda la distribuzione degli auotvalori dell'operatore laplaciano sulla manifold, con cui hai generato la tua teoria
+% log sobolev info su come crescono autovalori
+% poincare info sul primo autovalore, spectral gsp 
+
+% entrambi quinidh anno scopo di info su autovalori, in geometria ci sono 100 motivazioni del perche ci piace, in modno discreto è perche conoscere autovalori ti da info su come cambia la laplaciana> spectral graph theory, applicazione dell'algebra lineare ché in questo set discreto opertaori sono mstrici 
+% tante info sulla combinatoria del grafo eg numero cicli, cluster, ecc, osno nascoste dentro allo spetro di alcuni op like laplacian
+
+% l'eq gradient estimate si chiama bakry emery
+
+% - provare a approfondire come si usa isoperimetrica in grafi per capire questioni rilevanti x applicazioni 
+
+% 6.2 statememt imp da approfondire, 2.3 e 2.7
+% tempo di mizing=minimo tempo tale che parti da roba concentrata e arrivi al limite a meno di un epsilon
+% appena prima di 6.6 ha detto bla bla 
+% 6.6 generale ma ha sapore di una applicazione
+% log epsilon su rho è il punto, rho è quant'è buona la tua inequality, se non avessi log e rate esponenziale non servirebbe nulla
+
+% 6.3: puo essere carino cercare di capire come si applica questo linguaggio a un esempio semplice come lattice
+% congetture lasciamo stare
+
+% 7:
+% aprire 13 e capire perche quella situa era interessante/difficile giusto per inqudrare questa applicazione
+% it is easy to check... ric \ge 0: sicuramnete ottimo es verificre perche è facile
+
+% apri anche morris per capir eperche 
+
+% !!
+% partire applicazione 
+% poi goal è come si costruisce macchinario teorico per arrivare fino a qui 
+% poi giusto per capire un po la cheeger 
+
+% log sob è anche bound sull'entropia in termini della derivta dell'entropia 
+\section{Inequalities}
+The inequalities we look at are an isoperimetric inequality (IPI), a Poincaré inequality (PI), and a log-Sobolev inequality (LSI).
+
+\paragraph{Motivation} The reason why Bakry and Emery related this theoretical framework to functional inequalities in the first place is that ``\textit{Nous allons maintenant indiquer diverses formulations équivalentes à l’hyper-
+contractivité lorsque le processus est une diffusion. La plus importante d’entre
+elles est l'inégalité (ou plutôt les inégalités) de Sobolev logarithmique, due à
+Gross [2] (Gross se place dans un cadre bien plus général que celui des diffusions
+markoviennes)}" \cite{bakry2006diffusions}. Also, \cite{boudou2006spectral} says ``One aim of ergodic theory for Markov process is to
+understand whether Ttf converges, and in which sense, to the equilibrium average $\int f \de\pi$ and, if this is the case, to give quantitative estimates on the rate of convergence. One of
+the main tools in this context is provided by functional inequalities, in particular Poincar´e
+inequality, logarithmic-Sobolev inequality and modified logarithmic-Sobolev inequality".
+
+So, the reason why we're interested in studying them is that they are equivalent to the deacy of energy functional along the evolution of our diffusion process, implying convergence to equilibrium. Moreover, they have also other implications, i.e. the LSI yields hypercontractivity of the semigroup.
+
+As we will see, their discovery is entrenched with a deeper meaning in the continuous setting, where there are a number of reasons why they're useful (hypercontractivity, concentration of measure, etc.). This makes it a good result to have an analogous of them for the discrete setting. Here, they give results on the eigenvalues of the Laplacian, describing how the process evolves. Apart from implying convergence to equilibrium, they yield combinatorial properties and quantities of graphs, e.g. solutions to the sparsest cut problems, hence clustering, or number of loops. 
+
+
+% Moreover, log sobolev discovered by Gross for diffusion processes in quantum field theory -> other diffusion processes
+
+
+\paragraph{Random facts}
+(1.1)=PI, (1.2)=LSI, (1.3)=MLSI: 
+
+These three inequalities are hierarchically
+ordered in the following sense: if (1.2) holds with $s > 0$, then (1.3) holds with $\alpha \ge s/4$; if
+(1.3) holds with $\alpha >$ 0, then (1.1) holds with $k \ge \alpha /2$ \cite{boudou2006spectral}.
+
+Apparently, it is well known that (LSI) is equivalent to hypercontractivity of the semigroup and (PI) is equivalent to exponential
+convergence to equilibrium in L2 \cite{caputo2009convex}.
+
+\subsection{Gauss theorem (divergence theorem)}
+This theorem is good to know as it justifies the heat equation, and the equivalence of a Dirichlet form and the integral of the squared gradient, used in the inequalities below. 
+It states that given a vector field $\mathbf{f}$
+\begin{equation}
+    \int_S \mathbf{f} \de S=\int_V \nabladot \mathbf{f} \de V
+\end{equation}
+where V is a bounded region whose boundary $\partial V=S$ is a piecewise smooth closed
+surface. The integral on the right-hand side is taken with the normal $n$ pointing
+outward. We can build an intuition behind this theorem as follows. When considering a small enough region $V$, we have
+\[\int_V \nabladot \mathbf{f} \de V \approx V\cdot \nabladot \mathbf{f} \]
+with equality being exact as $V$ shrinks to zero size. By taking the limit as $V\to0$ and multiplying by $1/V$, the theorem gives us a coordinate independent definition of divergence. In fact, \textbf{the right way to think about divergence is as the net flow into, or out of, a region}. \footnote{\href{https://www.damtp.cam.ac.uk/user/tong/vc/vc4.pdf}{Cambridge notes}}
+
+Together with this theorem, we consider the product rule for the divergence: given a scalar-valued function $g$ and a vector (field) $\mathbf{f}$
+\[
+\nabladot( \mathbf{f} g)=(\nabla g) \mathbf{f} + g (\nabladot \mathbf{f} )
+\]
+
+Let us apply the Gauss theorem and this decomposition together:
+\[
+    \int_V \nabladot ( \mathbf{f} g) \de V = \int_V \nabla g \cdot \mathbf{f}  \de V+ \int_V g(\nabladot \mathbf{f} ) \de V
+    =
+    \int_S \mathbf{f} \cdot g \de S
+\]
+This gives us the integration by parts in higher dimension formula
+\begin{equation}
+    \int_V (\nabladot \mathbf{f} ) \cdot g \de V =\int_S \mathbf{f} \cdot g \de S - \int_V  \nabla g \cdot \mathbf{f} \de V
+\end{equation}
+
+We can apply this rule to the vector field $\nabla f$, getting the Laplacian $\Delta f =\nabladot \nabla f$, and to the scalar function $f$. Letting the boundary term vanish, we get that the Dirichlet form $\mathcal{E}(f,f)$(as used, for instance, by \cite{boudou2006spectral}) is the integral of the squared gradient of $f$, as used here \cite{notes-logsob}. This connects the two notations.
+
+\subsection{Spectral graph theory} We can define two relevant quantities for a graph, in particular a $d$-regular graph $G=(V,E)$. 
+\begin{definition}[Sparsest cut]
+    The sparsity of a partition $(S,V-S)$ of a graph $G$ (a cut) is
+\begin{equation}
+    \sigma(S):= \frac{\mathbb
+    E_{(u,v)\sim E} \big| \mathbf{1}_S(u) - \mathbf{1}_S(v)\big|}{\mathbb
+    E_{(u,v)\sim V^2} \big| \mathbf{1}_S(u) - \mathbf{1}_S(v)\big|}
+\end{equation}
+i.e. the fraction of edges broken by the cut over the total fraction of vertices separated by the cut. 
+
+Then, the sparsest cut problem is to find the set of minimal sparsity, and the solution defines the sparsity of the whole graph $G$:
+\begin{equation}
+    \sigma(G):= \min_{S\subset V; S\neq\emptyset} \sigma(S)
+\end{equation}
+\end{definition}
+
+\begin{remark}
+This terminology is quite confusing and entails an inversion. A higher value of $\sigma$ implies that cuts are dense, in the sense that the number of edges they cut is large compared to the number of edges they separate. The terminology comes from optimization and approximation algorithms and the sparsest cut problem: from the need to find the cut that is as sparse as possible, they named the quantity that is optimized (minimized) \textit{sparsity}. 
+\end{remark}
+
+\begin{definition}[Edge expansion]
+    In a $d$-regular graph, the edge expansion of a subset of vertices $S\subseteq V$ is 
+    \begin{equation}
+        \phi(S):=\frac{E(S,V-S)}{d \cdot |S|}
+    \end{equation}
+    i.e. the ration between the number of edges between $S$ and $V-S$ and the number of edges incident to any vertex in $S$. It is the fraction of edges incident to vertices in $S$ which ``go out" of $S$. 
+
+    Similarly, we define the edge expansion of a graph as 
+    \begin{equation}
+        \phi(G):=\min_{S:|S|\le|V|/2} \phi(S)
+    \end{equation}
+    where the condition on $|S|$ is equivalently $|S|\le|V-S|$
+\end{definition}
+
+These two quantities stay in the following relation:
+\[\frac{1}{2}\sigma(S)\le\phi(S) \le \sigma(S)\]
+and since $\sigma(S)=\sigma(V-S)$, it also holds \begin{equation}\label{eq: sparsity-expansion}
+    \frac{1}{2}\sigma(G)\le\phi(G) \le \sigma(G)\end{equation}
+
+Then, we call a family of constant degree \textbf{\textit{expanders}} a family of $d$-regualar graphs $\{G_n\}_{n\ge d}$ such that there is an absolute constant $\phi >0$ such that $\phi(G_n)\ge\phi$ for every $n$ (number of vertices). 
+
+This condition requires the minimal expansion of the graph to be high enough. 
+%By equation (\ref{eq: sparsity-expansion}), also sparsity will be bounded by below by $\phi$. 
+This means, intuitively, that an adversary will have to cut a larger fraction of edges to separate a subset of vertices from the rest of the graph. 
+In fact, \textbf{\textit{expanders are sparse graphs with good connectivity properties}}. 
+
+Here \textit{sparse} should be interpreted in the vanilla way, i.e. in the sense that the number od edges is fixed $=d$, whereas the number of vertices $n\ge d$ can increase. This is not necessarily related to \textit{cut sparsity} as defined above - a stupid example is a very dense graph in the vanilla sense, with 2 separated components. Indeed, also for expander, cut sparsity is high (equation \ref{eq: sparsity-expansion}).
+\\
+
+Moreover, in other literatures, the edge expansion of a graph is referred to as \textit{Cheeger constant} and indicated as $h_G$ \cite{notes-isoperimetric}. \\
+
+\textit{Attempt: by looking at the graph in the Markov chain sense, vanilla sparsity implies that the adjacency matrix is sparse, which may be relaxed to a probabilistic point of view by having many transitions that happen with low probability. Cut sparsity and expansion, instead, may have to do with the change over time of the mass distribution, I mean that high values may imply an high probability that the Markov chain takes values in a limited area of the graph for a long time, which means the distribution of mass remains more or less the same, which may have to do with convergence. }
+\\
+
+Now, let us consider a $d$-regular graph $G=(V,E)$ and its adjacency matrix $A$. We can define the Laplacian operator of $G$ as\footnote{In the physicists' style}
+\[L:= 1- \frac{1}{d}A\]
+where we notice that it is the very same definition of the generator of a Markov chain we had before, as our Markov kernel can be interpreted as $K=\frac{1}{d} A$ !!
+Then, the following theorem is a fundamental result in spectral graph theory, relating the spectrum of $L$ to combinatorial properties of our graph. 
+
+\begin{theorem}
+Let $G$ be a $d$-regular undirected graph, and $L = I - \tfrac{1}{d}\,A$ be its
+normalized Laplacian matrix. Let $\lambda_1 \le \lambda_2 \le \cdots \le \lambda_n$ be the
+real eigenvalues of $L$ with multiplicities. Then
+\begin{enumerate}
+  \item $\lambda_1 = 0$ and $\lambda_n \le 2$.
+  \item $\lambda_k = 0$ if and only if $G$ has at least $k$ connected components.
+  \item $\lambda_n = 2$ if and only if at least one of the connected components of $G$ is bipartite.
+\end{enumerate}
+
+\begin{proof}
+The proof makes repeated use of the following identity, whose proof is immediate: if $L$ is
+the normalized Laplacian matrix of a $d$-regular graph $G$, and $\mathbf{x}$ is any
+vector, then
+\begin{equation}\label{eq:quadratic-form}
+\mathbf{x}^{\mathsf T} L \mathbf{x}
+  = \frac{1}{d}\sum_{\{u,v\}\in E} \bigl(x_u - x_v\bigr)^2 .
+\end{equation}
+
+Hence, by the variational characterization of eigenvectors
+\[
+  \lambda_1 \;=\; \min_{\mathbf{x}\in\mathbb{R}^n\setminus\{0\}}
+  \frac{\mathbf{x}^{\mathsf T} L \mathbf{x}}{\mathbf{x}^{\mathsf T}\mathbf{x}} \;\ge\; 0 .
+\]
+If we take $\mathbf{1}=(1,\ldots,1)$ to be the all-ones vector, we see that
+$\mathbf{1}^{\mathsf T} L \mathbf{1}=0$, and so $0$ is the smallest eigenvalue of $L$,
+with $\mathbf{1}$ being one of the vectors in the eigenspace of $1$.
+\\
+
+[etc etc]
+% We also have the following min--max formula for $\lambda_k$:
+% \[
+% \lambda_k
+%  \;=\; \min_{\substack{S \subset \mathbb{R}^n\\ \dim S = k}}
+%        \;\max_{\mathbf{x}\in S\setminus\{0\}}
+%        \frac{\displaystyle\sum_{\{u,v\}\in E} (x_u - x_v)^2}
+%             {\displaystyle d \sum_{v} x_v^2}\, .
+% \]
+
+% So, if $\lambda_k=0$, there must exist a $k$-dimensional subspace $S$ such that for every
+% $\mathbf{x}\in S$ we have
+% \[
+%   \sum_{\{u,v\}\in E} (x_u - x_v)^2 \;=\; 0 \, .
+% \]
+% But this means that, for every $\mathbf{x}$, and for every edge $(u,v)\in E$ of positive
+% weight, we have $x_u = x_v$, and so $x_u = x_v$ for every $u,v$ which are in the same
+% connected component. This means that each $x\in V$ must be constant within each connected
+% component of $G$, and so the dimension of $V$ can be at most the number of connected
+% components of $G$, meaning that $G$ has at least $k$ connected components.
+\end{proof}
+\end{theorem}
+
+This tells us that the first (lowest) eigenvalue is always 0 and is related with the existence of an invariant measure. Also, the first two properties imply that the multiplicity of $0$ as an eigenvalue is precisely the number of connected components of $G$.
+
+Therefore, what is of interest for us is the second eigenvalue, that is related with connectivity and the sparsest cut problem. We have \[\lambda_2=0 \Longleftrightarrow G \text{ has} \ge 2 \text{ connected components} \Longleftrightarrow h_G=0\] because it means that there are two subgraphs in $G$ with no edges between them (definition of connected components), hence they give a trivial cut with sparsity 0 and a trivial subset of vertices with expansion 0. 
+The Cheeger inequality relaxes the previous result by saying that ``$\lambda_2 \text{ small } \Leftrightarrow h_G \text{ small}$":
+\begin{equation}\tag{Cheeger}
+    \frac{\lambda_2}{2}\le h_G \le \sqrt{2\cdot\lambda_2}
+\end{equation}
+
+\subsection{Isoperimetric inequality} The paper we're studying finds a bound on the Cheeger constant in terms of the spectral gap of the generator $L$. This is referred to as isoperimetric inequality, and it is formulated as 
+\begin{equation}\tag{IPI}\label{ineq: IPI}
+    h \ge \frac{1}{3}\sqrt{Q_* \lambda_1}
+\end{equation}
+where $\lambda_1$ indicates the spectral gap (change of notation w.r.t. before) and $Q_* \in \R$ being the minimal transition rate in the Markov kernel $Q$. 
+
+Notice also that here the Cheeger constant is expressed differently, i.e. as
+\[
+h=\max_{A \subset \X} \frac{\pi^+(\partial A)}{\pi(A)(1-\pi(A))}
+\]
+Here, the numerator is the perimeter measure of $A$, $\pi^+(\partial A)=\sum_{x\in A, y\in A^c}Q(x,y)\pi(x)$. We can look at it as a probabilistic version of the edge count $E(S,V-S)$ we had before. If we consider that $\pi(A)$ as a probability of being in $A$, the denominator is the expectation of the measure of $A$. In the context of graphs, we can think of $\pi$ as just a measure we want on our discrete space, and the measure of a vertex is generally its degree \cite{notes-isoperimetric}. This is consistent with the denominator $d|A|$ we had above. 
+\\
+
+As said above, this is a bound on the fraction of edges that one needs to cut to isolate a portion of vertices of the graph. This inequality in fact has important implications in the problem of graph cuts, which is related to problems like clustering, shortest paths, belief propagation and optimal hypersurface separation, with applications in statistical mechanics, computer vision, and others. 
+
+\subsection{Poincaré Inequality}
+The Poincaré inequality yields a bound on the first eigenvalue, via the spectral gap, of the Laplacian. 
+
+It is a bound on the variance functional:
+\begin{equation}
+    \text{Var}(f) \le \int_{\R^n}\big|\nabla f\big|^2 \de \pi
+\end{equation}
+
+\subsection{Logarithmic Sobolev Inequality}
+The log-Sobolev inequalities were discovered by Gross in the context of constructive quantum field theory \cite{gross}, which, in simple words, has to do with diffusion processes in a more general sense than our specific case of Markovian processes. What the inequalities do is they describe the distribution of the eigenvalues of the Laplacian operator. 
+
+It is a bound on the entropy functional:
+\begin{equation}
+    \cH(f) \le \frac{1}{2}\int_{\R^n}\frac{\big|\nabla f\big|^2}{f} \de \pi
+\end{equation}
+
+%%%%% notes on this
+%%%%% (parte di Boudou )
+%%%%% aaaand relate it to fisher info, discrete approach
+
+%%%%%my paper
+
+\section{Applications}
+Given the work by Erbar and Maas, which also shows implications of a lower bound on Ricci for a (modified) logarithmic Sobolev inequality, a Talagrand
+transportation inequality, and a Poincaré inequality, it makes sense to try and obtain sharp
+Ricci curvature bounds in concrete discrete examples.
+These are a few results up to today
+\begin{itemize}
+    \item Erbar and Maas: tensorization principle, crucial for application to high dimensions (discrete hypercube)
+    \item Erbar, Maas and Tetali: Bernoulli–Laplace model and for the random transposition model on the symmetric group (sempre high-dimensional result)
+    \item Mielke: one-dimensional birth and death processes
+\end{itemize}
+In spite of these, a \textbf{systematic approach for obtaining discrete Ricci bounds has been lacking}. Here in \cite{fathi2016entropic} they propose this method and allow to recover the bound for many interacting particle systems on the complete graph, among which the above examples and the zero-range process \cite{fathi2016entropic}.
+\\
+
+\subsection{The zero-range process with constant rates}
+\textcolor{white}{lalala}
+\\
+
+\paragraph{Why the zero-range process?}
+\textit{ This paper Fathi Erbar $\leftarrow$ \cite{fathi2016entropic} Fathi Maas $\leftarrow$ \cite{caputo2009convex} Caputo Da Pra Posta $\leftarrow$ \cite{boudou2006spectral} Boudou Caputo Da Pra Posta}: The study of functional inequalities for interacting particle systems has been motivated by both \textbf{theoretical and computational purposes}, and has led to the development of
+a \textbf{rather sophisticated mathematical technology}. For instance, such inequalities on interacting particle systems have been used in statistical mechanics and physics, to model things like the Glauber dynamics (for magnetism) or spin models. 
+Moreover, there is this wide range of literature each piece of which contributes a little to the bigger aim adapting the continuous definitions and approaches to discrete examples to obtain the same functional inequalities results.
+There are two foundational papers concerning functional inequalities and Ricci:
+\begin{itemize}
+\item Bochner who first approaches the study of estimates on the spectral gap of the Laplacian on Riemannian manifolds through Ricci (1946)
+\item Bakry and Emery who, in addition to estimates on spectral gap, estimates on the LSI, for diffusion processes in a more general context (remember LSI is equivalent to hypercontractivity of the semigroup) (1985)
+\end{itemize}
+The work by Bakry and Emery has inspired several developments, especially concerning diffusion models motivated by statistical mechanics. Among these, a possible timeline on papers tackling the zero-range example is:
+\begin{itemize}
+    \item[\cite{boudou2006spectral}] applies the Bochner identity to estimate the spectral gap of Markov chains;
+    \item[\cite{caputo2009convex}] develops a method to obtain estimates on the exponential rate of decay of the relative entropy from equilibrium of Markov processes in discrete settings, again based on Bochner; 
+    \item[\cite{fathi2016entropic}] is based on the result of Erbar and Maas studied in july, and proposes a systematic method for obtaining discrete Ricci curvature bounds, which is based on \cite{caputo2009convex} and yields new curvature bounds for zero-range processes on the complete graph;
+    \item[[This paper]]finally, the present paper, apart the results on functional inequalities with non-neg Ricci in general, use the bound in \cite{caputo2009convex} to apply the results to the zero-range process.  
+\end{itemize}
+
+\textcolor{CarnationPink}{domanda dal pubblico: ma c'è proprio bisogno di passare per Ricci per dimostrare queste inequalities per questi processi così semplici?}
+\\
+
+\paragraph{What is the zero-range process?} Consider a conservative interacting system of finitely many particles moving with jumps in a finite set of states. At each iteration, at most one particle can move from one state to another, and the rate at which particles jump only depends on the number of particles in the initial state. The continuous-time Markov chain generator of this process is the zero-range process on the complete graph. The rate can be modeled as a function of number of particles at the initial node. 
+The name \textit{zero-range} comes from the idea of \textit{range of an interaction} in physics. Among the four \textbf{fundamental interactions} (gravitational, electromagnetic, weak nuclear and strong nuclear), gravity and electromagnetism are interactions that produce long-range forces, which we experience everyday. 
+In our particle system, the interaction has a spatial range equal to 0, because the mutual stochastic influence of particles is just local, as the jump rate depends only on the particles that are in the initial present state. Thus, we can look at this ``influence" as a zero-range interaction, an interaction that has just a local effect.
+It is called an \textit{interacting} particle system because the jump process of a particle depends stochastically on the others.
+\\
+
+The setup is the following: consider the state space $\X_{K,L}:=\{\eta\in \R^L: \sum_l(\eta)_l = K\}$, which are vectors describing the situation, i.e. the number of particles in each node. Then, we formalize the movement of particles as follows. Pick a node $l$ uniformly at random and observe $\eta_l$, if the number of particles is positive, pick another node $m$ uniformly at random where one particle will move. Then, $n^{l,m}$ indicates the new configuration. This process can be represented by a Markov chain (on the state space $\X_{K,L}$) with kernel
+\begin{equation}
+Q_{K,L}(\eta_,\eta')=
+    \begin{cases}
+        \frac{1}{L} & \eta'=\eta^{l,m} \text{ for some }l,m,\\
+        0 & \text{otherwise}
+    \end{cases}
+\end{equation}
+Notice that here we consider a degenerate process where jumping rates are constant at $1/L$. Constant rates imply that the invariant measure of $Q_{K,L}$ is the uniform distribution denoted by $\pi_{K,L}$.
+\\
+
+Then, the ingredients are the following:
+\begin{enumerate}
+    \item positive bound on Ricci from \cite{fathi2016entropic} for increasing jump rates $\longrightarrow$ easily applicable to get a non-negative bound for constant jump rates
+    \item lemma on a diameter estimate
+    \item Ricci bound + diameter estimate $\to$ MLSI for degenerate zero range process
+\end{enumerate}
+\[\]\[\]
+\paragraph{What is the MLSI and what does it tell us}
+
+We will actually look at Poincaré inequality and logaritmic Sobolev together. 
+\begin{enumerate}
+\item The first formulation and interpretation of these inequalities is probabilistic, and they express a bound on the variance and the entropy of an observable function $f$ via a norm of the gradient of $f$. 
+
+\item These inequalities imply and enable us to quantify the exponential decay of variance and entropy of $f$ along the evolution of the Markov semigroup. 
+
+\item These results imply the convergence to equilibrium of the chain. 
+
+\item Moreover, they have deeper implications regarding the spectral graph (PI) or a hypercontractivity property (LSI). 
+\end{enumerate}
+
+\textcolor{CarnationPink}{to do: 
+look at the notes to expand on these facts above;
+conclude the application part saying what this tells us for the process (slides included);
+look at the rest of the paper}
+
+To understand the PI e LSI we start from the OU process. This represents the heat flow in $\R^n$ with the Gaussian measure $\gamma_n$. The Gaussian measure is in fact its stationary measure, so that if $P_t$ is the OU semigroup,
+\[
+\int_{\R^n} P_t f \de \gamma_n = \int_{\R^n} f \de \gamma_n
+\]
+where $f:\R^n\to I, I\subset \R$ is our observable.
+
+Then, we consider $\phi$-entropies of $f$ for a convex $\phi:I\to\R$,
+\[
+\mathbb{E}_{\gamma_n}^\phi (f) = \int_{\R^n}\phi(f) \de \gamma_n - \phi\biggl(\int_{\R^n}f \de \gamma_n \biggr)
+\]
+this generalizes the variance for $\phi(x)=x^2$ and Shannon's entropy for $\phi(x)=x\log x$.
+
+The first result is that
+\[
+...
+\]
+This is proven by considering 
+\[
+\alpha(t):=...
+\]
+and checking that $\alpha(0)=...$, $\alpha(\infty)=...$
+By applying ... (change of variables and integrating by parts) we get the result. 
+
+Then, ...

@@ -1,0 +1,679 @@
+\chapter{Paper: \textit{Ricci curvature of finite Markov chains}}
+
+The main of the paper is to develop a variant notion of Ricci curvature lower bound for discrete spaces. 
+
+This notion builds upon the definition of a Ricci curvature lower bound for metric measure spaces in general, by Lott and Villani (and Sturm independently) (see the background section \ref{sec: lottvill}).
+%qui devo capire perché mi sembra che Lott e Villani provino già equivalenza con entropia
+Then, it is shown that a lower bound on the Ricci curvature is equivalent to geodesic convexity of the entropy, by Von Renesse and Sturm, as we have seen. This is useful because the notion of convexity does not appeal to the geometric structure of the space (differentiability) hence can be applied to more general spaces. Another core result known since the seminar work of Jordan, Kinderlehrer and Otto is that the heat flow is the gradient flow of the entropy in $W_2$ spaces, as we have seen. This has many implications (see background section below).
+
+In fact, this paper wants to use the notion of convexity of the entropy to define a notion of $\Ric$ for discrete spaces. Moreover, we would like to interpret the heat flow as the gradient flow of some energy functional also in the discrete space. However, the $W_2$ distance is not appropriate for this purpose, because the discrete space does not have geodesics according to the $W$ geometry (they are all constant), and we do not have the identification between heat flow and gradient flow of any entropy functional. This is because the metric derivative (the limit of the distance $d(\gamma(t+h),\gamma(t))$ as $h$ goes to 0) of the Wasserstein distance of the heat flow can be infinite in discrete settings, hence we can not regard it as the gradient flow of some energy functional. See \cite{maas} for a more precise discussion of this incompatibility (remark 2.1). 
+
+Hence, we define a new metric $\W$ for which \emph{time-continuous Markov chains are the gradient flow of the entropy}, analogously to the condition on $W_2$. In particular, the connection between Markov chains and the heat flow is that \emph{the heat flow associated with a Markov kernel on a finite set is the gradient flow of the entropy with respect to $\W$}. Thus, we define convexity along $\W$ geodesics and we show that one such geodesic exists between each pair of probability measures on our discrete space. Then, we characterize the notion of a lower bound on the Ricci curvature with this notion of $\W$ convexity. Moreover, some examples are given on lower bounding the Ricci curvature of some discrete spaces, including the discrete circle and the discrete hypercube.
+
+Lastly, the last sections of the paper include a tensorisation result (commonly given for this kind of objects) and show some well-known functional inequalities, which we do not dive into for now. 
+\\
+
+Hence, here we first give some more background, then we follow the same organization of the paper for defining $\W$ and giving the new definition of Ricci. 
+
+\section{Background} \label{sec: lottvill}
+Here we look at some background on extending the notion of Ricci curvature to other spaces, also looking at how it is related to other aspects. This part is based on \cite{lott2009ricci}. 
+
+Our aim is to define Ricci curvature for measure metric spaces in general (extending definitions from the Euclidean space to Riemannian manifolds). 
+
+The study of optimal transport has been proven (by McCann) to be closely related with convexity along geodesics of some functionals (on $P(\R^n)$), called \textit{displacement convexity}. 
+% look into this
+Recently, some regularity conditions have been extended from $\R^n$ to $M$. For instance, Hessian computations for some functions on $P_2(M)$ have been done. The result is a relationship between the Hessian of entropy function and Ricci (Otto Villani), as we have seen (without proving why, equation \ref{eq: Ric1}). Later, Cordero-Erausquin, McCann and Schmuckenschlager have found some rigorous results on the relationship between nonnegative Ricci and convexity of some functions on $P^{ac}(M)$. This work has been extended by Von Renesse and Sturm, who we cited above. 
+
+In this context, Lott and Villani \emph{define} a new notion of Ricci curvature for metric measure spaces based on optimal transport and displacement convexity, which is what we referred to above. 
+
+\section{Prerequisits}
+Here we define some prerequisits at the basis of the setting studied in the paper. 
+
+We have a finite space $\X=\{x_1, x_2, \ldots, x_n\}$ and we can think of the elements of it as \emph{states}, or nodes. We also have a Markov process of random variables that take values in $\X$.
+
+We will deal with \emph{continuous-time Markov chains} (CTMC), which are Markov chains where the time spent in each state is continuous. For comparison, in discrete-time Markov chains, a unit time is spent on each state. In our case instead, to respect the Markov property, the time spent in each state is modeled by an exponential random variable. This is because the exponential distribution only depends on some constant (rate) $a_i$ for each state $i$, hence the time spent in each state will not depend on the past (states or the time spent on that state until now) (see \href{https://www.columbia.edu/~ks20/stochastic-I/stochastic-I-CTMC.pdf}{these notes} on CTMCs).\footnote{Recall the density of $x \sim \exp(a)$ is $f(x;a)=a e^{-ax}$ for $x \ge 0$ and = 0 otherwise.}
+Also, we assume that the transition probabilities from one state to the other do not depend on the current time, but only on the current state (\emph{homogeneous} Markov chain). 
+
+% Hence, a transition matrix and the set of rates (for each state) describe our Markov chain.
+
+Given the homogeneity property, the transition probabilities can be described by a $|\X| \times |\X|$ matrix $K$,
+\[
+K(x_i, x_j) = K_{ij}= \Pr( X_t = x_j\,|\, X_{t-1} = x_i)
+\]
+\[
+\sum_{y\in\X}K(x,y)=1
+\]
+
+$K$ is also called \textbf{\emph{Markov kernel}}. In this view, if we have an initial distribution over the states $p^0 \in \R^n$, the operation $K^tp^0$ gives the distribution over the states at time $t=1$. Hence $((K^t)^Tp^0)_i$ is the probability of living in state $x_i$ after $T$ iterations. 
+Given $\mathcal{A}$ $\sigma$-algebra of $\X$, we can give another definition of $K$, as a function:
+\begin{align*}
+    &K: \X \times \mathcal{A} \to [0,1]\\
+    &(x_i,A) \mapsto \Pr(X_{t+1} \in A|X_t=x_i)
+\end{align*}
+also, $\Pr(X_{t+1} \in A|X_t=x_i) = \sum_{x_j\in A} K_{ij}$. $A$ can be a singleton $\{y\}$, hence $K(x_i,x_j)=\Pr(x_j|x_i)=K_{ij}$, the probability of going to state $x_j$ from state $x_i$. Moreover, in this view, $K(x, \cdot)$ becomes a probability measure on $\mathcal{A}$, 
+\[
+K(x,A)=\mu_x(A)
+\]
+This is coherent with the general correspondence between probability measures and random variables, i.e. that $\Pr(X\in A)=\mu(A)$ when the probability measure $\mu$ is the \emph{law} of the random variable $X$. 
+
+
+We assume that our Markov kernel is \emph{irreducible}, i.e. that for every $x,y \in \X$ there exists a sequence $\{x_i\}_{i=0}^n$ such that $x_0=x$, $x_n=y$ and $K(x_{i-1},x_i)>0$ for all $i\in[1,n]$. Irreducibility means that we will explore all our space $\X$, and it implies the existence of a unique \emph{steady state}. 
+
+A steady state is a stationary or invariant probability measure $\pi$  such that
+\[
+\sum_{x\in\X} \pi(x) = 1 \quad \quad \text{and} \quad \quad \pi(y)=\sum_{x\in\X}\pi(x)K(x,y)
+\]
+It is a left eigenvector of the operator $K$. Its existence is guaranteed by Perron-Frobenius, as $K$ is a stochastic matrix. The invariant measure is a probability distribution over the states (just like the previous example of $p^0$) such that once we arrive at this distribution, we always remain here. Indeed, we would like some property of convergence to this distribution. 
+
+We also assume our kernel is \emph{reversible}, meaning that the detailed balance condition holds,
+\[
+K(x,y)\pi(x)=K(y,x)\pi(y)
+\]
+This means that the reversed kernel that goes over the chain backwards is equal to the original one.
+%leave this here for now
+
+% Look at \href{https://www.stats.ox.ac.uk/~deligian/pdf/sc5/notes/notes4.pdf}{these notes} for more on the definition and properties of a Markov kernel.
+% \\
+
+Given a steady state $\pi$, we can look at its associated \textbf{\emph{Markov semigroup}}. 
+
+Doing a little step back, a \emph{Markov operator} is an operator acting on the space of densities $\mP(\X)$ (see below) which describes the evolution of my chain. Indeed, we can look at our Markov chain of random variables as $X_1 \rightarrow X_2 \rightarrow \ldots \rightarrow X_n$, or equivalently as $\rho_1 \rightarrow \rho_2 \rightarrow \ldots \rightarrow \rho_n$ (when the laws of the random variables are absolutely continuous probability measures), and hence we can look at a transformation $P$ that brings $\rho_t into \rho_{t+1}$. When this transformation is determined by a transition matrix, as in our case ($K$), $P$ is linear, it is a map between Dirac measures $\delta_x$ for $x\in\X$ [\href{https://www.impan.pl/~rams/r48-ladek.pdf}{source notes}]. So we have
+\[
+P_t\rho=\mathbb{E}[\rho_t|\rho_0=\rho]
+\]
+and call $P_t$ a Markov operator. Then, we define a Markov semigroup as a family of Markov operators $\{P_t\}_{t\ge0}$ such that
+\begin{itemize}
+    \item $P_0=\id$
+    \item $P_t\mathbf{1}=\mathbf{1}$
+    \item If $f\ge0$, then $P_tf\ge0$
+    \item $P_{t+s}=P_t\circ P_s$
+    \item the function $t \mapsto P_t\rho$ is continuous for each $\rho$
+\end{itemize}
+Consider our steady state $\pi$ for our Markov chain. It is natural (says Chat) to look at this $\pi$ as the measure of our space $\X$, and hence at the semigroup definition as
+\[
+\int P_t f \de \pi = \int f \de \pi
+\]
+This means that \emph{the semigroup is self-adjoint with respect to the invariant measure}. Moreover, if we consider the dual of $P_t$ as in the theory above, we have that
+\[
+\int P_t f \de \mu = \int f \de P_t^* \mu
+\]
+for every $\mu$ by definition, hence
+\[
+\int P_t f \de \pi = \int f \de \pi = \int f \de P_t^* \pi
+\]
+hence \[ P_t^* \pi = \pi\] where $P_t^*$ is an operator acting on measures, $P_t^*: \mP(\X) \to \mP(\X)$ (instead $P_t:\R^\X \to \R^\X)$. Since we have that $\pi K=\pi$, I think that $P_t^*$ and $K$ might be equivalent, but $K$ acts on $\X$ and $P_t^*$ on $\mP(\X)$.
+
+
+Also, we generally look at semigroups as exponentials, and in this case as a matrix exponential where the matrix is our \textit{generator}, in our case:
+\[
+P_t := e^{t(K-I)}
+\]
+as the definition of generator is the matrix $Q$ such that
+\[
+Qf = \lim_{t\to0} \frac{P_tf-f}{t}
+\]
+Indeed 
+\[
+\pi P_t = \pi e^{t(K-I)}= \pi \sum_{n=0}^\infty \frac{1}{n!}t^n (K-I)^n = \sum_{n=0}^\infty \frac{1}{n!}t^n \pi (K-I)^n = \pi
+\]
+as $\pi(K-I)(K-I)^{n-1}=0$ as $\pi(K-I)=0$, so the only remaining term of the sum is for $n=0$ which gives $\pi$. Also we have
+\[
+\rho_t=P_t\rho_0
+\]
+\begin{equation}\label{eq: semigroup}
+    \frac{\de}{\de t} \rho_t=\frac{\de}{\de t}e^{t(K-I)}\rho_0 = (K-I)e^{t(K-I)}\rho_0 =(K-I)\rho_t
+\end{equation}
+
+\begin{remark}
+    The Markov semigroup $P_t$ is directly associated with the Markov kernel $K$: indeed, they are respectively the continuous and discrete faces of the same moon, our Markov chain. In fact, $K$ tells me the evolution for a discrete time of my chain, $P_t$ the evolution for a continuous time, and by simple statistical computations we can get the exponential form of $P_t$ applying the formulas for a Poisson with rate = 1. 
+\end{remark}
+
+Let $\mP(\X)$ be the set of probability densities over $\X$, namely
+\[
+\mP(\X):= \Big\{\rho:\X\to\R^+ : \sum_x \rho(x) \pi(x)=1\Big\}
+\]
+and let $\mP_*(\X)$ be the set of strictly positive probability densities. 
+
+
+\section{The metric $\W$}\label{sec: W}
+First, there are some objects to be defined. 
+
+Given our set $\X$, we define two kinds of operators:
+\begin{enumerate}[label=($\roman*$)]
+    \item $\varphi\in\R^\X, \quad \varphi: \X \to \R$
+    \item $\Psi\in\R^{\X\times\X}, \quad \Psi: \X \times \X \to \R$
+\end{enumerate}
+namely functions on $\X$ taking either one or two variables as inputs. Then, we define two functionals acting on each of the two functions. The first is the \emph{discrete gradient} $\nabla$,
+\[
+\nabla: \R^\X \to \R^{\X \times \X}, 
+\]
+\[
+\varphi(x) \mapsto \varphi(y)-\varphi(x) \, =: \nabla \varphi(x,y)
+\]
+the second one is the \emph{discrete divergence} $\nabladot$,
+\[
+\nabladot:\R^{\X \times \X} \to \R^\X , 
+\]
+\[
+\Psi(x,y) \mapsto \frac{1}{2}\sum_{y\in\X}(\Psi(x,y) - \Psi(y,x))K(x,y) \, =: \nabladot \Psi(x)
+\]
+These allow us to define a third operator, the Laplacian $\Delta:\R^\X \to\R^\X$
+\[
+\Delta := \nabladot \nabla = K-I
+\]
+where the composition of $\nabladot$ and $\nabla$ makes sense (input and target sets are respected) and  equality to $K-I$ can be easily verified (quaderno). Crucially, applying this result to (\ref{eq: semigroup}) we see that \textbf{\textit{the Markov semigroup solves the heat equation}}.\footnote{We say, equivalently, that the Markov chain can be interpreted as the heat flow, that there is an analogy between Markov semigroup and heat flow and that the Markov semigroup solves the heat equation}
+
+Finally, we have the following \emph{integration by parts formula} 
+\[
+(\nabla\psi,\Psi)_\pi= -\,(\psi,\nabladot\Psi)_\pi
+\]
+where for $\varphi,\psi\in\R^\X$ and $\Psi,\Phi\in\R^{\X\times\X}$ we have
+\begin{align*}
+(\varphi,\psi)_\pi
+&= \sum_{x\in X} \varphi(x)\,\psi(x)\,\pi(x), \\
+(\Phi,\Psi)_\pi
+&= \frac{1}{2}\sum_{x,y\in X}
+   \Phi(x,y)\,\Psi(x,y)\,K(x,y)\,\pi(x).
+\end{align*}
+where $\pi$ is our steady state. It follows that \textit{$\nabladot$ is the negative adjoint of $\,\nabla$}.
+
+Now, we want to re-define these functionals on a more specific setting, i.e. the Hilbert space $\mathcal{G}_\rho$ for a fixed density $\rho \in \mP(\X)$.
+
+To do so, we consider the \emph{logarithmic mean} function $\theta:\R^+ \times \R^+ \to \R^+$, defined by
+\[
+\theta(s,t) := \int_0^1s^{1-p}t^p \,\de p= \frac{s-t}{\log s-\log t}
+\]
+for $s,t> 0$. 
+
+This function $\theta$ is one instance of a more general class of functions that satisfy the properties of regularity (continuity and smoothness), symmetry, positivity and normalization, monotonicity, positive homogeneity, zero boundary ($\theta(0,t)=0$) and concavity. Moreover, they are bounded by above by the arithmetic mean,
+\begin{equation}\label{eq:arithmmean}
+    \theta(s,t) \le \frac{s+t}{2}
+\end{equation}
+and satisfy the following conditions (lemma 2.2 in the paper).
+\begin{align}
+    & s\,\partial_1(s,t)+t\,\partial_2\theta(s,t) = \theta(s,t)\\
+    & s\,\partial_1\theta(u,v) + t\,\partial_2\theta(u,v) - \theta(s,t)  \ge 0
+\end{align}
+where $\partial_i$ is the derivative with respect to the $i$-th entry. These will be useful later on. 
+
+Now, considering $\theta$ as the log mean, and fixing a density $\rho \in \mP(\X)$, we define
+\[
+\hat \rho(x,y):= \theta(\rho(x),\rho(y))
+\]
+which is a logarithmic mean between densities (I don't know what it means precisely for now). 
+
+Then, $\mathcal{G}_\rho$ is the space of all equivalence classes of functions $\Psi:\X \times \X \to \R$, where the equivalence relation is identity on the set $\{(x,y):\hat \rho(x,y)K(x,y) >0\}$. We endow our space with the inner product:
+\[
+(\Psi,\Phi)_\rho := \frac{1}{2}\sum_{x,y\in\X} \Psi(x,y)\Phi(x,y)\hat\rho(x,y)K(x,y)\pi(x)
+\]
+
+The discrete gradient operator $\nabla$ can be seen as $\nabla:L^2(\X)\to\mathcal{G}_\rho$, and its negative adjoint $\nabladot_\rho$, the \emph{$\rho$-divergence operator}, is defined as
+\[
+\nabladot_\rho\Psi(x):=\frac{1}{2}\sum_{y\in\X}(\Psi(x,y) - \Psi(y,x))\hat \rho(x,y)K(x,y)
+\]
+
+\subsection{Defining $\W$}
+
+Let us use the following short hand notation for the squared norm of the gradient of a function $\psi$, i.e. its \emph{action} under $\rho$,
+\[
+\A(\rho,\psi):=||\nabla\psi||^2_\rho = (\nabla \psi,    \nabla\psi)_\rho= \frac{1}{2}\sum_{x,y\in\X}((\psi(y)-\psi(x))^2\hat \rho(x,y) K(x,y) \pi(x)
+\]
+for $\psi \in \R^\X$ and $\rho\in\mP(\X)$.
+
+\begin{definition}[Distance $\W$]
+For $\rho_0,\rho_1 \in \mP(\X)$ we define\footnote{I use $\rho_0$ although it can be confused with $\rho_t|_{t=0}$ because they must be equal in the end and I hate the notation with the bar}
+\[
+\W(\rho_0,\rho_1):=\inf\bigg\{\int_0^1 \A(\rho_t,\psi_t) \, \de t: (\rho,\psi) \in \mathcal{CE}_1(\rho_0,\rho_1)\bigg)
+\]
+where the infimum runs over all pairs of \textcolor{magenta}{\emph{curves}}. For $T>0$, $\mathcal{CE}_T$ is the set of pairs $(\rho,\psi)$ being \textcolor{magenta}{sufficiently regular and satisfying a continuity equation}. In particular we ask:
+\begin{enumerate}[label=($\roman*$)]
+    \item $\rho$ is $C^\infty, \rho:[0,T]\to\R^\X$
+    \item $\rho_t|_{t=0}=\rho_0$, $\rho_t|_{t=1}=\rho_1$
+    \item $\rho_t\in\mP(\X)$ for all $t\in[0,T]$
+    \item $\psi$ is measurable, $\psi:[0,T]\to\R^\X$
+    \item For all $x \in \X$ and $t\in(0,T)$ we have
+    \[
+    \rho_t'(x) +\sum_{y\in\X} (\psi_t(y)-\psi_t(x))\hat\rho(x,y)K(x,y)=0 \quad \quad \quad \textit{(continuity equation)}
+    \]
+\end{enumerate}
+Where the continuity equation in $(v)$ can be re-written as 
+\begin{equation}\label{eq: cont}
+    \rho_t'+\nabladot_\rho(\nabla\psi)=0
+\end{equation}
+\end{definition}
+
+Hence in $\mathcal{CE}$ we look at $\psi$ and $\rho$ as curves, as we did in section \ref{sec: Wconvx}. 
+
+Notice that we define $\W$ along the lines of the dynamic formulation of ot/ Benamou-Brenier formula (\ref{eq: bb}). This implies looking for a geodesic that joins two measures. In fact, such a definition of the $W_2$ (here $\W$) metric has been referred to by Otto as giving a Riemannian structure to the space of measures. This allows to study geodesics, convexity of entropy and the heat flow as gradient flow. 
+\\
+\subsection{Heat flow on $\X$}
+The following theorem provides a crucial result on $\W$. Let us use the notation $P(\X)$ for the space $\mP_*(\X)$ henceforth. 
+
+\begin{theorem}
+    \begin{enumerate}
+        \item The space $(P(\X),\W)$ is a complete metric space, compatible with the Euclidean topology
+        \item \textbf{$\W$ restricted to $P(\X)$ is the Riemannian distance induced by the following Riemannian structure}:
+        \begin{itemize}
+            \item the tangent space at $\rho \in P(\X)$ can be identified as 
+            \[
+            T_\rho P(\X):=\{\nabla \psi:\psi \in \R^\X\}
+            \]
+            with the identification that there exists a unique element $\nabla\psi_0$ such that the continuity equation $(v)$ hols at $t=0$, for a curve $(-\varepsilon,\varepsilon) \ni t \mapsto \rho_t \in P(\X)$ such that $\rho_0=\rho$. Cioè per ogni densità $\rho$, cioè un elemento che vive nel mio spazio $P(\X)$, ho un insieme intero di elementi $\nabla \psi$ che gli sono tangenti,  ma solo uno, che indichiamo come $\nabla \psi_0$, è tale che l'equazione di continuità è soddisfatta. 
+            \item The Riemannian metric on $T_\rho$ is given by the inner product (already defined by the definitions we gave until now)
+            \[
+            (\nabla \varphi, \nabla \psi)=\frac{1}{2}\sum_{x,y\in\X} (\varphi(y)-\varphi(x))(\psi(y)-\psi(x))\hat\rho(x,y)K(x,y)\pi(x)
+            \]
+        \end{itemize}
+        \item The heat flow is the gradient flow of the entropy, in the sense that for $\rho \in P(\X)$ and $t\ge 0$ we have $\rho_t:=P_t\rho\in P(\X)$ and
+        \[
+        D_t \rho_t = -\text{grad}\,\cH(\rho_t)
+        \]
+        where with $D_t$ we mean in general the derivation of $\rho_t$. 
+    \end{enumerate}
+    \begin{proof}
+        \textcolor{red}{For the proof we are referred to the paper by Maas and I think I should look at it.}
+    \end{proof}
+\end{theorem}
+The conceptual point here is the following: among the elements in the tangent space at $\rho$, we choose the one that solves the continuity equation. The continuity equation has $\hat\rho$ in the formula, hence the choice of the logarithmic mean is relevant, and we see why now. 
+\\
+
+Consider the heat equation $\rho'_t=\Delta \rho_t = \nabladot \nabla \rho_t$. Consider also the continuity equation (\ref{eq: cont}). The heat equation can be re-written as a continuity equation if
+\[
+\hat\rho_t\,\nabla\psi_t=-\nabla\rho_t; \quad \nabla\psi_t=-\frac{\nabla\rho_t}{\hat\rho_t}
+\]
+At the same time, we have that the gradient of the entropy under the identification above is 
+\[
+\text{grad}_\W \cH(\rho_t)=\nabla \log \rho_t
+\]
+\[
+\cH(\rho_t) = \sum_{x\in\X}\rho_t(x) \log \rho_t(x) \pi (x)
+\]
+We would like that the heat flow was the gradient flow of the entropy, i.e. that the derivative of $\rho_t$, which is $\nabla \psi_t$, was equal to minus the gradient of the entropy, hence
+\[
+\nabla \psi_t = -\frac{\nabla\rho_t}{\hat\rho_t} = -\nabla \log \rho_t;
+\]
+\begin{equation}\label{eq: condition}
+    \frac{\nabla\rho_t}{\hat\rho_t} = \nabla \log \rho_t
+\end{equation}
+but condition \ref{eq: condition} is asking precisely that $\hat\rho_t$ is the logarithmic mean. Hence for $\theta$ being the logarithmic mean it is satisfied. It follows that the continuity equation can be seen as the heat equation, and the heat flow is the gradient flow of the entropy, because the derivation of $\rho_t$ satisfies the continuity equation, hence it is the heat flow, and with the logarithmic mean ut follows that it is equal to the gradient flow of the entropy. 
+\\
+
+What we have found is that \textbf{the heat equation with a Markov kernel}, which is equivalent to considering the \emph{flow} of a Markov chain, like instead of heat propagating we look at a Markov chain evolving, \textbf{is the gradient flow of the entropy}. Hence all the results we get in the final theorem of \cite{brue} hold :) !!!
+
+Another way to look at this (which is what I wanted to say above) is by substituting in the heat flow our continuous time Markov semigroup $P_t = e^{t(K-I)}$, i.e. using this as the heat semigroup. We get that under $\W$, it is the gradient flow of the entropy (in fact we defined $\rho_t=P_t\rho$). 
+
+% I would like to use the formula d/dt pt = (K-I)p and plug it into these computations above
+
+\subsection{Alternative definition for $\W$}
+
+In the paper, an alternative definition for $\W$ is given. This is because it allows to show the equivalence with Maas previous definition, it is more practical to use and it is in fact used in many subsequent proofs (which I actually don't look at).
+\\
+
+Namely, we define the following function $\alpha$
+\[
+\alpha(x,s,t) =\begin{cases}
+    0, &\theta(s,t)=x=0\\
+    \frac{x^2}{\theta(s,t)}, & \theta(s,t)\neq0\\
+    +\infty, &\theta(s,t)=0, x\neq0
+\end{cases}
+\]
+This is lower semicontinuous and convex, by concavity of $\theta$ and convexity of $x\mapsto\frac{x^2}{y}$.
+\\
+
+Then, for $\rho \in \mP(\X)$ and a new function $V\in\R^{\X\times\X}$ we define 
+\[
+\A'(\rho,V):=\frac{1}{2}\sum_{x,y\in\X}\alpha(V(x,y),\rho(x),\rho(y))K(x,y)\pi(x)
+\]
+and we set
+\[
+\mathcal{CE}_T'(\rho_0,\rho_1):= \{(\rho,V):(i'),(ii),(iii),(iv'),(v') \text{ hold }\}
+\]
+with
+\begin{itemize}
+    \item[$(i')$] $\rho$ is continuous (before $C^\infty$)
+    \item[$(iv')$] $V$ is locally integrable (before $\psi$ measurable)
+    \item[$(v')$] For all $x\in\X$ we have
+    \[
+    \rho'_t(x)+\frac{1}{2}\sum_{y\in\X}(V_t(x,y)-V_t(y,x))K(x,y)=0;
+    \]
+    \[
+    \rho'_t(x)+\nabladot V=0
+    \]
+    continuity equation. 
+\end{itemize}
+
+$\A'$ is convex by convexity of $\alpha$. Now we can state the following equivalent version of $\W$. 
+
+\begin{lemma}\label{lemma: W}
+    For $\rho_0,\rho_1 \in \mP(\X)$ we have
+\[
+\W^2(\rho_0,\rho_1)= \inf\bigg\{\int_0^1 \A'(\rho_t,V_t):(\rho,V) \in \mathcal{CE'}(\rho_0,\rho_1\bigg\}
+\]
+Moreover, for $\rho_0,\rho_1 \in P(\X)$, $(iv)$ becomes that $\psi$ is $C^\infty$. (?)
+\end{lemma}
+
+We just notice that the infimum here is taken over a smaller set than before. Indeed, given a pair $(\rho,\psi)$, we can set 
+$V(x,y)=(\psi(y)-\psi(x))\hat\rho(x,y)$ to get the two definitions coincide. Hence the ``$\ge$" proof is trivial. As for the other direction, the proof is slightly more complicated. 
+
+We disregard it as we will not be so interested in the quantity $\A'$ and in the alternative definition of $\W$.
+
+\subsection{Properties of $\W$}
+
+The metric $\W$ has the following properties:
+\begin{itemize}[label=$\circ$]
+\vspace{2pt}
+    \item \textit{Convexity}: consider two curves $\rho_t,\rho_t' \in \mP(\X)$. Then
+    \[
+    \W^2\big((1-\tau)\rho_0+\tau\rho_0',(1-\tau)\rho_1+\tau\rho_1'\big) \le (1-\tau)\W^2(\rho_0,\rho_1) + \tau\W^2(\rho_0',\rho_1')
+    \]
+    \vspace{2pt}
+    \item \textit{Lower bounds}: \[\frac{1}{\sqrt{2}}d_{TV}(\rho_0,\rho_1)\le\sqrt{2}W_{1,g}(\rho_0,\rho_1) \le \W(\rho_0,\rho_1)\] where $W_{1,g}$ is the 1-Wasserstein distance induced by the graph distance and $d_{TV}$ is the total variation metric;
+\vspace{10pt}
+    \item \textit{Upper bounds}: \[\W(\rho_0,\rho_1) \le W_{2,\W}(\rho_0,\rho_1)\le c \cdot W_{2,g}(\rho_0,\rho_1)\]
+    where $W_{2,\W}$ is the Wasserstein distance induced by the metric obtained restricting $\W$ to $\X$, $c$ is a constant depending on the Markov kernel $K$. 
+
+\end{itemize}
+
+\textcolor{red}{I disregard also these proofs.}
+
+\section{Geodesics in $\W$ space}\label{sec: Wgeodesics}
+In this section of the paper they deal with geodesics in ($\mP(\X),\W$). 
+
+First, it is shown that there always exists a geodesic connecting two densities $\rho_0,\rho_1\in\mP(\X)$ that attains $\W$. In particular, there is a pair $(\rho,V)$
+that attains $\W$ as defined in lemma \ref{lemma: W}, hence $\A'(\rho_t,V_t)=\W^2(\rho_0,\rho_1)$ and $\rho_t$ is a geodesic connecting $\rho_0$ and $\rho_1$.    
+
+Remember that such a geodesic $\rho_t$ is such that 
+\[
+\W(\rho_s,\rho_t)=|s-t|\W(\rho_0,\rho_1)
+\]
+
+I disregard also these proofs for now. 
+
+Then, we define absolutely continuous curves on ($\mP(\X),\W$). A curve $(\rho_t)_{t\in[0,T]}$ is \emph{absolutely continuous w.r.t $\W$} if there is a function $m \in L^1(0,T)$ such that
+\[
+W(\rho_s,\rho_t) \le \int_s^t m(r) \de r \quad \forall\,\, 0\le s \le t\le T
+\]
+and if $(\rho_t)_{t\in[0,T]}$ is absolutely continuous, then its metric derivative exists:
+\[
+|\rho_t'|:=\lim_{h\to0}\frac{\W(\rho_{t+h},\rho_t)}{|h|}
+\]
+and $|\rho_t'|\le m(t)$.
+
+Now, we relate the length of a curve $\int_0^T|\rho_t'| \de t$ to its minimal action, and also give a characterization of absolute continuity. 
+
+\begin{proposition}[Absolute continuity in $\W$]
+    \begin{enumerate}[label=($\roman*$)]
+        \item A curve $(\rho_t)_{t\in[0,T]}$ is absolutely continuous w.r.t. $\W$ if there exists a $V:[0,T]\to\R^{\X\times\X}$ such that $(\rho,V) \in \mathcal{CE}_T'(\rho_0,\rho_T)$ and\footnote{The integral with the sqrt of the action is equivalent to the integral in $\W$, up to reparametrization} \[
+        \int_0^T \sqrt{\A'(\rho_t,V_t)} \de t < \infty
+        \]
+        \item In this case, we have $|\rho'_t|^2 \le \A'(\rho_t,V_t)$ for a.e. $t\in[0,T]$
+        \item Also, there exists an a.e. uniquely defined function $\tilde V:[0,1]\to \R^{\X\times\X}$ such that $|\rho'_t|^2 = \A'(\rho_t,\tilde V_t)$ for a.e. $t$.
+    \end{enumerate}
+\end{proposition}
+
+Non ho ben capito cosa ci stia dicendo questa proposition!
+\\
+
+Finally, we state the following result on geodesics, which will be useful later on. 
+
+Recall that $(P(\X),\W)$ is a Riemannian space, hence local existence and uniqueness of geodesics is guaranteed. 
+\begin{proposition}[Formulas for geodesics on $P(\X)$]\label{eq: formulas}
+    Let $\rho \in P(\X)$ and $\psi \in \R^\X$. On a sufficiently small time interval around 0, the unique geodesic $(\rho_t)$ with $\rho_0=\rho$ and initial speed $\nabla \psi_0=\nabla \psi$ satisfies the following equations:
+    \begin{align}
+        &\partial_t\rho_t(x) +\sum_{y\in\X}(\psi_t(y)-\psi_t(x)) \hat\rho_t(x,y) K(x,y)=0\\
+        &\partial_t\psi_t(x) + \frac{1}{2}\sum_{y\in\X} (\psi_t(x)-\psi_t(y))^2 \partial_1\theta(\rho_t(x),\rho_t(y))K(x,y)=0
+    \end{align}
+\end{proposition}
+where the first equation is a the continuity equation \[
+\Delta_\rho\psi_t=\nabladot_\rho \nabla \psi_t = \nabladot(\nabla \psi_t \hat \rho_t)
+\]
+\[
+(23) \text{ becomes } \dt \rho_t + \Delta_\rho \psi_t = 0
+\]
+For the second one I still don't have a nice intuition. 
+
+\section{Defining Ricci for discrete spaces} \label{sec: Riccidef}
+After having seen in that the space $(\mP(\X),\W)$ geodesics always exists, it is natural to extend the celebrated definition of Ricci lower bound in terms of convexity of the entropy to discrete spaces.
+\begin{definition}
+    We say that $K$ has non-local Ricci curvature bounded by below by $\kappa\in\R$ and write $\Ric(K)\ge\kappa$ if for every geodesic $(\rho_t)_{t\in[0,1]} \in (\mP(\X),\W)$ we have
+    \[
+    \cH(\rho_t) \le (1-t)\cH(\rho_0) + t\cH(\rho_1) - \frac{\kappa}{2}t(1-t)\W^2(\rho_0,\rho_1)
+    \]
+    i.e. entropy is $\kappa$-convex along geodesics 
+\end{definition}
+
+\begin{remark}
+    Notice that equation (\ref{eq: semigroup}) gives a precious insight now: we study a lower bound on Ricci \textit{of} $K$, because $K$ is the law that moves probability mass around our manifold of measures. In fact, curvature in the continuous case is related to the notion of connections, which give rules to move around our manifold, here it is related to $K$. That equation shows that the derivative of a curve is indeed governed by $K$, maybe analogously to connections. The discrete manifold of measures would be too flat, sparse and disconnected to talk about its curvature, there is no such concept (which is why we made all this mess). 
+\end{remark}
+
+Another result is a characterization of a lower bound on Ricci, by means of a lower bound on the Hessian of the entropy. Indeed, we show that $\kappa$-convexity of $\cH$ along geodesics is equivalent to a lower bound on the Hessian of $\cH$ on $P(\X)$. Actually, the following theorem (the last of this section) shows many equivalent notions to $\Ric(K)\ge\kappa$.
+
+Let us first define the following quantity, useful for the theorem. 
+
+For $\rho \in P(\X)$ and $\psi \in \R^\X$ we define
+\begin{equation}\label{eq: discreteBochner}
+    \mathcal{B}(\rho,\psi) := \frac{1}{2}(\hat \Delta \rho \cdot \nabla \psi, \nabla \psi )_\pi - (\hat \rho \cdot \nabla \psi, \nabla \Delta\psi)_\pi
+\end{equation}
+with
+\[
+\hat\Delta\rho(x,y):= \partial_1\ \theta(\rho(x),\rho(y))\Delta\rho(x) + \partial_2\theta(\rho(x),\rho(y)) \Delta \rho (y)
+\]
+
+The main result on $\mathcal{B}$ is that $(\Hess\cH(\rho_t),\nabla \psi_t,\nabla\psi_t)_\rho =\mathcal{B}(\rho,\psi) $. The proof of this is based on the geodesic equation we provided above (Proposition \ref{eq: formulas}), I do not look at it. 
+
+The whole point of defining this quantity is that it is a discrete analogue of the Bochner quantity\[
+\]
+and therefore $\mathcal{B}(\rho,\psi)\ge \kappa \A(\rho,\psi)$ can be seen as the Bochner inequality for a discrete setting. 
+\\
+
+Now we move to the main theorem, characterizing a lower bound on Ricci with many equivalent notions. Let us use the following notation
+\[
+\frac{\de^+}{\de t}f(t)=\limsup_{h\downarrow0}\frac{f(t+h)-f(t)}{h}
+\]
+
+\begin{theorem}[Ricci lower bound equivalent statements]
+    Let $\kappa \in \R$. For an irreducible and reversible Markov kernel $(\X,K)$ the following assertions are equivalent:
+    \begin{enumerate}
+        \item $\Ric(K)\ge \kappa$;
+        \item For all $\rho,\nu \in \mP(\X)$ the following `evolution variational inequality' holds for all $t\ge0$:
+        \[
+\frac{1}{2}\frac{\de ^+}{\de t}\W^2\bigl(P_t\rho,\nu\bigr)
+\;+\;\frac{\kappa}{2}\,\W^2\bigl(P_t\rho,\nu\bigr)
+\;\le\;
+\cH(\nu)\;-\;\cH\bigl(P_t\rho\bigr);
+\]
+        \item For all $\rho,\nu \in P(\X)$, the above inequality holds for all $t\ge0$;
+        \item For all $\rho \in P(\X)$ and $\psi \in \R^\X$
+        \[
+        \mathcal{B}(\rho,\psi) \ge \kappa \A(\rho,\psi);
+        \]
+        \item For all $\rho \in P(\X)$\[\Hess\cH(\rho)\ge \kappa;\]
+        \item For all $\rho_0,\rho_1 \in P(\X)$, there exists a constant speed geodesic $(\rho_t)_{t\in[0,T]}$ that connects them along which entropy is $\kappa$-convex. 
+    \end{enumerate}
+
+    \begin{proof}
+        \textcolor{red}{I leave also this here for now.} 
+    \end{proof}
+\end{theorem}
+
+
+An interesting property that is implied by the evolution variational inequality in point $(2)$ is $\kappa$-contractivity of the gradient flow. 
+\begin{proposition}
+    Let $(\X,K)$ be as before, with $\Ric(K)\ge\kappa$. Then the associated Markov semigroup $(P_t)_{t\ge0}$ satisfies \[
+\W(P_t\rho,P_t\sigma) \le e^{-\kappa t}\W(\rho,\sigma)
+\]
+for all $\rho,\sigma \in \mP(\X)$ and $t\ge 0$. 
+\begin{proof}
+    We refer to the application of proposition 3.1 of \cite{savaré} to $\cH$. \textcolor{red}{As usual}.
+\end{proof}
+\end{proposition}
+
+\textcolor{magenta}{This is convergence of the Markov chain !! }
+\section{Applications} \label{sec: hypercube}
+
+Some examples are given. One is very straightforward, on the complete graph with $n$ nodes $\mathcal{K}^n$, and it is just a matter of calculations. 
+
+For the other examples, we do not employ the standard point of view of a Markov chain as jumps between states. Instead, we consider \emph{moves and move rates}: let $G$ be a set of functions from $\X$ to itself, the allowed moves between states, and let $c:\X \times G\to \R^+$ be a function representing how often a certain move $g\in G$ is made on a certain state $x\in \X$.
+\begin{definition}[Mapping representation]
+    A mapping representation of $K$ is a pair $(G,c)$ such that:
+    \begin{enumerate}
+        \item The generator che %PERCHE CAVOLO
+        è $\Delta = K-I$ si può scrivere come 
+        \[
+        \Delta \psi(x) = \sum_{g \in G} \nabla_g\psi(x)c(x,g)
+        \]
+        where
+        \[
+        \nabla_g\psi(x)=\psi(gx)-\psi(x)
+        \]
+        \item For every $g\in G$ there is a unique $g^{-1}\in G$ satisfying $g^{-1}(g(x))=x$ for all $x : c(x,g)>0$
+        \item For every $F:\X\times G \to \R$ we have
+        \[
+        \sum_{x\in\X, \, g\in G} F(x,g)c(x,g)\pi(x)= \sum_{x\in\X, \, g\in G} F(gx,g^{-1})c(x,g)\pi(x)
+        \]
+    \end{enumerate}
+\end{definition}
+
+% Notice that saying $\Delta = K-I$ makes sense because the generator is the derivative of the Markov semigroup, hence the second derivative of our function. It is the change in how the function (e.g. density $\rho$, $u$ for the concentration in the heat equation) is changing, hence the Laplacian of the function (divergence of the derivative). 
+
+% The Laplacian of the function is in general a measure of how much a function differs from its neighbours. 
+
+Pensavo di avere un insight ma non ci capisco un cazzzzz
+
+Remark 5.3 $\rightarrow$ non ha senso 
+
+Every irreducible and reversible Markov chain has a mapping representation. This can be explicitly built as follows: consider the bijection $g_{xy}$ that brings $x$ in $y$ and set $G$ to be the set of all this maps; then consider $c(x,g_{xy})=K(x,y)$ and $c(x,g_{zy})=0$ if $x\notin \{y,z\}$. Then $G,c$ is a mapping representation, because (consider $g=g_{xy}$:
+\begin{enumerate}
+    \item $\Delta \psi (x) = \sum_{g\in G} \nabla_g\psi(x) c(x,g) = \sum_{g\in G} (\psi(gx)-\psi(x))K(x,y) = \sum_{y\in\X} (\psi(y)-\psi(x))K(x,y)$ 
+    which is the Laplacian operator applied to $\psi$ by definition.
+    \item trivial
+    \item I don't know how to verify it but seems ok
+\end{enumerate}
+
+Then the paper gives explicit expressions for $\A$ and $\B$, but I skip them for now. 
+
+What follows is a criterion to derive a bound on Ricci based on this mapping representation. 
+
+\begin{proposition}[Criterion for Ricci via mapping reps]\label{prop: fine basta}
+    Let $K$ be an irreducible and reversible kernel on a finite set $\X$ and let $(G,c)$ be a mapping representation. Consider the following conditions:
+    \begin{enumerate}[label=($\roman*$)]
+        \item $g \circ l = l \circ g$, for all $g,l\in G$,
+        \item $c(gx,l)=c(x,l)$, for all $x\in\X$, $g,l \in G$,
+        \item $g\circ g= \id$, for all $g \in G$.
+    \end{enumerate}
+    We have that if $(i)$ and $(ii)$ are satisfied, then $\Ric(K)\ge0$. If also $(iii)$ is satisfied, then $\Ric(K)\ge2C$, with $C:= \min \{c(x,g):x \in\X, g\in G$ such that $c(x,g)>0\}$
+
+\end{proposition}
+
+Then, this proposition is proven, which seems doable (as usual we \textcolor{red}{skip it for now}), and finally applied to two examples. The second one is more interesting, as the bound is optimal!
+
+\begin{example}[Discrete circle]
+    Consider the discrete circle $C_n = \mathbb{Z}/ n\Z$ of $n$ sites, and a random walk on it defined by the kernel $K(i,i-1)=K(i,i+1)=1/2$ for $i \in C_n$. Think of this as $n$ nodes put in a circle, and each time we have equal probability (1/2) of moving to the right or to the left. Then the possible moves we can make are $G=\{l,r\}$ and $l(i)=i+1$, $r(i)=i-1$ (by convention we number nodes in senso orario). Intuitively $c(i,l)=c(i,r)=1/2$. By proposition \ref{prop: fine basta}, $\Ric(K)\ge0$. 
+\end{example}
+
+\begin{example}[Discrete hypercube]
+    Let $\mathcal{Q}^n=\{0,1\}^n$ be the $n$-dimensional hypercube and let $K_n$ be the kernel defining a simple random walk on it. The natural mapping representation is given by $G = \{g_1,\ldots,g_n\}$ with $g_i$ is the map that flips the $i$-th coordinate. For instance, for $n=3$ the hypercube is $\mathcal{Q}^3=\{(0,0,0),(0,0,1),$ 
+    $(0,1,0),\ldots,(1,1,1)\}$ and $g_1: (0,0,0)\mapsto(1,0,0)$, $g_2:(1,1,1)\mapsto(1,0,1)$. Also, $c(x,g_i)=1/n$ for each $i$ and $x\in\mathcal{Q}^n$. All three conditions in proposition \ref{prop: fine basta} are satisfied, hence $\Ric(K_n)\ge 2/n$.
+\end{example}
+
+\begin{remark}
+    These examples shed light on some insights on the Ricci curvature of discrete spaces. For instance, if you think about them a priori, it is puzzling to define the curvature of a discrete circle. Or of a graph. In fact, we talk about curvature of such spaces once we are given a \emph{rule} to move from state to state, namely the kernel. Indeed, as we already mentioned, in a continuous manifold its curvature, or shape in general, determines how I can move from point to point, how much time it takes me to go from point to point (given an initial velocity). Here, what determines this is the kernel or the mapping representation of it. 
+\end{remark}
+
+
+\section{Ricci of transformations of Markov chains}
+%ULTIMA SEZIONEEEEEEE
+
+In this section (section 7) they give two results on how Ricci transforms under transformation of the Kernel. 
+
+First, we look at \emph{laziness}. Given a kernel $K$, the associated lazy kernel is $K_\lambda:=(1-\lambda)I+\lambda K$. It has the same steady state $\pi$. 
+\begin{proposition}[Lazy Ricci]
+    Let $\lambda \in (0,1)$. If $\Ric(K)\ge \kappa$, then
+    \[
+    \Ric(K_\lambda)\ge\lambda\kappa
+    \]
+    \begin{proof}
+        A direct calculation shows that the action and Bochner quantities under laziness are
+        \[
+        \A_\lambda=\lambda \A; \quad \B_\lambda=\lambda^2\B
+        \]
+        Recall then that $\Ric(K)\ge \kappa$ iff $\B\ge \kappa\A$. Then $\B\ge\kappa\A$ implies $\lambda \B\ge \kappa \A_\lambda$ and $\B_\lambda\ge \kappa\lambda \A_\lambda$, hence $\Ric(K_\lambda)\ge \kappa\lambda$.
+    \end{proof}
+\end{proposition}
+
+The next result is a \emph{tensorisation} result on Ricci, i.e. Ricci of the product of Markov chains. We first define the setting to talk about product of Markov chains. 
+
+The Cartesian product between two spaces $A,B$ is the set of all \emph{ordered pairs} $A\times B:=\{(a,b):a\in A, b\in B\}$. Then the \emph{product chain} on the cartesian product space is $\mathbf{X}=(X_A,X_B)$ for $X_A,X_B$ Markov chains on each set. 
+
+For $i = 1,\ldots,n$ let $(\X_i,K_i)$ be irreducible and reversible Markov kernels with steady state $\pi_i$ and let $\alpha_i$ be non-negative numbers that sum to 1. The product chain on the space $\X=\prod_i\X_i$ for $\mathbf{x}=(x_1,\ldots,x_n)$ and $\mathbf{y}=(y_1,\ldots,y_n)$ is $X_\alpha=(X_1,\ldots,X_n)$\footnote{Although I'm not sure whether this notation is used for independent chains in the simple spaces. Here we do not assume independence, otherwise the rules for $K_\alpha$ would be different.} and has kernel $K_\alpha$ defined as
+\[
+K_\alpha(x,y)= \begin{cases}
+    \sum_i \alpha_i K_i(x_i,x_i), &x_i=x_i \,\forall i\\
+    \alpha_i K_i(x_i,y_i) &x_i\neq y_i\\
+    0 &\text{otherwise}
+\end{cases}
+\]
+for $x=\{x_1, \ldots, x_n\}$ and similarly $y$. The steady state is the product $\otimes$ of steady states.
+
+This read like this: take $\mathbf{x}$ and $\mathbf{y}$ defined with one coordinate per set $\X_i$. We change state by changing at most one coordinate of $\mathbf{x}$. Hence, if they have more than 1 coordinate different, the probability of going from $\mathbf{x}$ to $\mathbf{y}$ is 0. When exactly one coordinate is different (say $x_i)$, we look at the Markov kernel defined in the corresponding space ($\X_i, K_i$) weighted by $\alpha_i$. Finally, the probability of remaining in the same state is a weighted average of the probabilities of remaining on $x_i$ for each space ($\X_i, K_i$). It is easily checked that these sum to 1, for instance for the hypercube case where $\X_i=\{0,1\}$ and arbitrary weights summing to 1. Assuming that in each state, for $x_i \neq y_i$, we have that $K(x_i,x_i)+K(x_i,y_i)=1$, 
+\[
+\sum_\mathbf{y}K_\alpha(\mathbf{x},\mathbf{y}) = 0 + \sum_i \alpha_i K(x_i,x_i) + \sum_i \alpha_iK(x_i,y_i) = \sum_i \alpha_i (1) =1
+\]
+where the first summation term is for the one case where $\mathbf{x}=\mathbf{y}$, the second summation is for the $n$ cases where they differ for one coordinate (one for each $i$).
+
+Then, the result is the following. 
+
+\begin{theorem}[Tense Ricci]
+    Assume that $\Ric(K_i)\ge \kappa_i$ for $i=1,\ldots,n$. Then we have
+    \[
+    \Ric(K_\alpha)\ge \min_i \alpha_i\kappa_i
+    \]
+    \begin{proof}
+        \textcolor{red}{hihihi}
+    \end{proof}
+\end{theorem}
+
+Applications of the tensorisation result are two, to assymetric random walks on the discrete hypercube and to the discrete torus. In the first case, we study the hypercube as the tensor product of $\{0,1\}$ spaces, with parameters $p=K(0,1)$ and $q=K(1,0)$. For the discrete torus, we look at it as the product of random walks on $d$ discrete circles, hence we get that Ricci is non-negative from the example above and the tensorisation theorem. 
+% poi la prima cosa da fare è capire un po' le cose che sappiamo su Ricci, soprattutto qual è il risultato principale? sarà quello che dicono nella intro o nel main result o abstract o conclusione, allora poi vediamo magari la motivation o che ne so 
+
+\section{Motivation of paper}
+Lott: manuscript on Ricci bound for metric spaces\\
+
+Ollivier: other notion of Ricci for discrete. He says that it has many powerful implications in terms of these inequalities that have probabilistic interest
+\begin{itemize}
+    \item concentration of measure and Lévy–Gromov theorem
+    \item bounding the diamater of the space (Bonnet–Myers)
+    \item Brownian motion and Lichnerowicz’s theorem
+\end{itemize}
+
+\cite{olliviervillani}:
+they look for a lower bound on Ricci of the discrete hypercube. there are two possible notions: (1) given by Ollivier, related to ``spheres being closer between eachother than their centers when curv $>$ 0", (2) uses Brunn-Minkowski inequality ($\kappa$-concavity of the logarithmic volume), which leads to studying displacement convexity of the entropy \textit{because that volumes spread out when mass is preserved implies that density decreases and is equivalent to entropy increasing...?}
+\\
+
+Comunque, le applicazioni sono principalmente due:
+\begin{itemize}
+    \item studiare la Ricci di spazi come l'ipercubo (e perché questo è importante non lo so ancora, ma Ollivier e Villani ci hanno fatto un paper \cite{olliviervillani} + il mio paper dice hypercube fundamental building block in math physicis e comp sci)
+    \item ottenere versione discreta di certe ``extremely powerful inequalities" nel mondo continuo (e.g. Ollivier \cite{ollivier2009ricci} riporta quelle scritte sopra. poi le log-Sobolov inequality si sentono sempre. poi bo)
+\end{itemize}
+
+
+hypercube è importante in cs per esempio perché poi lo usi per modellare diverse situazioni e.g. lattici in crittografia e studiare diversi algoritmi su di esso. (\href{https://www.sciencedirect.com/science/article/pii/S0378437117312487}{source})
+\\
+
+Tutti i paper di oggi sono
+\href{https://janmaas.org/papers/discrete.pdf}{Maas}
+\href{https://www.math.uchicago.edu/~shmuel/QuantCourse%20/Metric%20Space/Ollivier,%20Ricci%20curvature%20of%20Metric%20Spaces.pdf}{Ollivier}
+\href{http://www.yann-ollivier.org/rech/publs/cube.pdf}{Ollivier-Villani}
+\href{https://www.sciencedirect.com/science/article/pii/S0022123699935577}{Otto-Villani} (inequalities) 
+Bakry-Emery !!
+
+\href{https://math.univ-lyon1.fr/~gentil/BGL-introduction.pdf}{Markov operators by Bakry et al ma bo!}
+
+% \section{Cose che non dico}
+% - alternativa definizione di Ricci bound data da Maas e equivalenza con questa
+
+% - Bochner result
+
+% - alternativa visione al kernel: mapping representation. it was nice! also used in examples of sphere and symmetric walk on hypercube
+
+% - intermediate results, properties, and proofs. 

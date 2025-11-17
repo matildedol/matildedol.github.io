@@ -1,0 +1,64 @@
+% APPENDIX A 
+\begin{lemma}[Extension lemma for smooth functions]
+Suppose $M$ is a smooth manifold with or without boundary, $A \subseteq M$ is a closed subset, and $f:A \to \R^k$ is a smooth function. For any open subset $U$ containing $A$, there exists a smooth function
+$\tilde f: M \to \R^k$ such that $\tilde f|_A = f$ and $\text{supp}\tilde f \subseteq U$.
+\end{lemma}
+
+\textbf{Lebesgue vs. Hausdorff}
+La Lebesgue measure calcola solo un volume della dimensione dello spazio, e si usa nel caso Euclideo. 
+La Hausdorff measure generalizza Lebesgue perché $\mathcal{H}_n=\mathcal{L}_n$, ma posso avere anche la misura di dimensione minore (e.g. se $n=3$, Hausdorff mi definisce un volume ma anche una 2d distanza, quindi posso misurare le lunghezze di una superficie immersa in $\R^3$).  
+\\
+
+\textbf{Variabili aleatorie e misure di probabilità}
+Puoi vedere una variablile aleatoria come sullo stesso piano concettuale della misura di probabilità. Il passaggio più semplice è da variabile aleatoria $X$ $\longrightarrow$ a misura di probabilità $\mu$:
+\[
+\text{Dato un insieme F,}\quad
+\mu(F) = \Pr(X  \in F)
+\]
+Diciamo che \textit{$\mu$ è la legge della variabile aleatoria $X$} oppure \textit{$\mu$ è la distribuzione di probabilità di $X$. }
+
+Def: $\mu$ è assolutamente continua quando data una misura di volume $\vol$ indotta dalla metrica $g$, $\mu$ si può scrivere come una densità per la misura, 
+\[
+\mu = \rho \cdot \vol_g
+\]
+e scriviamo $\mu << \vol_g$. Questo vuol dire che $\mu$ non è molto concentrata rispetto alla misura di volume. Esempio stupido è quando la misura $\mu$ è tutta concentrata in un punto, allora se io voglio trasportarla in una misura $\nu$ che è concentrata su due punti, non lo potrò mai fare con una funzione. Infatti usiamo misure AC per definire il problema di trasporto ottimale. 
+
+Quando $\mu$ è anche assolutamente continua,
+allora $X$ ha una funzione di densità. 
+
+Inoltre, quando definiamo un piano di trasporto, lo possiamo vedere come una distribuzione di probabilità congiunta:
+\[
+\pi(A \times Y) = \mu(A) \quad \longleftrightarrow \quad p(x) = \int p(x,z) \, dz
+\]
+dove $x$ è una realizzazione della variabile $X$ e $p$ la sua pdf. 
+\\
+
+\textbf{A metric induces a distance and a volume measure}
+Once we have chosen a metric, we get a \textit{\textbf{distance}} and a \textit{\textbf{volume measure}} that are the two canonical objects induced by the metric. 
+
+The distance is denoted here as $d_g$ or just $d$ and it is defined by \cite{brue} as 
+\[
+d^2_g(x,y):= \min\Big\{\int_0^1g_{\gamma(t)}(\gamma'(t),\gamma'(t)) \,dt : \gamma(0)=x, \gamma(1)=y, \gamma \in AC([0,1];M) \Big\}
+\]
+
+To grasp the idea, consider that in the Euclidean case the distance is defined as
+\[
+\int_0^1|\gamma'(t)| \,dt
+\]
+where $|\gamma'(t)| = \sqrt{(\gamma'(t),\gamma'(t))} = \sqrt{g_{\gamma(t)}(\gamma'(t),\gamma'(t))}$
+where here $g$ is the standard Euclidean metric. In plain English, we are integrating velocity against time, hence computing the distance as velocita $\times$ tempo. 
+
+Then, we define the volume measure  $\vol_g$ in either of these ways:
+\[
+\vol_g := \varphi_\#\sqrt{\det(g_x)_{ij}}\,\mathcal{L}^n
+\]
+where $\varphi$ is a chart and $\mathcal{L}^n$ is the Lebesgue measure. $\varphi_\#$ is the \textit{push forward} according to the chart. \footnote{This means that the volume is defined as the sqrt times the Lebesgue measure on the subset of the Euclidean space that is the image of our chart, and we push forward this through $\varphi$ to get a definition of volume on the manifold.  The push forward of a measure is exactly an operation that allows to use a measure defined on an input space to define a measure on another space through a map. }
+
+The idea is to multiply the Lebesgue measure by a quantity that indicates how much volumes are deformed on our manifold (according to $g$). 
+
+Alternatively, we define $\vol_g$ as the Hausdorff measure induced by $d_g$, i.e.
+\[
+\vol_g= \mathcal{H}^n(S) := \inf\Big\{\sum_{i=0}^\infty \big(\text{diam }U_i\big)^n : S \subseteq\bigcup_{i=0}^\infty U_i \Big\}
+\]
+where
+[...] %definition of diam induced by d_g, ma per ora lascio perdere ché non mi serve

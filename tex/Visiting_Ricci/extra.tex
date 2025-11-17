@@ -1,0 +1,120 @@
+% APPENDIX B
+\subsection{Flat connection}
+EXERCISE 1.1:
+\\
+\begin{definition}[Flat connection]
+    A flat connection is a connection whose Riemannian curvature is 0, i.e. $R(X,Y)Z=0$ for any vector fields $X,Y,Z$.
+\end{definition}
+
+\begin{remark}
+    In fact, the curvature is dependent on the choice of connection. I think that this is why we generally choose the Levi Civita connection (and the metric induced by the Euclidean inner product) to get generalizable results.
+\end{remark}
+
+We now want to show that the connection induced by the inner product in $\R^3$ - equivalently, the LC connection in $\R^3$ - is flat. 
+\\
+
+\textit{This follows directly from the definition given by Lee (\cite{lee2018riemann}) of Euclidean connection and from the fact that the LC connection on an Euclidean space is the Euclidean connection. Indeed, we take for granted that $\nabla_XY=XY$ and by applying the definition of Lie bracket we get flatness. In particular, by following the steps performed by Lee (p.194 onwards), we have that by definition of Euclidean connection}
+\begin{align*}
+    &\nabla_X\nabla_YZ=\nabla_XY(Z^k)\partial_k = XY(Z^k)\partial_k;\\
+&\nabla_Y\nabla_XZ=\nabla_YX(Z^k)\partial_k= YX (Z^k)\partial_k; 
+\\
+&\nabla_X\nabla_YZ - \nabla_Y\nabla_XZ = (XY(Z^k)-YX(Z^k))\partial_k = \nabla_{[X,Y]}Z
+\end{align*}
+\textit{
+***e penso che non si possa dire che vale per tutte le torsion free perché si passa sempre per applicare a qualcosa ???***}
+\textit{Then, Christoffel symbols are 0 by definition of the connection and by equation \ref{eq: crist}. }
+\\
+
+Also, we get that \[\nabla_{e_j} e_i = 0 \quad \forall i,j\]
+where with $e_i$ we indicate in compact notation the standard basis vector fields $\frac{\partial}{\partial e_i}$, $e_i \in \R^n$, that apply the standard basis vectors to each point. 
+\\
+
+\textit{This directly follows by definition of Christoffel symbols.}
+\\
+
+EXERCISE 1.2:
+This allows us to express in an explicit form the connection of two vector fields $X,Y$. 
+
+\textit{Recall that}
+        \begin{align*}
+            &X = (X^1,\ldots, X^n) = \sum_i X^i e_i\\
+            &Y = (Y^1,\ldots, Y^n) = \sum_i Y^i e_i
+        \end{align*}
+\textit{Then, }
+\begin{align*}
+    \nabla_X Y &= \nabla_{\sum_i X^i e_i} Y = \sum_i X^i \nabla_{e_i} Y
+\end{align*}
+\textit{using the property of linearity over $C^\infty(M)$ in the first component of connections and that $X^i$ are functions. Then,}
+\begin{align*}
+     &= \sum_i X^i \, \nabla_{e_i} \sum_j Y^j e_j\\
+     & = \sum_i X^i \, \Bigl( \sum_j Y^j \nabla_{e_i} e_j + e_i \sum_j Y^j e_j \Bigr)\\
+     &= \sum_i X^i \,\Bigl(e_i \sum_j Y^j e_j \Bigr) = \sum_i X^i \sum_j e_i Y^j e_j
+\end{align*}
+\textit{where we use the product rule for connections, with $f=\sum_j Y^j$. Hence, to compute $\nabla_XY$ we can just take the ordinary derivative of each $Y^j$ in the direction of $e_i$, apply the obtained function to the vector field $e_j$ and sum, then apply each function $X^i$ to the obtained vector field $e_i Y^j e_j$ and sum (the sum of vector fields is a vector field as the space of vector fields is a vector space).
+         }
+\\
+
+EXERCISE 1.3:
+We can also use this to compute the connections in a 2-dim manifold immersed in $\R^3$. We can check that this is equivalent to computing the Jacobian matrix of X and apply it to Y.
+\\
+
+\textit{This is done by computing the tangential derivative as done above and (maybe) checking that
+\[
+    \nabla^t_XY = \pi_{TM}(\nabla_{\Tilde{X}}\Tilde{Y} |_M)
+    \]
+is equivalent to computing the connection as \[\nabla_X Y =\sum_i X^i \sum_j e_i Y^j e_j\]}
+
+  % Let us now consider a 2-dimensional manifold $(M,g)$ immersed in $\R^3$. Consider also a region $U\subset M$  and two vector fields $X,Y:U\to\R^3$. We can compute the connection $\nabla_X Y$ by considering an open set $\tilde U \subset \R^3$ that contains $U$ and the vector fields $\tilde X, \tilde Y$ defined on $\tilde U$, such that $\tilde X|_U = X; \tilde Y|_U = Y$. Then, we can compute explicitly $\nabla_{\tilde X} \tilde Y$ as above; then restrict it to $U$ and \emph{project} it onto the tangent space $\longrightarrow$ we get exactly the connection on our manifold, i.e.
+  %       \[ P_{TM}\bigl(\nabla^{\R^3}_{\tilde X} \tilde Y |_U \bigr)= \nabla^g_X Y
+  %       \]
+  %       We can check that this corresponds to computing the Jacobian matrix of X (the matrix of all partial derivatives) and apply it to Y 
+
+%%%%%%%%%%%%%%%%% Curvatures 
+% Hence, \textbf{the Riemannian curvature tensor has to do with the second derivative of vector fields}. It is the difference between differentiating $Z$ first along $X$ and then $Y$, and first along $Y$ and then $X$ (connections are not symmetric in general). This does not give a linear object (a tensor), it was Riemann who discovered that subtracting the derivative along the commutator makes it a tensor. It is kind of magic that this is a tensor. 
+
+% As a reference, consider that in the first order, we can define a tensor \[
+% T=\nabla_X Y -\nabla_Y X - [X,Y]
+% \]
+% but $T=0$. \textbf{The first interesting tensor is therefore the second order one}, the Riemannian curvature tensor. 
+
+
+
+\subsection{Introducing curvatures with Lee's reasoning} \label{sec: lee}
+
+Read this section referring to Lee, Intro to Riemannian Manifolds, Chapter 7 pp.193-195.
+
+We build a vector field $Z$ that is parallel wrt the equator ($x_1$ axis) and all the meridians (every $x_2$ coordinate line). Then we want to check if it is parallel also along \textit{all} the $x_1$ coordinate lines, i paralleli. 
+Recall that if $X$ is parallel along a curve $\gamma$ it means $\nabla_{\gamma}X=0$. Hence we have that $\nabla_{\partial_2}Z=0$ and want to check if $\nabla_{\partial_1}Z=0$, where $\partial_i$ represents the vector field that associates the vector $x_1$ to all points, that ``extends" all the curves that describe paralleli. 
+
+We get that this is true if 
+\[
+\nabla_{\partial_2}\nabla_{\partial_1}Z=0
+\]
+and hence if 
+\[
+\nabla_{\partial_2}\nabla_{\partial_1}Z=\nabla_{\partial_1}\nabla_{\partial_2}Z
+\]
+
+This condition is always true for the Euclidean connection, because ordinary (Euclidean) second partial derivatives commute. Hence what we wanted to show is confirmed for the \textbf{standard basis vector fields under the Euclidean connection}.
+If we extend this to \textbf{generic vector fields} $X, Y$ we get that the condition doesn't hold anymore, and the difference between the two terms depends on the commutator:
+\begin{equation}\label{eq: flat}
+    \nabla_X\nabla_YZ-\nabla_Y\nabla_XZ=\nabla_{[X,Y]}Z
+\end{equation}
+This results from how the Euclidean connection is defined ($[\nabla_X Y]_i = [XY]_i)$. Hence the original thing we wanted to show doesn't always hold (only when $X$ and $Y$ commute locally, i.e. $[X,Y]=0$). 
+
+Then, since we know that a space is flat when locally isometric\footnote{Two metric spaces $(X,d), (Y,d)$  are isometric when there exists a bijective isometry between them, i.e. a function $f:X\to Y$ s.t. $d(a,b)=d(f(a),f(b)) \, \forall a,b \in X$. } to the Euclidean space, and we have result \ref{eq: flat} for the Euclidean space, we take this as a \textbf{\emph{flatness criterion}} and say that a space is flat, or has curvature 0, when that holds. Hence the definition of Riemannian curvature! 
+
+
+\subsection{Gradient flows \& Benamou-Brenier}
+
+I was interested in \href{https://arxiv.org/pdf/2301.01766}{this paper}. To understand it I looked at
+
+\begin{itemize}
+\item definition of gradient flows: as those curves $x(t)$, $x:I \to \text{Dom}(f)$ such that they are descent directions as defined by the sub-differential(?)
+\begin{itemize}
+\item -> definition of sub-differential -> how is $p$ an object living on $H$ that is equivalent to the gradient of $f$ in the definitions fo convexity?
+\end{itemize}
+\item Benamou-Brenier formula, related to continuity equation: alternative definition of $W_2$ distance 
+
+\item Fisher-Rao come definita nel paper ???     
+\end{itemize}

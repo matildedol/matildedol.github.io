@@ -1,0 +1,1425 @@
+\documentclass[a4paper,14.5pt,reqno]{amsbook}
+%\usepackage{times} % Basic Times font
+%\usepackage{mathpazo} % Palatino text with math support
+%\usepackage{charter}
+
+\usepackage{subfiles}
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{libertinus}
+\usepackage{natbib}
+\bibliographystyle{plain}
+\usepackage{blindtext}
+\usepackage{graphicx}
+\usepackage{thmtools}
+\usepackage{cancel}
+\usepackage[english]{babel}
+\usepackage{amsthm}
+\usepackage{mathrsfs}  
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{enumitem}
+\usepackage{amsmath}
+\usepackage{bm}
+\usepackage{bbm}
+\usepackage[utf8]{inputenc}
+\usepackage{blindtext}
+%\usepackage{titlesec}
+\usepackage{mathabx}
+\makeatletter
+%\renewcommand{\@secnumpunct}{.\quad}
+\makeatother
+\newcommand{\longrightharpoonup}{\relbar\joinrel\rightharpoonup}
+\usepackage{harpoon}% <---
+
+
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepgfplotslibrary{patchplots}
+
+\theoremstyle{definition} % Ensures normal (upright) text inside the theorem
+
+\newtheorem*{customthm}{} % Unnumbered theorem, no default label
+
+\newenvironment{namedthm}[1]{%
+    \smallskip % Adds space before the theorem
+    \noindent\textbf{#1.} % No indentation, no auto punctuation, controlled spacing
+}{%
+    \par % Ensures proper paragraph formatting
+}
+
+\usepackage[dvipsnames]{xcolor}  % allows named colors like "blue", "magenta"
+\usepackage{hyperref}
+
+\hypersetup{
+    colorlinks,       % disable colored text, use boxes
+    %linkbordercolor = Cyan,   % color of internal document links
+    %urlbordercolor = Melon, % color of external URL links
+    %citebordercolor = NavyBlue,  % color of citation links
+    %pdfborder = {0 0 1},      % thickness of link border
+    linkcolor={black!50!black},
+    citecolor={black!50!black},
+    urlcolor={blue!50!black}
+}
+
+\usepackage[a4paper, total={6in, 8in}]{geometry}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\usepackage{xcolor}
+
+
+\newcommand*\de{\mathop{}\!\mathrm{d}}
+\usepackage[thinc]{esdiff}
+
+%\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\1}{\mathbbm{1}}
+% measures / sets of measures:
+\newcommand{\mH}{\mathscr{H}}
+\newcommand{\mL}{\mathscr{L}}
+\newcommand{\mP}{\mathscr{P}}
+\newcommand{\cH}{\mathcal{H}} % entropy
+\newcommand{\cT}{\mathcal{T}} % topology
+\newcommand{\W}{\mathcal{W}} % new metric W
+\newcommand{\X}{\mathcal{X}} % space X
+\newcommand{\nabladot}{\nabla \cdot} % discrete divergence operator
+\newcommand{\A}{\mathcal{A}} % action
+\newcommand{\B}{\mathcal{B}} % fucking B object
+
+\newcommand{\dt}{\frac{\de}{\de t}}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\supp}{supp}
+\DeclareMathOperator*{\id}{id}
+\DeclareMathOperator{\imm}{Im}
+\DeclareMathOperator{\lalpha}{\overline{\alpha}}
+\DeclareMathOperator{\aconv}{\alpha \textit{x}+\overline{\alpha}\textit{y}}
+\DeclareMathOperator{\bconv}{\beta \textit{x}+\overline{\beta}\textit{y}}
+
+%%%%%%%%%%%%%%%%%%%% from the paper
+\newcommand{\R}{\ensuremath{\mathbb{R}}}
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
+\DeclareMathOperator{\Ric}{Ric}
+\DeclareMathOperator{\vol}{vol}
+
+\def\diam{\mathop{\mathrm{diam}}\nolimits}
+\def\vol{\mathop{\mathrm{vol}}\nolimits}
+\def\area{\mathop{\mathrm{area}}\nolimits}
+\def\Hess{\mathop{\mathrm{Hess}}\nolimits}
+\def\supp{\mathop{\mathrm{supp}}\nolimits}
+\def\Ric{\mathop{\mathrm{Ric}}\nolimits}
+\def\Id{\mathop{\mathrm{Id}}\nolimits}
+\def\tr{\mathop{\mathrm{tr}}\nolimits}
+\def\ac{\mathop{\mathrm{ac}}\nolimits}
+\def\div{\mathop{\mathrm{div}}\nolimits}
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\theoremstyle{plain}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{corollary}[definition]{Corollary}
+\newtheorem{lemma}[definition]{Lemma}
+
+\theoremstyle{remark}
+\newtheorem*{example}{Example}
+\newtheorem*{remark}{Remark}
+
+\title{Notes on Ricci curvature of finite markov chains}
+\author{matilde dolfato}
+\thanks{Under superivsion of: Prof. Elia Brué}
+\date{may 2025}
+
+\begin{document}
+\frontmatter            % optional but recommended for amsbook
+\maketitle
+
+\mainmatter
+
+This is a collection of notes on the study behind the paper \textit{Ricci Curvature of Finite Markov Chains via Convexity of the Entropy}, Erbar and Maas (2011).
+\\
+
+Geometry $\leftrightarrow$ Optimal Transport $\leftrightarrow$ Statistics and Statistical Mechanics.
+
+Sections 1 to 4 are on the theory behind the paper. Section 5 goes over the study. 
+\tableofcontents
+\newpage
+\chapter*{High-level logical idea}
+
+%here i just want to give an idea of the general, overall framweork and logical connections between the many chunks of theory
+
+
+
+In the paper, they try to study \textbf{Ricci curvature of} \textbf{discrete spaces} for the first time. Studying the Ricci curvature of continuous spaces, instead, is a whole established field of research. The main motivation is that lower bounding the Ricci curvature of a space gives nice asymptotic properties to functions on that space. The following example is the main one to have in mind. 
+
+\begin{example}[Heat equation asymptotic behavior]
+We study the development of a function $f$ on a manifold $M$ according to the heat equation (``apply" the heat equation to $f$). If we have an lower bound on the Ricci curvature of $M$, then we know that the heat semigroup will converge to a constant value (average temperature) after a large time $t$. I.e.,
+\begin{align*}
+    \text{If} \Ric \ge k, \,\, \,\, ||\nabla P_t f|| \le e^{-tk}P_t |\nabla f|
+\end{align*}
+
+
+where $P_t f$ indicates the development of $f$ according to the heat equation, and its derivative for large $t$ is bounded by 0, i.e. $P_t f$ converges to a constant value. 
+\end{example}
+
+In the paper, the authors would like to find a notion of lower bound on the Ricci curvature for discrete spaces, like spaces of Markov Chains.
+However, the very definition of (Ricci) curvature depends on a geometric structure and differentiable properties that are undefinable for discrete spaces. Hence, what they decide is to use the equivalent statement proposed in Theorem (\ref{thm: ric}), which is not a differentiable one. Indeed, the statement depends only on distances and integrals (which are easily extendable to a discrete sum).
+By doing so, we are able to gain precious insights on objects living on discrete spaces, like Markov Chains, as we did for functions like the heat equation. The treasure at the end of the rainbow is to study some ``geometric" properties of the discrete space to discover asymptotic properties of Markov processes, such as if they converge to an equilibrium, a steady state.
+
+
+\newpage
+\chapter{Notions from geometry}
+
+Given a smooth manifold $M$, we can define its tangent space. 
+\begin{definition}[Tangent space, visual]\label{def: tpm}
+    Consider all the smooth curves on $M$, $\gamma:[0,\varepsilon]\to M$ such that $\gamma(0) = p$ for some $p \in M$. We want to define an equivalence relation on these curves, namely that of having the same velocity: given $\gamma_1:[0,\varepsilon_1]\to M$ and $  \gamma_2:[0,\varepsilon_2]\to M$, $\gamma_1 \sim \gamma_2$ if for any chart $\varphi: U \to V \subseteq \mathbb{R}^n$ it holds \begin{equation}\label{eq: speedeq} (\varphi \circ \gamma_1)'(0) = (\varphi \circ \gamma_2)'(0)
+    \end{equation}. The tangent space to $M$ at $p$, $T_pM$, is the set of all equivalence classes according to the velocity equivalence relation (\ref{eq: speedeq}). 
+\end{definition}
+
+\begin{remark}
+    We need to pass to the chart to define what the velocity of a curve is, through $(\varphi \circ \gamma)'$, otherwise this derivative doesn't make sense (with the technology we use here).
+\end{remark}
+
+\begin{remark}
+    It is sufficient to verify condition (\ref{eq: speedeq}) for one chart, when considering a smooth manifold. 
+\end{remark}
+
+An equivalent, more algebraic definition of tangent space follows, which looks at directional derivatives and first uses the concept of \textbf{\emph{derivation}}.
+\begin{definition}[Derivation]\label{def: deriv}
+     Consider the space of all real-valued smooth function on $M$, denoted $C^\infty(M)$. A map $D: C^\infty (M) \to \mathbb{R}$ is called a derivation at $p$ if it is linear and satisfies $D(fg) = D(f) g(p) + D(g) f(p)$ for all $f,g \in C^\infty(M)$. 
+\end{definition}
+\begin{definition}[Tangent space, algebraic]
+    Given a smooth manifold $M$, the tangent space of $M$ at $p$, $T_pM$, is the set of all derivations at $p$, i.e. of all possible ways to take a directional derivative at $p$.
+\end{definition}
+
+\begin{remark}
+    Derivations are essentially directional derivatives, hence the tangent space is the set of all possible ways of taking a directional derivative of a function at $p$. 
+\end{remark}
+
+\begin{remark}
+    \textbf{The tangent space is a vector space.}
+\end{remark}
+Citing \cite{lee2003smooth}, you should
+visualize tangent vectors to $M$ as ``arrows" that are tangent to $M$ and whose base
+points are attached to $M$ at the given point. Proofs of theorems about tangent vectors
+must, of course, be based on the abstract definition in terms of derivations, but your
+intuition should be guided as much as possible by the geometric picture.
+
+When the manifold is immersed in some Euclidean space $\mathbb{R}^n$, we can view $T_pM$ as a vector subspace. The affine subspace $p+T_pM$ corresponds to our intuition of a ``Taylor approximation" of $M$. For a surface (2-dimensional manifold) in $\mathbb{R}^3$ that would be the tangent plane to the surface. 
+
+
+% We define the \textbf{tangent space} $T_pM$ to a manifold $M$ at a point $p$.
+
+Now, let us define the tangent bundle to $M$. 
+
+\begin{definition}[Tangent bundle]
+    Given a smooth manifold $M$ of dimension $n$, the tangent bundle to $M$ is a $2n$-dimensional smooth
+manifold $TM$ together with a smooth \emph{projection map}  $\pi:TM \to M$ such that 
+\[
+        TM = \bigsqcup_{p \in M} T_pM\,;\]\[
+    \pi(p,v)=p \quad\forall v \in T_pM, \,\, \forall p \in M
+\]
+   This means that $TM$ is the disjoint union of the tangent spaces at all points in $M$, and $\pi$ is the map sending each tangent vector back to the point it is tangent at. Each fiber $\pi^{-1}(p) \in TM$ has the structure of a vector space.   
+\end{definition}
+
+A tangent bundle glues together the tangent spaces of $M$.\footnote{I do not go over the definition of a vector bundle in general, which glues together vector spaces, I did NOT understand it.} 
+
+% We define a vector bundle in general as a manifold together with a map $\pi$ such that
+% \begin{itemize}
+%     \item  each fiber $\pi(p)^{-1}$ has the structure of a whole vector space (the tangent space, in the case of the tangent bundle)
+%     \item  non capito (source InfoGeo)
+% \end{itemize}
+
+\begin{definition}[Vector field]
+    Given a smooth manifold $M$, a vector field is a continuous map $X:M \to TM$ such that 
+    \[
+    \pi \circ X = \text{Id}_M
+    \]
+    Equivalently, it is a map $p \mapsto X_p $ such that $X_p \in T_pM$.
+\end{definition}
+\begin{remark}
+    A vector field is a \emph{section} of the map $\pi$. 
+\end{remark}
+Vector fields on M can be visualized just like we visualize vector fields in the Euclidean space: as an arrow attached to each point of M, chosen to be tangent to M and to vary continuously from point to point \cite{lee2003smooth}.\footnote{I discard the notion of Jacobi field and a different interpretation of the relation between curvature and geodesics (pg 5 paper byBrue) for now (it was just a good excuse to look at the above notions).} 
+
+Also, we can look at vector fields from a concrete perspective, as follows.
+
+We first define a \textbf{\emph{basis of vector fields}}. Consider a manifold $M$ and a smooth coordinate chart $\varphi:U \subseteq M \to \R^n $  that induces a coordinate system $\{x_1,\ldots,x_n\}$ on all tangent spaces at $U$. \footnote{In the Euclidean space we fix a coordinate system by choosing a basis, on a manifold we do so by choosing a chart that induces a basis on the tangent space to the manifold :)} 
+
+Then, we can derive the basis vector fields as \[
+    \frac{\partial}{\partial x_i} =: \partial_i
+    \]
+    that associate the basis vector at each point in $U$. They are constant vector fields. 
+    
+
+Then, a vector field $X:M\to TM$ can be expressed in terms of coordinates as the sum of $n$ real-valued functions $X^1, \ldots,X^n $ applied to each basis vector field, i.e.\[
+    X=\sum_iX^i \partial_i
+    \]
+These functions are called \textit{component functions of $X$} in the given chart \cite{lee2003smooth}.
+
+Also, we write the value of the vector field $X$ at any point $p$ as $X_p$, and we have \[X_p = X^i (p) \partial_i|_p\]
+
+
+The next proposition says that given a tangent vector at some point $p$, we can always find a vector field that creates it.
+\begin{proposition}
+    Let M be a smooth manifold with or without boundary. Given $p\in M$ and $v \in T_pM$, there is a smooth global vector field $X$ on $M$ such that $X_p=v$.
+
+    Proof: the proof considers the vector field defined on the set $\{v\}$ defined as $v\mapsto p$ and the applies the extension lemma (see \ref{sec: app}). 
+\end{proposition}
+
+We refer to $\mathfrak{X}(M)$ as the space of all smooth vector fields on $M$. It is a vector space (i.e. closed) under  pointwise addition and scalar multiplication,
+\[
+(aX + bY)_p = aX_p + bY_p
+\]
+The zero element is the zero vector field that assigns $0 \in T_pM$ to each $p \in M$. 
+
+Also, smooth vector fields can be multiplied by smooth real-valued functions. Given $f \in C^\infty(M)$, we define $fX: M \to TM$ as \[
+(fX)_p = f(p)X_p
+\] and the result is smooth. 
+
+
+Vector fields define operators on the space of smooth real-valued functions. Given $X\ \in \mathfrak{X}(M)$ and $f:U \to \R$, $U\subseteq M$, we define a new function $Xf : U \to \R$ as
+\[
+(Xf)(p) = X_pf
+\]
+Also, the function $Xf$ is smooth. 
+
+
+To clarify: 
+    \begin{itemize}
+        \item[] \textcolor{SkyBlue}{$Xf \longrightarrow$ smooth function}, the operator defined by $X$ on smooth functions (\textcolor{SkyBlue}{derivation});
+        \item[] \textcolor{OliveGreen}{$fX \longrightarrow$ smooth vector field}, obtained by \textcolor{OliveGreen}{multiplying $f$}.
+    \end{itemize}
+
+Smooth vector fields also satisfy the following product rule:
+\begin{equation}\label{eq: prule}
+    X(fg) = f\, \,Xg + g\, \,Xf
+\end{equation}
+
+Where the blank space is there because we first apply $X$ to $g$ and then multiply by $f$, obtaining another smooth function. 
+
+Recalling definition \ref{def: deriv}, \textbf{derivations can be identified with smooth vector fields}, i.e. 
+\[ X_pf = (Df)(p)
+\]Hence, we sometimes use the same notation for these two objects (vector fields $X:M \to TM$ and derivations $D:C^\infty(M) \to C^\infty(M)$.
+\\
+
+Now, if we consider a smooth function $Xf$, we can apply another vector field $Y$ to it obtaining another smooth function $YXf = Y(Xf)$. The operator that brings $f \mapsto YXf$, however, does not satisfy the product rule and is not a vector field. 
+
+What we can do is we consider also the converse operation $XYf$ and subtract the two, obtaining a new operator, the \textit{Lie bracket}.
+
+\begin{definition}[Lie bracket]
+    Given two smooth vector fields $X,Y \in \mathfrak{X}(M)$ and a smooth function $f: C^\infty(M) \to C^\infty(M)$, the operator $[X,Y]: C^\infty(M) \to C^\infty(M)$ is called the Lie bracket operator and defined as
+    \[
+    [X,Y]f = X(Yf) - Y(Xf)
+    \]
+\end{definition}
+
+The key fact is that this operator \textit{is} a (smooth) vector field.
+
+In coordinates, 
+\[
+[X,Y] = (XY^i - YX^i) \partial_i
+\]
+
+\newpage
+\chapter{Riemannian geometry}\label{sec: Mgd}
+
+Going from smooth manifolds in general to Riemannian manifolds means adding a \emph{\textbf{metric}}. In general, \cite{lee2018riemann} does a nice introduction on this. Everything we know about Euclidean geometry on $\mathbb{R}^n$ can be derived from its inner product. To extend this geometric ideas to abstract smooth manifolds, we define an object that amounts to a \emph{smoothly varying choice of inner product} on the tangent spaces.
+
+First, an auxiliary definition:
+\begin{definition}[Tensor]
+    A $k$-tensor is a multilinear function that maps $k$ vector spaces $V\times V \times \ldots \times V$ to the reals \cite{spivak2018calculus}. Tensors are invariant to changes of coordinate system. 
+\end{definition}
+\begin{definition}[Riemannian metric]
+    Given a smooth manifold $M$, a Riemannian metric on $M$ is a smooth covariant tensor field\footnote{I think of it as a collection of tensors that varies smoothly across tangent spaces, I disregard the precise definitions of tensor field for now.}  $g$ whose value $g_p$ at each $p \in M$ is an inner product on $T_pM$. 
+\end{definition}
+
+Hence, $g$ is a symmetric 2-tensor field that is positive definite in the sense that
+$g_p(v,v) \ge 0$ for each $p \in M$ and each $v \in T_pM$, with equality if and only if $v = 0$.
+
+% Just like for Euclidean spaces we can define the Lebesgue volume measure $\vol_n$, starting from the Riemannian metric $g$ we can define the \textbf{\emph{Riemannian volume measure}} $\vol_g$. It is such that given an orthonormal basis $\{e_1,\ldots,e_n\}$ of $T_pM$:
+% \[
+% \vol_{g,p}(e_1,\ldots,e_n)=1
+% \]
+
+% This measure will be useful later on. 
+
+\begin{definition}[Riemannian manifold]
+    A Riemannian manifold is a pair ($M,g$) of a manifold $M$ and a specific choice of Riemannian metric $g$. 
+\end{definition}
+
+\begin{proposition}
+    Every smooth manifold admits a Riemannian metric.
+\end{proposition}
+
+\begin{example}
+    The n-dimensional Euclidean space $\mathbb{R}^n$ is a Riemannian manifold with the Euclidean metric $g$ (the Euclidean norm).
+\end{example}
+
+\begin{example}
+    A second class of Riemannian manifolds is a family: given $R>0$, let $\mathbb{S}^n (R)$ denote the sphere of radius $R$
+centered at the origin in $\mathbb{R}^{n+1}$, endowed with the metric $\mathring{g}_R$ (called the \emph{round metric}
+of radius $R$) induced by the Euclidean metric on $\mathbb{R}^{n+1}$.
+\end{example}
+
+
+\section{Connections}
+To define what curvature is we need to generalize the concept of a straight line in $\mathbb{R}^n$ to a manifold $M^n$. This is captured by \emph{geodesics}. Geodesics in $\mathbb{R}^n$, i.e. straight lines, have the property of being the shortest path between two points. This notion is quite difficult to work with. Hence, we consider an equivalent statement, that is that any straight line in $\mathbb{R}^n$ has 0 acceleration. To talk about acceleration on a manifold,  we need to define a new concept of derivation, through the object of \emph{connection}: a set of rules for taking
+directional derivatives of vector fields, \textbf{independently of the coordinate system}.
+\\
+
+Recall some auxiliary definitions first:
+\begin{definition}
+    Let $\gamma:[0,t] \to \mathbb{R}^n$ be a smooth curve. The \emph{position} (vector) at time $t$ is $\gamma(t)$. The \emph{velocity} (vector) is given by the derivatives of the position vector with respect to time,
+$\gamma'(t)= \frac{\partial}{\partial t}\gamma(t)$. The \emph{speed} is the magnitude of the velocity vector, and it is a scalar quantity. So, the
+velocity includes both the speed and the direction of current motion.
+The \emph{acceleration} is the derivative of the velocity and the second derivative of the position, $\gamma'' (t)=
+\frac{\partial}{\partial t}\gamma'(t)=\frac{\partial^2}{\partial^2 t}\gamma(t)$.
+\end{definition}
+
+\textbf{The velocity of a curve is a vector field along the curve}. 
+The definition of velocity can be extended to a generic manifold by considering the derivative of the composition of the curve with a smooth chart of the manifold as in Definition \ref{def: tpm} (alternatively, with derivations, we don't go into that). For the acceleration, we use connections. 
+% cioè la connessione fa le derivate dei campi vettoriali. i campi vettoriali sono già definiti come una derivazione della curva sul manifold (nel senso che sono funzioni dal manifold al tangente, e il tangente è l'insieme delle derivazioni). quindi la conenssione ti serve per definire l'accelerazione, ha a che fare con la seconda derivata rispetto agli oggetti che vivono SUL manifold. 
+\\
+
+The following is an abstract from \cite{lee2018riemann} that sheds light on the motivation behind connections. 
+
+
+\textit{The problem is this: to define $\gamma''(t)$ by differentiating $\gamma'(t)$ with respect to~$t$, we have to take a limit of a difference quotient involving the vectors $\gamma'(t+h)$ and $\gamma'(t)$; but these live in different vector spaces ( $T_{\gamma(t+h)}M$ and $T_{\gamma(t)}M$, respectively), so it does not make sense to subtract them.  The definition of acceleration works in the special case of smooth curves in $\mathbb{R}^n$ expressed in standard coordinates (or more generally, curves in any finite-dimensional vector space expressed in linear coordinates) because each tangent space can be naturally identified with the vector space itself.  On a general smooth manifold, there is no such natural identification.
+The velocity vector $\gamma'(t)$ is an example of a vector field along a curve, a concept for which we will give a rigorous definition presently.  To interpret the acceleration of a curve in a manifold, what we need is some coordinate-independent way to differentiate vector fields along curves.  To do so, we need a way to compare values of the vector field at different points, or intuitively, to “connect” nearby tangent spaces.  This is where a connection comes in: it will be an additional piece of data on a manifold, a rule for computing directional derivatives of vector fields.}
+
+
+\begin{definition}[Connections]
+    Given a smooth manifold $M$ and two vector fields $X,Y \in \mathfrak{X}(M)$, a connection is a map $\nabla:\mathfrak{X}(M) \times \mathfrak{X}(M) \to \mathfrak{X}(M)$ that maps $(X,Y) \mapsto \nabla_XY$ and satisfies the following properties:
+    \begin{enumerate}[label=($\roman*$)]
+        \item  \emph{Linearity over $C^\infty(M)$ in $X$}: for $f_1, f_2 \in C^\infty(M)$ and $X_1,X_2 \in \mathfrak{X}(M)$:
+        \[\nabla_{f_1X_1 + f_2X_2}\,Y=f_1\nabla_{X_1}\,Y + f_2 \nabla_{X_2}\,Y\]
+        \item \emph{Linearity over $\mathbb{R}$ in $Y$}: for $a_1, a_2 \in \mathbb{R}$ and $Y_1,Y_2 \in \mathfrak{X}(M)$:
+        \[\nabla_{X}\,(a_1Y_1+a_2Y_2)=a_1\nabla_{X}\,Y_1 + a_2 \nabla_{X}\,Y_2\]
+        \item \emph{Product rule}: for $f \in C^\infty(M),$\[\nabla_X(f\,Y)=f\nabla_XY+(Xf)Y\]
+    \end{enumerate}
+\end{definition}
+
+You can think of a connection as an object that takes the \textbf{derivative of a vector field $Y$ along the direction of another field $X$}. Also, $\nabla_X Y$ is called the \textbf{covariant derivative of Y in the direction X}. A covariant derivative is just a derivative along a certain direction. 
+
+\begin{remark}[A connection is not a tensor.]
+$\nabla_X fY = X(f)Y + f\nabla_X Y$, which is different from what we would want by linearity for the second term. Now compute $\nabla_{fX} Y $:
+\[
+\nabla_{fX} Y = f\nabla_X Y
+\]
+so you get that \textbf{it is a tensor in the first component, and not in the second}. The reason why it is not in the second lies in the product rule, property (iii) of connections. This is the same rule as for the Euclidean space. Also, the derivative of the function is the term $X(f)$:
+\[
+X(f) = \sum_i X^i \partial_i (f) = \sum_i X^i  \frac{\partial f}{\partial x_i}
+\]
+Hence, it is also clear that if $f(Y) = aY$ for $a \in \R$, the term $X(f)$ is 0 and we get linearity in the second component, property (i). 
+\end{remark}
+
+We can also write connections explicitly, given a smooth coordinate chart. Consider the basis vector fields $\{\partial_1,\ldots,\partial_n\}$ for a coordinate chart over $U\subseteq M$. For any $i,j$, we can express a connection as
+\[
+\nabla_{\partial_i}\partial_j = \Gamma^k_{ij} \, \partial_k
+\]
+
+This identifies $n^3$ functions $\Gamma^k_{ij}:U\to \R$ called the \textbf{\emph{connection coefficients of $\nabla$}}.
+
+\begin{proposition}
+    The connection coefficients entirely define a connection. In particular:
+\begin{equation}\label{eq: crist}
+       \nabla_XY=(X(Y^k)+X^iY^j\,\Gamma^k_{ij})\,\partial_k 
+\end{equation}
+
+\end{proposition}
+
+Notice that in this proposition: $Y^k$ are functions, hence $XY^k =$ are functions; also $X^iY^j$ are functions; when they get multiplied by the vector fields $\partial_k$ we obtain vector fields (a connection spits out a vector field). 
+
+\begin{remark}
+    As equation \ref{eq: crist} makes clear, the connection coefficients are a correction to properly take the derivative on the manifold, considering its \emph{curvature}, with respect to taking a standard derivation as if we were in the Euclidean space ($XY^k\partial_k = XY$). 
+\end{remark}
+
+Let us look at some examples of connection.. 
+
+\begin{example}[Euclidean connection]
+    In the Euclidean space, \cite{lee2003smooth} defines a connection directly as 
+    \[
+    \nabla^{\R^n}_X Y = \sum_i X(Y^i)\partial_i
+    \]
+    Considering this definition, it is immediate to see that under the standard basis \textbf{a connection in the Euclidean space as trivial coefficients}.
+\end{example}
+Maybe Lee takes for granted that the metric is the Euclidean one: under a different metric I think we could have non-trivial coefficients. 
+
+\begin{example}[Tangential connection on a submanifold] \label{ex: tgconn}
+    When considering an embedded submanifold $M \subseteq \R^n$, the tangential connection $\nabla^t $ is
+    \[
+    \nabla^t_XY = \pi_{TM}(\nabla_{\Tilde{X}}\Tilde{Y} |_M)
+    \]
+    where $\Tilde{X}, \Tilde{Y} \in \R^n$ are extensions of $X,Y \in M$ and $\pi_{TM}$ is the orthogonal projection onto $TM$. Hence you extend the vector fields, take the derivative in $\R^n$ and project onto the tangent bundle of the manifold. 
+\end{example}
+
+Now we turn to define a special connection, the \textbf{\emph{Levi-Civita connection}}. This definition is useful because to use geodesics and covariant derivatives as tools for studying Riemannian geometry, we need a way to single out a particular connection that reflects the property of the metric. The two properties below uniquely define a connection. 
+\begin{definition}[Levi-Civita Connection]
+    Given a Riemannian manifold $(M,g)$, the Levi-Civita connection is a connection that satisfies the following properties: 
+    \begin{itemize}
+        \item[$\circ$] it preserves the metric:\[ X(g(Y,Z)) = g(\nabla_XY,Z) + g(Y, \nabla_X Z)\] 
+        \item[$\circ$] it is \emph{torsion-free} or \emph{symmetric}:\[T(X,Y) = \nabla_XY-\nabla_YX-[X,Y] = 0;\]
+        \[
+         \nabla_XY-\nabla_YX=[X,Y]
+        \]
+    \end{itemize}
+    
+\end{definition}
+\begin{theorem}[Fundamental theorem of Riemannian geometry]
+Given a Riemannian manifold $(M,g)$, there exists a unique connection $\nabla$ on $TM$ which is compatible with $g$ and symmetric, which is the Levi-Civita connection of $g$.\footnote{We just leave this there to remember that $\nabla_{LC}$ is a connection which is symmetric, and we disregard the proof for now.}
+\end{theorem}
+
+Some remarks on the LC connection:
+\begin{itemize}
+    \item The connection coefficients $\Gamma^k_{ij}$ of the LC connection are called \textbf{\emph{Christoffel symbols}}.
+    \item The Levi-Civita connection on a Euclidean space is equal to the Euclidean connection.
+    \item The Levi-Civita connection on a submanifold embedded in a Euclidean space is equal to the tangential connection. 
+\end{itemize}
+
+Now, we define what geodesics are.
+\begin{definition}[Geodesic]
+    Given a smooth manifold $M$ and a connection $\nabla$ on $TM$, a smooth curve $\gamma$ is called a geodesic w.r.t. if it has acceleration 0, i.e. $\nabla_{\gamma'} \gamma'=0$. 
+\end{definition}
+\begin{remark}
+    As anticipated, we prefer the definition above to the characterization of geodesics as ``curves that minimize distance". Indeed, this version breaks in many cases, like that of a sphere: in a sphere, geodesics go back to the starting point $p$. Hence, when we are the the antipodal point to $p$ we have exactly 2 curves minimizing the distance, and for points in the other emisphere our geodesic will not be the one which minimizes distance. Hence, this second characterization is correct only \emph{locally}, in a neighborhood of $p$.
+\end{remark}
+
+A nice remark is the following. 
+\begin{example}
+    In an embedded submanifold $M \in \R^n$, a smooth curve $\gamma(t):I\to M$ is a geodesic wrt the tangential connection iff it has acceleration (ordinarily computed as $\gamma ''(t)$) orthogonal to the tangent bundle $TM$. Think of the acceleration of a particle moving on a circle !  
+This makes sense because to get the tangential connection on the submanifold we project the Euclidean connection, hence we get acceleration 0. 
+\end{example}
+
+% \begin{remark}
+%     The acceleration of a curve $\gamma$ is the vector field $D_t\gamma':=\nabla_{\gamma'(t)}\gamma'$ which is the covariant derivative of $\gamma$ along $\gamma$. We use $D_t$ for more compact notation.
+% \end{remark}
+
+\section{Curvatures}
+Now we are ready to deal with curvatures.
+
+First, we give an high-level introduction to the very basic notion of curvature, on the lines of \cite{lee2018riemann} (refer to the textbook from page 1).
+
+Lee says: \textit{Riemannian geometry [...] is the branch of differential geometry in
+which ``geometric" ideas, in the familiar sense of the word, come to the fore. It is the
+direct descendant of Euclid’s plane and solid geometry, by way of Gauss’s theory of
+curved surfaces in space, and it is a dynamic subject of contemporary research. The central unifying theme in current Riemannian geometry research is the
+notion of curvature and its relation to topology.} \cite{lee2018riemann}
+
+The curvature of a curve $\gamma(t)$ is defined as the \textbf{length of its acceleration vector}, $\kappa(t)=|\gamma''(t)|$. 
+
+The geometric interpretation of this is to consider the smallest circle inscripted on a curve (osculating circle), i.e. the smallest circle tangent to the curve with velocity and acceleration vectors at the tangent point equal to those of the curve. Then the curvature is $\kappa(t)=1/R$ where $R$ is the radius of that circle. For instance, a circle of radius $r$ has constant curvature $1/r$, a straight line has curvature 0.
+
+We can then extend this definition so that the curvature takes both positive and negative sign, by fixing a direction of positive sign. This direction is chosen by considering a normal vector field $N$ on the curve, and setting the curvature to be negative when the curve is turning away from $N$. We result with a function $\kappa_N$ that is the \textit{\textbf{signed curvature}}. 
+
+Then, to generalize Euclidean geometry, we start by thinking of a surface embedded in $\R^3$. The curvature of a surface is defined by two numbers, the \textit{\textbf{principal curvatures}}. In general, the principal curvatures are the eigenvalues of a self-adjoint linear endomorphism $s:V\to V$ where $V$ is our surface endowed with an inner product (chapter 8 pg 238 of \cite{lee2018riemann}). We know that there are $n$ real eigenvalues by the Spectral theorem! 
+
+However, principal curvatures are not \emph{intrinsic} properties of surfaces. Intrinsic properties are those that do not depend on embedding the surface in a higher dimensional space, but are true also for a 2-dimensional being living on the surface. Formally, they are those properties that are preserved by isometries. 
+In 1827 Gauss discovered that by combining principal curvatures in a specific way we get a property that \textit{is} intrinsic, the \textit{\textbf{Gaussian curvature}}. The Gaussian curvature is the determinant of the operator $s$. In 2d, it is $K=\kappa_1\kappa_2$. Indeed, all isometric transformations of our surface $V$ leave the determinant of $s$ invariant.
+\\
+
+Now, let us look at some definitions of curvature formally. 
+The most important notion of curvature is the \textbf{Riemannian curvature tensor}.  
+\begin{definition}[Riemannian curvature tensor]
+    Given a Riemannian manifold $(M,g)$, the map $R: \mathfrak{X}(M) \times \mathfrak{X}(M) \times \mathfrak{X}(M) \to \mathfrak{X}(M)$ defined as
+    \begin{align*}
+            R(X,Y)Z&:=\nabla_X\nabla_YZ-\nabla_Y\nabla_XZ -\nabla_{[X,Y]}Z\\
+            &= (\nabla^2_{X,Y} -\nabla^2_{Y,X} - \nabla_{[X,Y]}) Z
+    \end{align*}
+    is called the \textbf{\emph{Riemannian curvature tensor}}. It is a (1,3)-tensor as it is multilinear over $C^\infty(M).$
+\end{definition}
+
+% * I think of the Riemannian curvature as a measure of how much a space \textit{fails to be flat}. This is based on the reasoning by Lee \cite{lee2018riemann}, Curvature chapter, of which I took notes on my notebook and here in section \ref{sec: lee}. In the Euclidean space, we ``define" the Euclidean connection to have trivial Christoffel symbols, hence the difference in the switched second derivatives is equal to the derivative along the commutator (1) essentially by construction. Cause we know the Euclidean space is flat and a manifold is flat when isometric to the Euclidean space, hence we take result (1) as a flatness criterion. Then, we define (Riemannian) curvature as how much another connection (metric space) fails to respect this criterion! :) 
+
+
+
+\begin{remark}
+    A nice insight is given by looking at the first two terms in $R$ first. They are the ``cross" derivative of the first two vector fields, but just subtracting these two quantities does not give a linear object, i.e. a tensor. It was Riemann who discovered that by subtracting the commutator between $X$ and $Y$, $[X,Y]$, we get something linear.
+\end{remark}
+
+\begin{example}
+    Two simple cases for computing the Riemannian curvature tensor are the following. 
+    \begin{enumerate}
+        \item The Euclidean space, where the Riemannian curvature is 0 as the Euclidean connection is flat.
+        \item Relation with the Gaussian curvature: another simple case is that of a 2-dimensional manifold immersed in $\R^3$. This manifold takes the metric $g$ induced by $\R^3$. In this case, the Riemannian curvature $R(X,Y,Z,W)$ is the product of a function of the 4 vector fields and a real-valued function $K(X)$ which is the Gaussian curvature (defined above). It makes sense! because the Gaussian curvature is the determinant of a self-adjoint operator and it pops up when considering the LC connection, induced by the metric. 
+    \end{enumerate}
+\end{example}
+
+\begin{remark}[Tensor vs. real number]
+The Riemannian curvature as defined above is a tensor. We can equivalently take the inner product between $R(X,Y)Z$ and a \textit{forth} vector field $V$ to get the Riemannian curvature as a real $R(X,Y,Z,V) = (\,R(X,Y)Z,\,V) \in \R$. The two definitions hold the exact same amount of information. We use this second approach in the definitions below. 
+\end{remark}
+
+Next, we look at the sectional curvature of a space.
+\begin{definition}[Sectional curvature]
+    Given linearly independent tangent vectors $v,w \in T_pM$, the sectional curvature $\mathcal{K}(v,w) \in \mathbb{R}$ is defined as 
+    \[
+    \mathcal K(v,w) = \frac{(R(v,w)w,v)}{(v,v)(w,w) - (v,w)^2} \quad \in \R
+    \]
+\end{definition}
+
+This is some kind of normalization of the Riemannian curvature. We can think of the \textbf{sectional curvature as the Gaussian curvature of the surface} on $M$ tangent to $T_pM$. In fact, given two vector $v,w$, these define a region on the manifold $M$, tangent to the tangent space. This region is defined as follows. If you take a curve $\gamma(t)$ starting at $p$ with initial velocity $v$, by changing the norm of $v$ you get a different ending point $\gamma(1)$ along the curve. At the same time, if we parametrize the curve with two initial vectors $v,w$, we do not span only a curve but a whole region, with boundaries the curves parametrized by $v$ and $w$ alone. 
+
+Alternatively, the sectional curvature reflects the \emph{second-order} asymptotic behavior of the distance function $d(\gamma(t), \eta(t))$ near $t=0$ between geodesics $\gamma(t)=\exp_p(tv)$ and $\eta(t)=\exp_p(tw)$, where $\exp(\cdot)$ is the exponential map \cite{Ohta_2014}. 
+
+\begin{definition}[Exponential map] \label{def: exp}
+    Given a tangent vector $v \in T_pM$, there exists a unique geodesic $\gamma^v :[0,1]\to M$ such that $\gamma(0)=p$ and $(\gamma^v)'(0)=v$. The related exponential map is then defined as 
+    \[
+    \exp_p(v) = \gamma^v(1)
+    \]
+    Intuitively, you take a tangent vector $v$ at $p$ and walk in that direction for unit time. The point at which you arrive is the exponential map of $v$ starting at $p$.
+
+    The exponential map in the Riemannian case is just the point at unit distance (for $||v||=1$) from $p$ in direction $v$. Hence, $\exp(tv)$ can be thought of as an extension of convex combinations to Riemannian manifolds.
+\end{definition}
+
+The 0-th order behavior of this distance is the distance between curves itself (which goes to 0); the first order is given by the velocity vectors $v$ and $w$; the 2-nd order is given by the acceleration vectors, i.e. second derivatives of the curves along the direction of the first derivatives, the velocities. Indeed, the acceleration reflects curvature: in a 2-dimensional curve, the acceleration is the force you exercise in order to keep moving along the curve with a constant speed, with respect to the external space $\R^3$. 
+\\
+
+The notions of Riemannian curvature and sectional curvature hold exactly the same amount of information.
+
+They induce the notion that of Ricci curvature, that is a weaker but crucial notion that in a way ``summarizes" the information given by the other two. In particular, it keeps the information given by the \emph{trace} of the other two tensors.\footnote{In general, when we summarize information given by a matrix, we can do it with a spectrum of coordinate-independent objects. At the boundaries of this spectrum there are the determinant and the trace. All the objects between them  are the other coefficients of the characteristic polynomial of the matrix.} 
+
+\begin{definition}[Ricci curvature tensor]\label{def: ric}
+    Given a Riemannian manifold $(M,g)$ and vector fields $X, Y \in \mathfrak{X}(M)$, the Ricci curvature tensor of $M$ is a map $\Ric: \mathfrak{X}(M) \times \mathfrak{X}(M) \to \R$ defined as
+    \[
+    \Ric(X,Y) = \sum_{i=1}^n (R(e_i, X)Y, e_i)  \quad \in \R
+    \]
+
+\end{definition}
+I.e. the Ricci curvature is the Riemannian curvature tensor contracting on the first and third component. Hence, the Ricci curvature is an object eating two vectors and spitting out one number.  We indeed look at the Ricci curvature as an object similar to an inner product (see the beginning of Section \ref{sec: charact}). 
+
+\cite{Ohta_2014} defines the Ricci curvature along a direction $v$, starting from the sectional one. This is like feeding the Ricci tensor with the same vector $v$ twice.
+
+\begin{definition}[Ricci curvature along $v$]
+    Given a unit vector $v\in T_pM$ we define the \emph
+    {Ricci curvature }of $v$ as the trace of the sectional curvature $\mathcal{K}(v, \cdot)$, i.e. 
+    \[
+    \Ric(v):=\sum_{i=1}^{n-1}\mathcal{K}(v,e_i) \quad \in \R
+    \]
+    where $\{e_i\}_{i=1}^{n-1} \cup v$ is an orthonormal basis of $T_pM$. Hence, $\Ric(v) = \text{Tr}(\mathcal{K}( v, \cdot))$. 
+\end{definition}
+
+This gives us a geometric interpretation of the Ricci curvature, as the sum of the sectional curvatures of the 2-planes spanned by $(v,e_1),\ldots,(v,e_{n-1})$. 
+
+In general, from both definitions and from how we introduced it, it is clear that the Ricci curvature is a sum/average of the sectional or Riemannian curvature. As such, it can not give information that has to do with surface as the sectional curvature did: it sums the information of that surface with all the other surfaces induced by that tangent space. Indeed, \textbf{the Ricci curvature has to do with \emph{volumes}}. This is formalized by the following result.
+
+\begin{theorem}[Bishop-Gromov volume comparison for $K=0$]
+   If we assume $\Ric\ge 0$, then for any $p \in M$ and $0<r<R$ 
+\begin{equation}\label{eq:BG}
+\frac{\vol_g(B(x,R))}{\vol_g(B(x,r))} \le
+ \frac{\int_0^R t^{n-1}\,\de{t}}{\int_0^r t^{n-1}\,\de{t}} = \frac{R}{r}
+\end{equation}
+\end{theorem}
+
+We are not interested in the specific form of the bound in inequality \ref{eq:BG}; it is enough to consider that it is a function of $K$ and it implies that a lower bound on the Ricci curvature controls the ratio of the volumes of two balls on the manifold, hence controls the volume $\vol_g$. 
+
+When we refer to properties of the Ricci curvature of a whole manifold $M$, we mean that the property holds for all unit vectors $v \in TM$, e.g. $\Ric \ge K$ means $\Ric(v) \ge K \,\, \forall v\in TM$.
+
+\newpage
+\chapter{Optimal transport}
+
+Optimal transport provides a robust approach to Ricci curvature lower bounds: the line of research linking ot to Riemannian geometry started in the 2000s. As we will see, optimal transport naturally inherits the geometric structure of the underlying space, and especially the Ricci curvature is crucial for describing optimal transport on Riemannian manifolds.
+
+In general, optimal transport allows to define the metric structure on the space of measure, talking about how to optimally transport one probability measure onto another and thus about a \textit{distance} between measures, which is indeed inherited by the distance on the underlying space. It has many applications like in statistics, physics and machine learning.  \cite{brue} \cite{villani2008optimal} \cite{Ohta_2014}
+
+\section{Measure and probability theory 
+}
+%take for granted sigma algebra and measure
+Here we collect some preliminary definitions useful for later. 
+
+\begin{definition}[Hausdorff outer measure]
+    Given a metric space $(X,g)$ and a set $A \subset X$, we define the Hausdorff outer measure $\mH^d_*$ as
+    \[\mH^d_*(A) := \inf\Big\{\sum_{i=0}^\infty \big(\text{diam}(U_i)\big)^d : A \subseteq\bigcup_{i=0}^\infty U_i \Big\}
+\]
+where
+    \[
+    \text{diam } U := \sup\{g(x,y) : x,y \in U\} \quad \text{diam } \emptyset := 0
+    \]
+\end{definition}
+
+The Hausdorff (outer) measure for $d=n$ in $\R^n$ is equivalent to the Lebesgue measure, they differ for a constant. The Hausdorff measure generalizes the Lebesgue measure as it allows to define lower dimensional volumes, for $d<n$. For instance, we can measure the lengths of a surface immersed in $\R^3$ with the Hausdorff measure of $\R^3$ (with the Euclidean distance) for $d=2$. 
+
+\begin{definition}[Borel $\sigma$-algebra]
+    Given a topological space $(X,\cT)$, the Borel $\sigma$-algebra is 
+    \[
+    \mathscr{B}(X):= \sigma(\cT)
+    \]
+    i.e., it is the $\sigma$-algebra \textit{generated} by the collection of all open sets of $X$,  $\mathcal{T}$. This means it is the smallest $\sigma$-algebra containing  $\mathcal{T}$, equivalently, the intersection of all $\sigma$-algebras containing  $\mathcal{T}$.
+\end{definition}
+
+\begin{definition}[Borel set]
+    A set $A\in\mathscr{B}(X)$ is a Borel set or Borel measurable set.
+\end{definition}
+
+\begin{definition}[Borel function]
+    A function $f: X \to Y$ topological spaces is a Borel function if $f^{-1}(A)$ is a Borel set for any open set $A$. 
+\end{definition}
+
+Then, the \textbf{\emph{Hausdorff measure}} $\mH^n$ is the Hausdorff outer measure restricted to Borel sets. 
+\\
+
+\begin{definition}[Probability measure]
+    A probability measure on a $\sigma$-algebra $\mathcal{A}$ of a set $X$ is a measure $\mu:\mathcal{A}\to [0,1]$ such that $\mu(X)=1$.
+\end{definition}
+
+We denote with $\mP(X)$ the set of probability measures on the space $X$. 
+
+Given a probability measure $\mu$ we can see it as the \textit{law} or \textit{probability distribution} of a random variable $X$ such that 
+\[
+\Pr(X \in A) = \mu(A)
+\]
+
+\begin{definition}[Push forward measure]
+    Given a Borel function $f:X \to Y$, we define the push forward operator $f_\#: \mathscr{M}(X) \to \mathscr{M}(Y)$, where $\mathscr{M}$ is the set of $\sigma$-additive functions (measures), by
+    \[
+    f_\#\mu(B) = \mu(f^{-1}(B)) \quad \forall B \in \mathscr{B}(Y)
+    \]
+    and call $f_\#\mu$ push forward measure.
+\end{definition}
+It is a way to obtain a measure in a target set $Y$ given a measure in a starting set $X$, through a function $f$. 
+
+\begin{proposition}[I don't know how it's called]\footnote{EB: change of variables formula} \label{prop: pushf}
+    From the above definition we get that
+\begin{equation*}
+    \int g \, \de{f_\#\mu} = \int g \circ f \, \de{\mu}
+\end{equation*}
+We first prove the statement for characteristic functions. Indeed we have that if $g$ is the characteristic function of a (Borel) set $B\subset X$, $g=\chi_B$, then the equation above develops as
+\begin{align*}
+    &RHS=\int \chi_B \,\,\de{f_\#\mu(B)} = f_\#\mu(B)\\
+    &LHS = \int \chi_B(f(x)) \,\, \de{\mu}(x) = \mu(f^{-1}(B))
+\end{align*}
+where the equality in RHS is because that integral means we are just measuring the set $B$; the LHS follows from $\chi_B(f(x)) = f^{-1}(B)$ as we are considering the image of $f$ only for $x\in B$, hence the pre-image of $B$. Then (\ref{eq: pushf} )follows.
+
+Then, we have that by linearity, it is true also for simple functions, and by taking the limit for any function.
+\end{proposition}
+
+\begin{theorem}[Disintegration theorem - high level]  \label{thm: sigmax}
+Given a measure $\theta := f_\# \sigma$ there exists a family $\{\sigma_x\}_{x\in X}$ such that
+\[
+\sigma = \int_X \sigma_x \, \de{\theta}
+\]
+and such family is $\theta$-a.e. unique and we call $\sigma_x$ \textit{conditional probabilities}, $\sigma_x = E[\sigma | \{f=x\}]$. 
+
+The following notations are equivalent:
+\begin{itemize}
+\item$\sigma = \int_X \sigma_x \, \de{\theta}$
+    \item $\sigma = \sigma_x \otimes \theta$
+    \item $\sigma (\de{x}, \de{y}) = \sigma_x (\de{y})\theta )\de{x}) $
+    \end{itemize}
+where the last one follows from
+\[
+\int_{X\times Y} f(x,y) \, \de{\sigma(x,y)} = \int_X\Bigl(\int_Y f(x,y) \, \de{\sigma_x(y)} \Big) \, \de{\theta(x)}
+\]
+    
+\end{theorem}
+\section{Formulations of optimal transport}
+- This and the next two sections are all based on \cite{brue} -
+\\
+
+Consider probability measures $\mu \in \mP(X), \nu \in \mP(Y)$ and a Borel cost function $c(x,y):X\times Y \to [0, \infty]$ that represents the cost of shipping a unit of mass from $x$ to $y$.
+\\
+
+First, here is Monge's fromulation of the optimal transport problem. 
+\begin{equation}\tag{M}\label{def: otM}
+        \inf\bigg\{\int_{X} c(x,T(x)) \,\,\de{\mu}(x) : T:X\to Y \text{ Borel, } T_\#\mu=\nu\bigg\}
+\end{equation}
+where $T$ is a\textit{\textbf{ transport map}} and it is a way of carrying mass from $X$ to $Y$.
+
+\begin{remark}
+    Transport maps that bring $\mu$ in $\nu$ exist whenever $\mu$ has no atom. That is, if $\mu$ is a Dirac measure concentrated in one point $x_0$, and $\nu$ is not Dirac or it is Dirac concentrated in $>1$ points $y_0,y_1$, then there is no function that brings the mass in $x_0$ into $y_0, y_1$.
+\end{remark}
+
+Now, to look at the Kantorovich problem we first give the definition of \textit{\textbf{transport plan}}.
+
+\begin{definition}[Transport plan]
+    Given $\mu \in \mP(X)$ and $\nu \in \mP(Y)$, define
+    \begin{align*} 
+        \Gamma (\mu, \nu) := \{ &\pi \in \mP(X \times Y) : \pi(A\times Y) = \mu(A),\,\\ &\pi(X\times B) = \nu(B) \quad \forall \text{ Borel } A,B\}
+    \end{align*}
+    
+
+\end{definition}
+
+Transport plans are another way of carrying mass from $X$ to $Y$, and in particular $\pi(A\times B)$ is the mass that was in $A$ and has been sent to $B$.
+
+The definition speaks well with the joint probability distribution of two random variables, whose laws are $\mu$ and $\nu$. Indeed, the requirements in the definition are like marginalizations of $\pi$. Also, given coordinate projections of $\pi$, $p_X: X\times Y \to X, \, (x,y) \mapsto x$ and $p_Y: X \times Y \to Y, \, (x,y) \mapsto y$, being a transport plan is equivalent to 
+\[
+p_X{_\# }\pi = \mu, \quad p_Y{_\# }\pi = \nu
+\]
+
+Kantorovich formulation of the optimal transport problem is then:
+\begin{equation}\tag{K}\label{def: otK}
+    \inf\bigg\{\int_{X\times Y} c(x,y) \,\,\de{\pi}(x,y) : \pi \in \Gamma(\mu,\nu) \bigg\}
+\end{equation}
+
+The optimal transport cost is denoted as
+\begin{equation}\label{eq: cost}
+    \mathscr{C}(\pi) := \int_{X\times Y} c(x,y) \, \de{\pi(x,y)}
+\end{equation}
+Now, we turn to comparing the two formulations. 
+
+The relationship between transport maps and transport plans is summarized as follows. Given a transport map $T$, we can define the transport plan
+\begin{equation}\label{eq: pit}
+    \pi_T := (\id \times\, T)_\#\mu
+\end{equation}
+
+
+where $(\id \times\, T): X \to X \times Y$ is the map $x \mapsto (x, T(x))$. Then, by indicating with $\mathscr{C}$ the cost attained by a transport map/plan, we have 
+\[
+\mathscr{C}(\pi_T) \,\, =\int_X c(x, T(x)) \, \de{\mu}(x) = \,\, \,\,\mathscr{C}(T)
+\]
+
+Thus, 
+\[
+\text{inf}_{(M)} \ge \text{inf}_{(K)}
+\]
+meaning that the Kantorovich formulation is more general than the Monge one. This is due to the fact that a transport plan always exists, instead a transport map could not exist as we said above. Indeed, transport plans are a more flexible tool than transport maps. 
+
+Here is a list of the main advantages of (\ref{def: otK}) formulation:
+\begin{enumerate}[label=($\roman*$)]
+    \item  The class of transport plans is not empty (since $\mu \times \nu$ is always an option) and convex (can be checked with elementary operations on functions). Then, since the map $\pi \mapsto \mathscr{C}(\pi)$ is affine (it's an operation on the differential, \textit{the Lebesgue integral is linear in the measure by definition}, can be checked through simple functions), also the set of plans that attain the minimum is convex. 
+    \item  The operation between plans is clearly more symmetric. In fact, the switching map $(x,y) \mapsto (y,x)$ induces a mapping from $\Gamma(\mu, \nu)$ to $\Gamma(\nu, \mu)$, giving an easy way to invert a plan. Instead, we need invertibility of $T$ to ensure that if we have a map from $\mu$ to $\nu$ we also have the inverse map. 
+    \item  Existence of minimizers is ensured under a mild condition on the cost function (lower semicontinuity), whereas for (\ref{def: otM}) optimality required $c$ to be convex and nondecreasing.
+\end{enumerate}
+
+Finally, we add a third formulation, the \emph{dynamic formulation}. 
+As usual, some preliminary definitions first. 
+The \emph{length} of a curve for $t\in[0,1]$ is 
+\[
+l(\gamma)=\int_0^1 |\gamma'(t)| \de t
+\]
+which resembles ``velocità * tempo".
+
+Then, given a distance $d$ we can characterize geodesics as curves $\gamma(t)$ such that $l(\gamma(t))=d(\gamma(0),\gamma(1))$.
+
+\begin{definition}[Action of a curve] \label{def: action}
+    The (possibly infinite) action of a curve $\gamma:[0,1]\to X$ is 
+    \[
+    \A(\gamma)= |\gamma(t)'|^2 
+    \]
+    Also, by Holder we have that $\A(\gamma) \ge l^2(\gamma) \ge d^2(\gamma(1),\gamma(0))$ and $\gamma$ is a geodesic if and only if $\A(\gamma)=d^2(\gamma_0,\gamma_1)$\footnote{Let us recap equivalent characterizations of geodesics: geodesics are curves that \textit{have 0 acceleration; locally minimize length; whose length is equal to the distance between extremes; whose action is equal to the squared distance between extremes}. }
+\end{definition} 
+
+In brief, the dynamic formulation of OT is the following problem
+\begin{equation}\tag{dyn}\label{def: otdyn}
+    \min \bigg\{\int_X \A(\gamma) \de \eta(\gamma) : \eta \in \mP(X), \gamma(0)_\#\eta = \mu, \gamma(1)_\# \eta = \nu \bigg\}
+\end{equation}
+
+The main difference with previous formulations is that Monge and Kantorovich formulations can be referred to as \emph{static} ones, instead this is dynamic. This is because in (\ref{def: otK}) and (\ref{def: otM}), we only care of where we bring each mass from $X$ to $Y$ (which is modeled either through a map or a plan), here, we also care of how we do it, and we look for the optimal way. Hence if in the examples before we looked at the space $X$ and at how mass was moved there, here I imagine it better on $\mP(X)$, looking at geodesics joining two probability measures. 
+
+
+A \emph{geodesic metric space} is a space such that for each pair of points in it there exists a geodesic joining them. If $X$ is a geodesic metric space, then $\min_{(\ref{def: otdyn})}=\min_{(\ref{def: otK}})$. 
+
+
+\section{Metric side of optimal transport}
+Here we want to \textit{use} the optimal transport problem to endow the space of measures with a natural metric structure, once we have a metric space $(X,d)$. This will be done by ``lifting" metric properties from $X$ to $\mP_2(X)$. The main thing we need to do so is to define a distance on $\mP_2(X)$, which will be the Wasserstein distance. 
+
+First, we put ourselves in the following setting. We consider the space of measures  $\mP_2(X)$, defined as follows. 
+
+\begin{definition}[The Wasserstein space $\mP_p$]
+    Given a metric space $(X,d)$ and $p \in [1, \infty)$, we define 
+    \begin{align*}
+    \mP_p(X) := &\bigg\{ \mu \in \mP(X) : \int_X d^p(x,x_0) \, \de{\mu}(x) < \infty \\ & \text{for some } x_0 \in X \bigg\}
+    \end{align*}
+    
+\end{definition}
+This is hence the \textit{set of measures} for which the integral of the squared distance between two points is bounded. 
+
+Now we define the \textbf{\emph{Wasserstein distance}}, a core concept in optimal transport. Looking at the transport cost (\ref{eq: cost}), we have seen it can be interpreted as the road we need to walk from each point mass of $\mu$ to $\nu$ and the cost we pay. It seems similar to a distance, however, that object does not satisfy the axioms of a distance function.
+By defining the cost function $c(x,y)$ of in terms of a distance $d$, the transport cost (\ref{eq: cost}) becomes a \emph{distance} between $\mu$ and $\nu$.
+
+\begin{definition}[Wasserstein distance in $\mP_2(X)$]\label{def: w2}
+   Given two measures $\mu, \nu \in \mP_2(X)$, we define
+   \[
+   W_2^2(\mu,\nu) := \min \bigg\{\int_{X\times X} d^2(x,y) \, \de{\pi}(x,y) : \pi \in \Gamma(\mu,\nu)\bigg\}
+   \]
+\end{definition}
+
+
+
+First, we look at the following theorem.
+\begin{theorem}
+    $(\mP_2(X), W_2)$ is a metric space and the embedding $X \ni x \mapsto \delta_x \in \mP_2(X)$ is isometric, i.e. $d(x,y) = W_2(\delta_x, \delta_y)$.
+\end{theorem}
+We prove this theorem, i.e. prove that $W_2$ is a distance. 
+
+\begin{enumerate}[label=($\roman*$)]
+    \item  \textbf{Finiteness of $W_2$.} Choose $\pi = \mu \times \nu$ and consider
+    \begin{align*}
+        d^2(x,y) &\le (d(x,x_0) + d(y,x_0))^2\\
+        &\le d^2(x,x_0) + d^2(y,x_0) + 2 d(x,x_0) d(y,x_0)\\
+        & \le 2 (d^2(x,x_0) + d^2(y,x_0))
+    \end{align*}
+    where the first line is by triangle inequality ($d$ is a distance) and the second by simple calculus. Then,
+    \begin{align*}
+        W_2^2(\mu, \nu) &\le \int_{X\times X} d^2(x,y) \, \de{\pi}(x,y) \\
+        & \le \int_{X\times X} 2(d^2(x,x_0) + d^2(y,x_0))  \, \de{\pi}(x,y) \\
+        & = 2 \int_X d^2(x,x_0) \, \de{\mu}(x) + 2 \int_X d^2(y,x_0) \, \de{\nu}(y) < \infty
+    \end{align*}
+    \item  \textbf{Symmetry.} From the proof of Brenier, Knott-Smith theorem (theorem 5.2 in \cite{brue}): we define the function $i:(x,y)\mapsto(y,x)$ and we have that $d(x,y) = d(y,x)$. We can check that $i_\#:\Gamma(\mu,\nu) \to \Gamma(\nu,\mu)$, indeed   \[ \Gamma(\mu,\nu) \ni \pi(x,y) \mapsto i_\#\pi(x,y)=\pi(i^{-1}(x,y)) = \pi(y,x) \in \Gamma( \nu,\mu)\]
+    by definition of push forward measure. Hence, starting from the other problem $W_2(\nu,\mu)$ and applying equation (\ref{prop: pushf})
+    \[
+    W^2_2(\nu,\mu) = \min \int d^2(y,x) \, \de{\pi}(y,x) = \min \int d^2(y,x) \, d \,i_\#\pi(x,y) = \min \int d^2(x,y)  \de{\pi}(x,y) = W_2^2(\mu,\nu)
+    \]
+    
+    
+    
+    
+ %    have that when $X=Y$ and $c(x,y) = d^2(x,y)$ (up to a constant), and we are in the Euclidean case, then the problem (\ref{def: otK}) has a unique solution which is induced by a transport map $T$. Although we are not in the Euclidean case, the above assumptions are respected, hence we can apply the theorem\footnote{Or, more simply, our cost function is convex and nondecreasing, hence $T$ exists}. In particular, we have that $T$ is the map inducing $\pi_T \in \Gamma(\mu,\nu)$ and we can find also $S$ inducing $\pi_S \in \Gamma(\nu,\mu)$ for the other problem from $\nu$ to $\mu$. $S$ is the map $S:Y \to X$, $y \mapsto (y, S(y))$. We also consider the map $i$ defined as $i(x,y) = (y,x)$, and have that $i_\#$ sends $\Gamma(\mu,\nu)$ into $\Gamma(\nu,\mu)$. Now, 
+ %    \[
+ %    (\id \times \, T)_\# \mu = \pi_T \quad \in \Gamma(\mu,\nu)\]\[
+ %    (\id \times \, S)_\# \nu = \pi_S\quad \in \Gamma(\nu,\mu)
+ %    \]
+    
+ %    by applying $i^{-1}$, we have 
+ %    \[
+ %    i^{-1}_\# (\id \times \, S)_\# \nu\,\,  =(S \times \id)_\# \nu \quad \in \Gamma(\mu,\nu)
+ %    \]
+ %    identifying $X=Y$.  By the uniqueness of $\pi$, 
+ %    \[
+ % (\id \times \, T)_\# \mu = (S \times \id)_\# \nu
+ %    \]
+
+
+\item  \textbf{Non-degeneracy.} One implication follows from non-degeneracy of the distance $d$, with $\pi=(\id \times \id)_\# \mu$. We get the other implication by considering that $W_2(\mu,\nu)=0$ implies $x=y$ for $\pi$ a.e. $(x,y)$, and thus
+\[
+\int_X f(x) \, \de{\mu}(x) = \int_{X\times X} f(x) \, \de{\pi}(x,y) = \int_{X\times X} f(y) \, \de{\pi}(x,y) = \int_X f(y) \, \de{\nu}(y)
+\]
+the first equality follows from the definition of $\pi$, and from $\int f \, \de{\mu} = \int f \, \de{\nu}$ we get $\mu = \nu$. 
+
+\item  \textbf{Triangle inequality.} To prove triangle inequality, namely that $W_2(\mu,\nu) \le W_2(\mu,\sigma) + W_2(\sigma,\nu)$, we consider the Dudley lemma stated in the appendix (\ref{sec: app}) and the triangle inequality property for the $L^2$ norm. 
+
+We consider 3 spaces $X_1,X_2,X_3$ and $\mu \in \mP(X_1), \sigma \in \mP(X_2), \nu \in \mP(X_3)$. Given any optimal plan from $\mu$ to $\sigma$ $\pi^{12}$ and from $\sigma$ to $\nu$ $\pi^{23}$, there exists an optimal plan $\pi^{13}$ from $\mu$ to $\nu$ such that its marginalizations are the other 2 optimal plans. Then 
+\begin{align*}
+W_2(\mu,\nu)&= ||d(x_1,x_3)||_{L^2(\pi^{13})} \\&\le ||d(x_1,x_2)||_{L^2(\pi^{13})} + ||d(x_2,x_3)||_{L^2(\pi^{13})}\\& = ||d(x_1,x_2)||_{L^2(\pi^{12})} + ||d(x_2,x_3)||_{L^2(\pi^{23})}\\& = W_2(\mu,\sigma) + W_2(\sigma,\nu)
+\end{align*}
+where the first inequality follows from triangle ineq. property of the $L^2$ norm, the equality from the fact that projecting $p^{ij}$ is the identity map for $(x_i,x_j)$ + def. of push forward. 
+\end{enumerate}
+
+Now, let us make some remarks and intuition on the Wasserstein distance. 
+
+We notice that by setting $c(x,y) = d^2(x,y)  $, and considering two probability measures with the same support, the plan $\pi$ attaining $W^2_2$ is exactly the plan solving the optimal transport problem \ref{def: otK}. The cost function is of course continuous, hence such a plan exists. Indeed, we can think of the formula for the $W_2$ distance as follows:
+\begin{itemize}
+    \item The plan $\pi$ tells us \textit{which percentage of the mass $x$ goes into the set $y$}. It gives us a rule to send mass from $\mu$ to $\nu$. 
+    This is clear when $\pi$ is induced by a transport map (maps each $x$ into a $y$). In this case, we have
+    \[
+    \pi_x = \delta_{T(x)}
+    \]
+    \item The distance $d$ tells us how much we pay for the transport of each $x$ into its $y$.
+\end{itemize}
+
+Indeed, in general, we can look at $\pi$ under the lens of the disintegration theorem \ref{thm: sigmax}. 
+
+Given $\pi$ such that $\mu = p_\#\pi$ (where $p$ is the projection map) there exists a family of conditional probabilities $\pi_x$ such that
+     \[\pi = \int \pi_x \,\de{\mu}\]
+    and
+    \[
+    \int f(x,y) \, \de{\pi}(x,y) = \int \bigg(\int f(x,y) \, \de{\pi}_x(y)\bigg) \de{\mu}(x)
+    \]
+    
+    Also, $\pi_x$ are supported on $p^{-1}(x) = \{x\}\times Y$ and can be viewed as probability measures on $Y$. 
+    
+    It follows that can represent $\pi$ as the \textbf{measure-valued transport map} $x \mapsto \pi_x$.
+
+Also, here are some examples of optimal transport problems. 
+\begin{example}
+    If $\mu = \frac{1}{n}\sum_i \delta_{x_i}$ and $\nu = \frac{1}{n}\sum_i \delta_{y_i}$, then we send each $x_i$ into the closest $y_i$ (recall drawing by Vitillaro) and pay a cost $|x_i - y_i|^2.$ Hence $W_2^2(\mu,\nu) = \frac{1}{n}\sum_i |x_i - y_i|^2 $.
+\end{example}
+
+\begin{example}
+    If $\mu$ is concentrated in $x$ and $\nu$ in two atoms $y_1$ and $y_2$, then $\pi_x = \frac{1}{2}\delta_{y_1} + \frac{1}{2}\delta_{y_2}$.
+\end{example}
+
+\begin{example}
+    If instead the mass of $\nu$ is a segment S or a bounded surface S, we set $\pi_x = \mathscr{H}^1|_S$ or $\pi_x = \mathscr{H}^2|_S$ respectively, where $\mathscr{H}$ is the Hausdorff measure. 
+\end{example}
+
+\subsection{Completeness and convergence in $(\mP_2(X),W_2)$}
+
+Here we look at completeness and the notion of convergence in $\mP_2(X)$, two other notions that are lifted from $X$. First, let us look at completeness, by assuming $(X,d)$ is complete. 
+
+In a nutshell, we define our Cauchy sequence of measures $(\mu_n)$ as marginalizations of a plan $\pi_\infty$ (which exists by Dudley's lemma) and get convergence from the convergence of the sequence $(p_n)$ of projection functions, which are Cauchy in a complete space. 
+
+
+Let $(\mu_n)$ be a Cauchy sequence with respect to the $W_2$ distance. We consider an iterated version of Dudley's lemma (see proposition 8.6 in \cite{brue}), which allows to define our sequence of measures as marginals of a measure $\pi_n \in \mP(X_1 \times X_2 \times \ldots X_n)$ for $1 \le n \le N$. When $N=\infty$, we generalize to the case $n=\infty$ by considering
+\[
+\pi_\infty \in \mP(\mathbb{X}) \text{\quad such that \quad} p^{1,\ldots,n}_\# \pi_\infty = \pi_n
+\]
+
+Then the lemma lets us define
+\[
+\mu_n = (p_n)_\# \pi_\infty \]\[ \theta^{n,n+1}=(p_n,p_{n+1})_\#\pi_\infty
+\]
+where $\mu_n$ are ``simple" measures and $\theta^{n, n+1}$ are plans. 
+
+Then, we observe that $p_n$ is a Cauchy sequence (non ho ben capito perché). The space in which $p_n$ lives, $L^2(\mathbb{X}, \mathscr{B}_\infty,\pi_\infty, X)$ is complete by completeness of $(X,d)$, hence $p_n$ converges. We call $p_\infty$ its limit and define
+\[
+\mu_\infty := (p_\infty)_\# \pi_\infty
+\]
+Then, we have
+\[
+W_2^2(\mu_n,\mu_\infty) \le \int d^2 (p_n, p_\infty)\de {\pi_\infty} \to 0
+\]
+i.e. $\mu_n$ converges to $\mu_\infty$ in $W_2$, hence $\mP_2(X)$ is complete.
+\\
+
+Now, we want to characterize convergence in $\mP_2(x)$ according to $W_2$. We consider the following definition of weak convergence of measures
+\[
+\int f \, \de{\mu}_n \to \int f \, \de{\mu} 
+\]
+for $f$ continuous and bounded. Then, the result is that 
+\begin{enumerate}[label=($\roman*$)]
+    \item  $\mu_n \xrightarrow{W_2} \mu \Longrightarrow$ convergence of moments $\forall x$ and $\mu_n \to \mu$ weakly 
+    \item  convergence of moments for some $x$ and $\mu_n \to \mu$ weakly $\Longrightarrow$ $\mu_n \xrightarrow{W_2} \mu$
+\end{enumerate}
+
+The proof uses that the definition of weak convergence above is equivalent to the same statement for Lipschitz functions, and weak convergence as defined by the $\liminf$ ($\limsup$) of the measure of open (closed) sets, and for moments it uses the definition of $W_2$ of course.
+
+\subsection{Benamou-Brenier formula}
+Related to the dynamic formulation of ot is this formula which expresses the Wasserstein distance in terms of action of a curve. Indeed, we consider the quadratic action 
+\[
+\A(\mu,v)=\int_{\R^n} |v|^2 \, \de \mu(t)
+\]
+and it turns out that 
+\begin{equation}\label{eq: bb}
+    W_2^2(\mu,\mu)=\min \bigg\{\int_0^1 |v(t)| \de\mu(t) : \frac{\de}{\de}\mu(t) + \div(v(t) \mu(t))=0 \bigg\}
+\end{equation}
+
+Wasserstein distance under this formula can be interpreted as follows. It considers the problem of minimizing the action of a curve, i.e. the squared norm of its velocity, under a constraint. The idea is essentially that the squared velocity, times the mass (represented here by the density/measure of $x$), gives the kinetic energy of moving along the curve ($E=mc^2$). We are minimizing such energy; in other words, we are looking for the lowest possible effort to move from $\mu_0$ to $\mu_1$. The constraint is given by the \emph{continuity equation}, which ensures that mass is preserved when moving from one extreme to the other. When the minimum is 0, the curve attaining it is the geodesic from $\mu_0$ to $\mu_1$, the constant speed curve (with 0 acceleration) that joins the two extremes. It is the length minimizing curve (at least locally), as we have seen. In fact, clearly, minimizing length is the same as minimizing energy (action), as is clear from their definitions (that geodesics can be characterized in this way is due to Otto, then Ambrosio, Gigli and Savaré pointed out that a metric notion of geodesics was more practical). 
+
+In this case, transporting mass from $\mu_0$ to $\mu_1$ is seen as a \emph{flow} over time. As proved in proposition 17.9 of \cite{brue}, there is a two-way correspondence between solutions to the continuity equation and absolutely continuous curves wrt $W_2$. 
+
+\begin{remark}[Continuity equation]
+    We just want to point out that the continuity equation asks that mass is preserved during transportation. Also, proposition 16.3 in \cite{brue} states that a measure $\mu$ solves the continuity equation iff given any curve $\varphi$, the map $t\mapsto\int\varphi\de\mu_t$ is absolutely continuous and its derivative is $\int \nabla \varphi v_t \de \mu_t$ it is equivalent to absolute continuity of a curve, with $v$ being its derivative. 
+\end{remark}
+
+Refer to section \ref{sec: ce} for an explanation of the continuity equation.
+
+\section{Convexity of the entropy}
+\label{sec: Wconvx} This section is devoted to proving the following statement: the relative entropy is convex in $(\mP_2(\mu_t), W_2)$. 
+
+First, we define the entropy. 
+
+\begin{definition}[Relative entropy]
+    Given $(X,g)$ with a canonical reference measure $\vol_g$ and a measure $\mu \in \mP(X)$ such that $\mu = \varrho \vol_g$, we define the function $\cH_g:\mP(X) \to [0,\infty]$ as
+\[
+\mathcal{H}_g(\mu) := \int_X \varrho \log \varrho \de{\vol_g}
+\]
+(entropy is set to $+\infty$ if $\mu \neq \varrho \vol_g$). 
+\end{definition}
+
+We can check that $\cH(\mu) \ge 0$ by considering that the function $h(x) = x \log x$, the \emph{density energy}, is convex and applying Jensen. 
+
+\begin{remark}[Relative entropy and KL divergence]
+    Given strict convexity of the integrand $h(\varrho)$, we have $\cH_g(\mu)=0 \Longleftrightarrow \varrho=1$, which is like saying that the distribution induced by $\mu$ is a Uniform distribution. Indeed, the relative entropy is equivalent to the Kullback-Leibler (KL) divergence between a probability measure $\mu$ and the Uniform one. 
+\end{remark}
+
+Now, let us restrict ourselves to the Euclidean case $X= \R^n$ for a moment. We can set 
+\[
+\vol_g = \mL^n
+\]
+
+{\begin{remark}
+    From now on, \textcolor{magenta}{our manifold is $\mP_2(X)$}, a space of probability measures.
+    So our ``points" are probability measures and we look at functions taking measures as input, like $\cH$. 
+\end{remark}
+
+To study convexity of the entropy on a Riemannian manifold, we consider geodesics and study the convexity of a function \textit{along geodesics}, just like in the Euclidean case we consider convex combinations (segments) of two points. 
+
+Let us define what convexity along geodesics means. 
+\\
+
+The main conceptual point is that until now we have talked about two probability measures ($\mu$ and $\nu$ then, $\mu_0$ and $\mu_1$ now), a transport map and a transport plan between them. Now, we introduce a third object, a \emph{curve} between them. In particular, we look at the curve that is the (unique constant speed) geodesic between them. This is just a measure-valued function.
+
+It follows that the notions of transport map and transport plan can be extended to \emph{interpolated} maps and plans which depend on the time $t \in [0,1]$. 
+
+More precisely, we consider two probability measures $\mu_0= \varrho \mL^n$ to $\mu_1$. By Brenier theorem (theorem 5.2 in \cite{brue}), there exists an optimal transport map $T=\nabla \phi$ for $\phi$ lower semicontinuous, convex and $\mu_0$-a.e. differentiable. 
+
+Moreover, we can define  the \emph{interpolated transport map}
+\begin{equation}\label{eq: Tt}
+    T_t:= (1-t) \id + t\,T
+\end{equation}
+with
+\[
+T_t= \nabla \phi_t, \quad \phi_t= (1-t) \frac{|\cdot|^2}{2} + t\phi
+\]
+which we don't care about now. 
+
+Notice that this definition speaks well with the definition of a transport plan $\pi_T$ induced by $T$ (equation \ref{eq: pit}).
+Indeed, we extend $\pi_T$ to vary along $t$, i.e. we define an \emph{interpolated transport plan}
+\[
+\pi_{T,t} = (\id \times \,T_t)_\# \mu_0
+\]
+and we notice that \[
+\pi_{T,0} = \mu_0
+\]\[\pi_{T,1}=T_\#\mu_0=\mu_1\]
+(by definition of T). 
+
+By corollary 10.10 in \cite{brue}, we have that 
+\[
+\mu_t := (T_t)_\#\mu_0
+\]
+is the unique constant speed geodesic between $\mu_0$ and $\mu_1$.
+
+The main result is that that the function $\cH(\mu_t)$ is convex, i.e. \textbf{the relative entropy is convex along geodesics}. This is stated formally in theorem 15.16 in \cite{brue}. 
+
+In brief, the proof uses mainly these ingredients: we define the entropy of $\mu_t = \varrho_t \mL^n$ by considering the interpolated density $\varrho_t$, which is equal to a function of $\varrho$ and $T_t$
+\[
+\varrho_t = \frac{\varrho}{\det \nabla T_t}\circ (T_t)^{-1}
+\] 
+We can manipulate the entropy as follows
+\[
+\cH(\mu_t)=\int_{T_t(D_0)} U\bigg(\frac{\varrho}{\det \nabla T_t}\circ (T_t)^{-1}\bigg) \, \de{y} = \int_{D_0} U\bigg(\frac{\varrho}{\det \nabla T_t}\bigg) \det \nabla T_t \, \de{x}  
+\]
+Now, ignoring how $D_0$ is defined, we have that geodesic convexity of $\cH(\mu_t)$ follows from convexity of the function
+\[
+f(t):= U \bigg(\frac{\varrho(x)}{\det \nabla T_t(x)}\bigg) \det \nabla T_t (x)
+\]
+This function can be seen as the composition $b\circ a$, with
+\begin{equation}\label{eq: detstrano}
+    a(t) := (det \nabla T_t(x))^{\frac{1}{n}}, \quad b(z) := U\Big(\frac{\varrho(x)}{z^n}\Big)z^n
+\end{equation}
+$a$ is concave by lemma 15.15 of \cite{brue}, which is a pure algebraic result; $b$ is convex thanks to an assumption on $U$ (that it is $(MC)_n$, we ignore this here).  Thus, $b\circ a$ is convex.
+
+Then, geodesic convexity of the entropy follows from convexity of this integrand $f$. 
+
+Additionally, we can relate the above theory to these definitions  (I don't remember where I took them).
+We can say that $\mu_t$ is the unique \textit{Wasserstein geodesic}, i.e. the unique constant speed geodesic satisfying the following.
+\begin{definition}[$W$ geodesic]\label{def: Wgeodesic}
+\footnote{EB: giusto un chiarimento (probabilmente inutile): $\gamma_t$ è una curva di misure, ovvero una mappa $[0,1] \to P_2$ che ad ogni $t$ associa una misura $\gamma_t$}    Given two measures $\theta,\sigma$, a curve $\gamma_t$ is the (Wasserstein) geodesic from $\theta$ to $\sigma$ if
+    \begin{align*}
+        \gamma_0=\theta,\,\,& \gamma_1=\sigma\\
+        W_2 (\gamma_s, \gamma_t) = |t-s|\, &W_2( \theta, \sigma) \quad \forall t,s \in [0,1]
+    \end{align*}
+\end{definition}
+
+And geodesic convexity is also called \textit{Wasserstein convexity} and can be stated as follows.
+
+\begin{definition}[$W$ convexity]\label{def: Wconvex}
+    Given a function $f$, and two measures $\theta, \sigma$ and their\footnote{EB: non è nesessariamente unica la geodetica che connette due misure} geodesic $\gamma_t$, $f$ is \textit{\textbf{convex along $\gamma_t$}} if
+\begin{align*}
+    f(\gamma_t)\le(1-t)f(\theta )+ tf(\sigma)\quad \forall t \in [0,1]
+\end{align*}
+Indeed, theorem 15.16 in \cite{brue} shows this result for $f= h(\varrho_t)$ integrand of $\cH$. Hence a more visual formulation of the result is that
+
+\[
+\cH_g(\mu_t) \le (1-t) \cH_g(\mu_0) + t \cH_g(\mu_1) \quad \forall t \in [0,1] 
+\]
+obtaining geodesic or $W$ convexity of the entropy.
+
+
+{\color{blue}EB: di solito $W$ convexity significa che $f$ è convessa lungo ogni geodetica che connette le due misure. Come ribadito sopra, spesso la geodetica non è unica.}
+\end{definition}
+
+\begin{remark}
+    I would like to point out how some of the concepts we discussed so far are related to one another. In a HIGH LEVEL manner. 
+    
+    The problem of optimal transport, especially under the dynamic formulation (Benamou-Brenier), allows us to endow the space of probability measures with a Riemannian structure, namely geometric notions, with the $W$ distance. This allows to talk about geodesics, indeed the essence of the dynamic formulation of the problem. This allows also to get the result that entropy is convex along geodesics. Moreover, since the seminar work of Otto and others, it is known the result discussed below, i.e. that the heat flow is the gradient flow of the entropy in the $W_2$ space of measures, which ``has been the starting point for many developments in evolution equations, probability theory and geometry" \cite{maas}. These are all related because in the optimal transport problem we are minimizing the energy, entropy is an energy, and convexity of the entropy ensure the uniqueness of a minimizer. this is clearly related to the gradient flow of the entropy. We could conclude that the heat semigroup is the geodesic the ot problem looks for under the $W_2$ distance.
+    
+    Later, we will see how this are related to the Ricci curvature which is somehow implicit in $\mP_2(\R^n)$ as $\Ric=0$, and becomes explicit on the Riemannian manifold. Another punto di collegamento è che la convessità dell'entropia è legata al Jacobiano, che ha a che fare con come il volume viene distorto quando la massa è preservata, cioè sotto all'equzione di continuità, ed è quindi chiaro che Ricci, che regola la distorsione del volume, sia legato a tutto ciò. 
+\end{remark}
+\newpage
+\chapter{Flows}
+Here we go over the prerequisits for chapter 19 of \cite{brue}. 
+
+\section{Notation}
+$x(t)$ represents a curve $x:[0,T]\to X$, $x_t \in X$ are its images or in general points of $X$ where we want to emphazise the possible parametrization with $t$. $x'(t)$ and $\frac{\de}{\de t} x(t)$ are derivatives of the curve wrt time, where in the first case notation is less precise but it is generally used interchangeably, when there is only a time variable. 
+Let me also clarify that $\nabla f(x,t)$, instead, refers to the \emph{spatial} derivative of the function, wrt $x$. It is a vector indicating direction of ascent of $f$ in the space $X$. %Just think of it as gradient in gradient decsent, it is a vector indicating the direction of ascent.  
+
+\section{Heat equation}
+
+Let us look at what divergence and the Laplacian operator are first. 
+
+From an high level perspective, the divergence of a vector field is the extent to which the vector field is locally behaving as a source or a sink, a measure of its ``outgoingness". For instance, consider the velocity of air at each point, defining a vector field. While air is heated in a region, it expands in all directions, and thus the velocity field points outward from that region. The divergence of the velocity field in that region would thus have a positive value.
+
+\begin{definition}[Laplacian operator]
+    The Laplacian operator $\Delta$ is a second-order differential operator defined as the divergence of the gradient of $f$,
+\[
+\Delta f = \nabla^2 f = \nabla \cdot \nabla f = \text{div}_g \nabla f
+\]
+Hence if $f=f(x)$ it is the second derivative, if $f=f(x,y)$ it is the sum of second derivatives
+\[
+\Delta f = \sum_i \frac{\partial^2}{\partial x_i \partial  x_i} f
+\]
+\end{definition}
+
+We state the heat equation on the lines of \href{https://web.stanford.edu/class/math220b/handouts/heateqn.pdf}{these notes}, looking at the heat flow. 
+
+Consider heat propagating in a region $X$ and let $u(x,t)$ be the temperature at position $x\in X$ and time $t$. Let $H(t)$ be the total heat contained in $X$, 
+\[
+H(t)=\int_X c \cdot u(t,x) \de x
+\]
+where $c$ is some constant containing properties of the material of diffusion. 
+
+Then,
+\[
+\frac{\de}{\de t}H(t) = \int_{\partial X} \kappa \nabla u \cdot n \de S
+\]
+This is based on Fourier law, which says that heat flows from hot to cold regions proportional to the gradient of the temperature. In fact, $\kappa$ is this proportion coefficient, $n$ is the outward normal unit vector (which allows to entail where heat is entering or exiting), $\de S$ is the measure of the surface of $\partial X$, which is the boundary. This equation reads that \textit{the change in heat is given by the integral of heat exiting the boundary of our space}. 
+
+Therefore,
+\begin{equation}\label{eq: heat1}
+\int_X c \cdot \dt u(t,x) \de x = \int_{\partial X} \kappa \nabla u \cdot n \de S
+\end{equation}
+Now, we apply the divergence theorem, which says that the total outward flow of a function from a region is given by the sum/integral of all the sources and sinks in the region. in fact, it is 0 when the sources and sinks within the region annhilate each other. Formally, 
+\[
+\int_{\partial X} f \cdot n \de S = \int_X \nabladot f \de x
+\]
+Then, equation \ref{eq: heat1} above can be improved as
+\begin{equation*}
+\int_X c \cdot \dt u(t,x) \de x = \int_{\partial X} \kappa \nabla u \cdot n \de S = \int_X \nabladot (\kappa \nabla u) \de x = \int_X k \Delta u \de x
+\end{equation*}
+Hence we obtain the heat equation 
+\begin{equation}
+    \dt u = \Delta u
+\end{equation}
+for $k=1$. It says that the change in temperature over time is equal to the divergence of the gradient of the temperature, its Laplacian, namely because the change over time is equal to the flow out of the boundary.
+\\
+
+\subsection{Heat semigroup} What follows in \cite{brue} is a proposition on some properties of the \textit{Riemannian heat semigroup} (family of operators that solve the heat equation on a Riemannian manifold). We merely state them, without going into depth for now:
+\begin{itemize}
+    \item the heat semigroup is stochastically complete and self adjoint
+    \item it commutes with the laplacian operator
+    \item we have a regularization estimate on it
+    \item $\int_M g(P_t)f \de{\vol_g} \le \int_M g(f) \de{\vol_g}$
+    \item if $f\le C$ then $P_tf\le C$ and also for $\ge$
+\end{itemize}
+Another proposition states that the heat semigroup is smooth in space and time, i.e.
+\[
+||P_tf||_{C^k} \le C ||f||_{L^2}
+\]
+ and the map $(t,x) \mapsto P_tf(x)$ is smooth in $(0,\infty) \times M$. It follows that $P_tf$ solves the heat equation ``in the classical sense".
+\\
+
+ Then, let us define the following to get convergence properties of the heat semigroup. 
+
+ We can identify $P_tf$ with its space-time continuous representative $P_t^*\mu$. We define it by duality:
+ \[
+ \int_M f \de{P_t^*\mu} := \int_M P_tf \de{\mu} \quad \text{for any }f\in C(M)
+ \]
+Notice $P_t^*:\mP(M) \to \mP(M)$, it is a monotone functional on $C(M)$. 
+
+We can apply Riesz representation theorem and state the following.
+\begin{proposition}
+There exists a smooth function $p.(0,\infty) \times M \times M \to [0,\infty)$ such that
+\[
+P_tf(x) = \int_M p_t(x,y) f(y) \de{\vol_g(y)}
+\]
+and $p_t(x,y)=p_t(y,x)$. Moreover, 
+\[
+P_t^*\delta_x=p_t(x,\cdot)\vol_g
+\]
+This is to say that $P_t^*$ represents $P_tf$ because given a $y$ and a function $f$, $P_tf(y)$ is entirely determined by $P_t^*(y)\delta_x = p_t(x,y)\vol_g$.
+\end{proposition}
+
+
+{\color{blue}EB: cos'è $p_t(x,y)$ su $\mathbb R^n$?}
+
+\section{Continuity equation}
+The continuity equation is a condition we will encounter often in this study. It is a principle of \textit{mass preservation}.
+
+Let $\rho_t$ be a density (or a measure) and $v_t$ a vector field. The continuity equation is
+\begin{equation}\tag{CE}
+    \dt \mu_t + \nabladot(\mu_tv_t)=0
+\end{equation}
+in a physical sense, it states that the change in density (mass * volume) over time is equal to how much stuff flows in (minus the divergence), in a very high level manner. 
+
+The velocity field $v$ is not directly related to the curve $\mu$, I just think of it as \textit{a} velocity field for the objects living on $X$.
+
+We have used and will use the continuity equation in the following ways:
+\begin{itemize}
+    \item Benamou-Brenier formula for $W_2$: geodesics in the $W_2$ space of measures are solutions to the continuity equation;
+    \item if a curve $\mu_t$ is absolutely continuous (not concentrated), there exists an ``optimal" vector field $v_t$ such that (CE) is satisfied and the action of $v_t$ relative to $\mu_t$ equals the metric derivative of $\mu_t$
+    \item therefore, in general, we will look for AC curves and for the vector field that equals their metric derivative and satisfies (CE), giving geodesics, solutions to (dyn).
+    \item in view of the paper, we define the tangent space at $\rho$ as the set of all $\nabla \psi$ and we find that there is a unique $\nabla_0\psi$ that satisfies (CE) with $\rho$!
+\end{itemize}
+
+\section{Gradient flow}
+
+Gradient flows are based on the notion of subdifferentials.
+\emph{Subdifferentials} are a way to generalize the concept of gradients for non smooth functions. We indicate them as $\partial f$. When $f$ is smooth,  $\partial f = \{\nabla f\}$.
+In particular, the Gateaux subdifferential generalizes this concept for directional derivatives. Consider that\[
+p \in \partial f \quad \Longleftrightarrow \quad \liminf_{t \to 0^+} \frac{f(x+tv) - f(x)}{t}  \ge (p,v) \quad \forall v \in H
+\]
+Then,
+\begin{definition}[Gateaux subdifferential]
+    For $x \in Dom(f) \subset H$, the Gateaux subdifferential is
+    \[
+    \partial_G f := \Big\{ p \in H : \liminf_{t \to 0^+} \frac{f(x+tv) - f(x)}{t}  \ge (p,v) \quad \forall v \in H\Big\}
+    \]
+\end{definition}
+
+We can look at the set $\partial_G f$ as the set of all those operators that underestimate the directional derivative of $f$ along $v$, with $(v,p)$ being only the Riesz representation of such operators. 
+\\
+
+Then, we define the \textbf{\emph{gradient flow}} of a function as the set of curves $x(t)$ such that for $g \in \partial_Gf$, $g + x(t) = 0$. .
+
+\begin{definition}[Gradient flow]
+    We say that $x:(0, \infty) \to Dom(f)$ is a gradient flow of $f$ if $x \in AC_{loc}((0,\infty);H)$ and
+        \begin{equation}\label{eq: gradflow}
+        x'(t) \in -\partial_G f(x(t)) \quad\text{for }\mL^1\text{-a.e.} t\in (0,\infty)
+    \end{equation}
+    We also say that $x(t)$ starts from $\bar x$ if $\lim_{t\to 0}x(t)=\bar x$
+\end{definition}
+
+Another useful result is Brézis-Komura theorem (theorem 11.7 in \cite{brue}), which states the following on the existence and shape of gradient flows.  
+\begin{theorem}[Brézis-Komura]\label{thm: gradflow}
+    Let $f$ be $\lambda$-convex, lower semicontinuous and with dense domain. Then, a gradient flow $x(t)$
+    exists for any $\bar x\in Dom(f)$, which are the starting points of $x(t)$. In particular,
+    \[
+    x(t) = S_t \bar x
+    \]
+    The family of operators $S_t:Dom(f) \to Dom(f)$ satisfies the following properties
+    \begin{align*}
+        S_{t+s}=&S_t\circ S_s \quad\quad\quad\quad\quad \textit{(semigroup property)}\\
+        |S_t \bar x - S_t \bar y | &\le e^{-\lambda t}|\bar x - \bar y| \quad\quad \textit{(contractivity property)}
+    \end{align*}
+\end{theorem}
+
+This means that the gradient flow of $f$ defines a \textit{semigroup} of the function, i.e. that $f$ defines a family of operators $S_t$ that is close under composition (and, in this case, contractive). Think of a semigroup as a family of operators with certain properties. In general, operators that are solutions to an ODE define a group (\href{https://www.math.ucdavis.edu/~hunter/m218a_09/ch5}{uc davis notes}). 
+
+\newpage
+\chapter{Heat flow, optimal transport and Ricci curvature}
+\section{Heat flow as grad flow of energy functionals}
+Define the \emph{Dirichlet energy} as
+
+\begin{definition}[Dirichlet energy on M]
+Consider a function $ u \in L^2(\vol_g) $, $u: R^n \to \R$. The Dirichlet energy is a \emph{real-valued quadratic functional} $D:L^2(\vol_g)\to[0,\infty]$ defined by
+\[
+D_g(u):= \frac{1}{2}\int_M |\nabla u|_g^2 \, \de{\vol_g}
+\]
+when $u$ is a section of $TM$ and $D_g(u)=+\infty$ otherwise. 
+\end{definition}    
+
+The Dirichlet energy is ``a measure of how variable a function is". 
+
+{\color{blue}EB: potrebbe essere un buon esercizio verificare che l'energia di DIrichlet in $\mathbb R$ è un funzionale convesso e lower-semicontinuous in $L^2(\mathbb{R})$}
+
+
+It is convex, lower semicontinuous and with a dense domain, hence the theory of gradient flows (theorem \ref{thm: gradflow}) applies.
+\\
+
+The gradient flow $P_t u$ solves the heat equation, i.e. 
+\[
+\frac{\de{}}{\de{t}}P_t u = \Delta_g P_t u \quad \text{for} \mL^1\text{-a.e. } t\in (0,\infty)
+\]
+Here, the LHS is the derivative of the map $t\mapsto P_t u$ with values on $L^2(\vol_g)$; the RHS is the Laplacian operator on $P_tu$. 
+
+Hence, we have found one of the interpretations of the heat semigroup, namely that \textcolor{Turquoise}{the heat semigroup is the gradient flow of the Dirichlet energy on $L^2$}. 
+
+This follows from the fact that the only possible element in the subgradient of $D_g$ is $-\Delta_g$ (I don't know why), and the gradient flow is by definition $x_t$ such that $x'_t = -\partial_g D_g$. Hence our gradient flow is such that $\frac{\de{}}{\de{t}}P_tf = -\partial_g f = \Delta_g f$. 
+
+Now, recall the dual of the heat semigroup $P_t^*$. There are two main results stated in theorem 19.4 for which we are interested in $P_t^*$. One is that it is an EVI gradient, and we discard it for now as I see it as only a useful tool connecting the other statements. The other interesting result, instead, is \textcolor{WildStrawberry}{Kuwada equivalence}, which states the following. 
+
+$P_t^*$ is \emph{$K$-contractive}, i.e.
+\[
+W_2^2(P_t^* \mu, P_t^* \nu) \le e^{-2Kt}W_2^2(\mu,\nu)
+\]
+
+{\color{blue}
+EB: prova a dimostrare questa disuguaglianza su $\mathbb R^n$
+}
+
+if and only if the gradient $P_t$ is $K$-contractive, i.e.
+\begin{equation}\label{eq: convergence FINALMENTE}
+    |\nabla P_t f|^2 \le e^{-2Kt}P_t|\nabla f|^2
+\end{equation}
+Notice that equation \ref{eq: convergence FINALMENTE} states that for $t$ big enough, the gradient of the heat semigroup goes to 0, i.e. \textcolor{WildStrawberry}{heat converges to a constant!}
+
+\begin{remark}
+    Here we have seen the theory for the Dirichlet energy. In chapter 18, which I have yet to dive into, it is shown that the same theory holds on the \textit{space of measures} $(\mP_2M,W_2)$ for the relative entropy. This is thanks to Otto, who shows that \textcolor{Turquoise}{on the space of measures $\mP_2(M),$ the heat semigroup can be defined as the gradient flow of the logarithmic entropy}. This follows from mainly two passages: first, we consider that any gradient flow solves the continuity equation for some vector $v$,\[\frac{\de}{\de{t}} \mu_t + \text{div}(v_t\mu_t)=0\]\footnote{we can ignore what the CE is for now} where we set $v_t = -\nabla^W \cH(\mu_t)$, so defining the gradient flow of the entropy in the space of measures. Then, we observe that \[\nabla \cH'(\varrho_t)=\frac{\nabla \varrho}{\varrho}\]. Finally, we consider the heat semigroup $\varrho_t$ and get: \[\frac{\de}{\de{t}} \varrho_t=\Delta \varrho_t = \text{div}(\nabla \varrho_t) =  \text{div}(\frac{\nabla \varrho_t}{\varrho_t}\varrho_t)=\text{div}(\nabla^W \cH(\varrho_t)\varrho_t)\] i.e. the heat flow semigroup is the gradient flow of the entropy with respect to $W_2$. In fact, these are two (among more) interpretations of the heat flow: as the gradient flow of the Dirichlet energy in $\mL^2$ and as the gradient flow of the entropy in $\mP_2$.
+    Also, on the space of measures or for metric spaces in general gradient flows are defined differently (EDE and EDI), but we do not dive into this specific definition and keep the functional one for intuition. 
+\end{remark}
+
+\section{Relation to Ricci curvature}
+Now, we make some considerations on how Ricci relates to these and link the three concepts altogether.
+
+Let us go back to the proof of geodesic convexity of the entropy in section. At some point, we looked at concavity of the map
+\[
+t \mapsto (\det \nabla T_t(x))^{\frac{1}{n}}
+\]
+which we denoted by $a$ then.
+
+Here, we try to extend this proof to Riemannian manifolds.
+\\
+
+The expression for the optimal map $T_t$ on Riemannian manifolds takes the form
+\[
+T_t(x) = \exp(-t \nabla \phi(x)) =: \gamma_t
+\]
+where we $\exp$ is the exponential map (definition \ref{def: exp}). 
+
+Trying to reproduce the proof of convexity of the entropy, we study the quantity 
+\[
+\mathscr{J}(t) := \det (\nabla_x\exp(-t \nabla \phi))
+\]
+and it turns out that 
+\begin{equation}\label{eq: Ric1}
+    \frac{\de^2}{\de{t^2}} \mathscr{J}^{\frac{1}{n}}_t + \frac{\Ric(\gamma',\gamma')}{n}\mathscr{J}^{\frac{1}{n}}_t  \le 0
+\end{equation}
+\\
+
+This equation related Ricci to the Jacobian\footnote{determinant of the Jacobian matrix aka gradient}, which governs how volumes change over the curve. Indeed, my intuition is that applying the measure valued function of the curve to a volume means moving the volume from $\mu_0$ to $\mu_1$ (gradually in $t$), and the determinant of our operator tells us exactly how volumes get distorted by the operator. In fact, it was clear from the initial proof that convexity of the entropy is related to the Jacobian of the gradient of the geodesic.  
+\\
+
+Alternatively, we can interpret Ricci curvature by looking at Bochner identity.
+In the Euclidean case $f:\R^n \to R$, for $f$ sufficiently smooth, we have
+\[
+\Delta \frac{|\nabla f|^2}{2} = || \Hess f||^2 + (\nabla f, \nabla \Delta f)
+\]
+Extending this to the Riemannian case, we get 
+\[
+\Delta_g \frac{|\nabla f|^2}{2} = || \Hess f||^2 + (\nabla f, \nabla \Delta_g f) + \Ric(\nabla f, \nabla f)
+\]
+
+Hence we get the Bochner inequality
+\begin{equation}\label{eq: Ric2}
+    \Delta_g \frac{|\nabla f|^2}{2} - (\nabla f, \nabla \Delta_g f) \ge \Ric(\nabla f, \nabla f)
+\end{equation}
+
+To conclude, (\ref{eq: Ric1}) and (\ref{eq: Ric2}) give two alternative interpretations of the Ricci curvature. The first i related to how $\Ric$ controls volumes distortion along curves, referred to as Lagrangian interpretation. The second one shows, by choosing $f=\phi$, how $\Ric$ controls the behavior of the velocity vector field $\nabla \phi$, and it is referred to as the Euler interpretation. 
+\\
+
+Now we put it all together, stating the very last result relating Ricci to convexity of the entropy and the heat flow. I will state it in a high-level manner for now, mainly considering first some considerations we have gone over so far and then looking at how they relate to each other. 
+
+The following considerations on Ricci, the heat flow and convexity of the entropy are true%(also keep in mind the gradient flow equation \ref{eq: gradflow} and its properties given by theorem \ref{thm: gradflow}):
+\begin{enumerate}[label=($\roman*$)]
+    \item the gradient flow of the logarithmic entropy solves the heat equation (eqv, is the heat semigroup)
+    \item we can represent the operator of the gradient flow with its dual $P_t^*$
+    \item the Kuwada equivalence, i.e. that $P_t$ converges iff $P_t^*$ is $K$-contractive
+    \item Ricci curvature is related to convexity of the entropy through inequality \ref{eq: Ric1}, and hence also to volume distortion
+    \item Ricci curvature is related to the behavior of velocity fields through Bochner inequality \ref{eq: Ric2}
+\end{enumerate}
+
+
+The main result that follows from all these considerations (and is partly already included), stated in theorem 19.4 of \cite{brue}, is that \textbf{\textcolor{cyan}{a lower bound on Ricci, K-convexity of entropy, and convergence of the heat flow are equivalent}}. 
+
+The relations between the main statements passes through Bochner and through Pt* (being an EVI gradient flow of the entropy (which we did not define) and being K contractive). 
+
+While we do not go in depth in each claim for now, we look at how the statements above relate from an high-level perspective.
+
+The explicit relation is from lower bound on Ricci to convexity of entropy and the other way around through eq (\ref{eq: Ric1}), which also makes explicit that Ricci is related to volume distortion. 
+
+Convergence of the heat semigroup (gradient contractivity) is related to the above statements in a more indirect way. It is equivalent to $P_t^*$ being $K$-contractive; EVI gradients of the entropy are $K$-contractive, and that the entropy has an EVI gradient is equivalent to being $K$-convex. This proves one side of the relation (from $K$-convexity to convergence of heat semigroup). On the other hand, gradient contractivity of $P_t$ is equivalent to Bochner (I do not dive into this now). Then, it is quite easy to verify that $\Ric\ge K$ iff Bochner, one implication is immediate, the other comes from choosing a function f such that $\nabla f = v$ and $\Hess f =0$. 
+
+% sarebbe utile guardare tutte le proof più in dettaglio, magari poi. 
+
+\newpage
+\include{paper1}
+
+\newpage
+\include{paper2}
+
+\bibliographystyle{plain}
+\bibliography{refs}
+
+\appendix
+\chapter{More Math} \label{sec: app}
+\input{moremath}
+\chapter{Extra}
+\input{extra}
+\end{document}

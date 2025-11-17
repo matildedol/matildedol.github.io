@@ -1,0 +1,143 @@
+\section{Slightly less high-level}
+Let us make this more precise, starting by looking at the geometry of a continuous space.\\
+
+The setting is the following: We have a manifold $M$ and a metric $g$ inducing a connection $\nabla = \nabla^{LC}$ which is always the Levi-Civita connection **non mi ricordo sotto che assunti**; a distance $d$ and a volume measure $\vol_g$. 
+
+\textbf{Geodesics} are curves with acceleration = 0. Also, we can think of them as the shortest path between any two points on the manifold, or as the curves realizing the distance between the two points (= the curve whose 
+
+%%%%%%%%%%%%% fare meglio questa parte, non ho capito bene che sono X, Y ,Z e perché ha senso sta formiula
+The\textbf{ Riemannian} \textbf{curvature} of the space is defined as 
+\begin{align*}
+    R(X,Y)Z = \nabla_Z \nabla_X Y - \nabla_X \nabla_Z Y - \nabla_{[X,Z]} Y
+\end{align*}
+
+A nice insight is given by looking at the first two terms in R first. They are the ``cross" derivative of the first two vector fields, but just subtracting these two quantities does not give a linear object, i.e. a tensor. It was Riemann who discovered that by subtracting the commutator between X and Z, $[X,Z]$, we get something linear. 
+%%%%%%%%%%%%%%%%%%%%%%
+
+This definition of curvature of a space speaks well with another notion of curvature, which is that of taking the inverse of the radius of the sphere ``inscribed" in your curve (easy to visualize this in 2d).  \\
+
+The notion of Riemannian curvature can be extended to that of \textbf{Ricci curvature}, although I don't know how yet. For now, consider that the Ricci curvature is an object taking two vectors and spitting out one number, 
+\begin{align*}
+    \Ric(X,Y) \in \mathbb{R}
+\end{align*}
+Hence, it looks pretty similar to an inner product, except for the non-negativity constraint. Or, like for the inner product, we can look at it as a matrix (recall from Linear Algebra the writing of the inner product as a matrix with as entries the inner products between vectors of the basis). For matrices, we have the notion of positive definiteness or non-negativity when all their eigenvalues are greater than 0. Well, we can extend this notion to any scalar $k$, considering $k=0$ just a particular case. This leads us to studying a \textbf{lower bound on the Ricci curvature} of a manifold, which turns out to be a very precious result revealing important properties of the manifold. \\
+
+A key result obtained roughly 20 years ago on the Ricci curvature is the following. 
+
+
+\begin{theorem}[Ricci curvature equivalent statements]\label{thm: ric}
+    Given ($M, g$) compact, the following are equivalent:
+    \begin{itemize}
+        \item[(i)] $\Ric \ge 0$
+        \item[(ii)] $
+                    \mu \in P(M), \mu = \varrho \vol_g\\
+       \text{ The Shannon entropy} \int_M \varrho \log\varrho \, d \vol_g \in \mathbbm{R}\,  \text{is convex in the $W_2$ geometry.}
+       $
+    \end{itemize}
+
+\end{theorem}
+A few remarks are in order. 
+\begin{remark}
+        The second statement reads ``given a measure in the probability space over $M$, which can be seen as as a density $\varrho$ times the volume induced by the metric $g$, the Shannon entropy is convex". Hence $\mu$ is a probability measure and can be seen as a density times a measure (the volume), and the part that we are interested in integrating is the density, against the volume measure. 
+\end{remark}
+
+\begin{definition}[Convexity in the $W_2$ geometry] \label{def: convx}
+    What is convexity in the $W_2$ (Wasserstein) geometry? \\
+    The \textbf{Wasserstein distance} between two measures is the very core of Optimal Transport and it is defined as
+    \begin{align*}
+        W_2 (\mu_1, \mu_2)^2 := \inf_{\pi \in P(M \times M)} \int d_g^2 (X,Y) \, d \pi (X,Y)
+    \end{align*}
+    The \textbf{W. geodesic} between two measures $\mu_1, \mu_2$ is a curve $\mu(t)$ s.t. 
+    \begin{align*}
+        \mu(1)=\mu_1, \mu(2)=\mu_2\\
+        W_2 (\mu(s), \mu(t)) = |t-s| W_2( \mu_1, \mu_2)
+    \end{align*}
+    Meaning that the W. distance between two points on the curve is equal to the portion of the curve between the two points. \\
+    Given a function $F$, and two measures $\mu_0, \mu_1$ and their W. geodesic $\mu(t)$, $F$ is \textbf{W. convex} if
+    \begin{align*}
+        F(\mu(t))\le(1-t)F(\mu_0 )+ tF(\mu_1)\,\, \forall t \in [0,1]
+    \end{align*}
+    
+\end{definition}
+
+\begin{remark}
+    The notion of Wasserstein convexity is trivially equivalent to the usual notion of convexity in the Euclidean case. The geodesic in the Euclidean case is the segment: given two points $x$ and $y$ with unit distance, taking any two points on the straight line joining $x$ and $y$, of course their distance will be equivalent to the portion of the whole line that is between these points. \\
+    Instead, in the non-Euclidean framework we can think of such the notion of W. convexity as restricting the function to its geodesics and studying usual convexity on them. 
+\end{remark}
+
+Hence, by looking at the continuous setting introduced above  we can see how the notion of (Ricci) curvature is has a strong geometrical structure and entails differentiability. Instead, the equivalent statement proposed in Theorem (\ref{thm: ric}) can be easily extended to the discrete setting. In particular, curves in the discrete settings are (continuous) probability functions of the points of the space, like the probability distributions associated with the random variables forming a Markov Chain (``points" in our discrete space) **forse transition probabilities, insomma da capire meglio**. Hence, the paper proposes to study the convexity of the entropy of these probability functions to get a notion of lower bound on Ricci curvature of discrete spaces, and enjoy its insights on the behavior of Markov Chains. 
+%%%%%%%% non so se queste ultime cose siano molto corrette, to be checked
+
+\newpage
+\section{Characterizing the Ricci curvature lower bound} \label{sec: charact}
+The Ricci curvature as an object taking two vectors in input and spitting out one number: we can look at it as something similar to an inner product. When we look at the inner product as a matrix, the non-negativity property (of its eigenvalues) gives us important information on the objects we are working with. We can do the same for the Ricci curvature, extending the notion to a generic scalar $k$, considering $k=0$ just a particular case. Indeed, it turns out that having a lower bound on the Ricci curvature of a manifold gives us precious results on the properties of the space.  
+
+Now we turn to studying an equivalent definition to a lower bound on the Ricci curvature. 
+The notion of Ricci curvature is intrinsically geometric and entails differentiability. The result we present now, obtained roughly 20 years ago, is a characterization of a lower bound on the Ricci curvature that does not require differentiability.
+\\
+
+We think of our manifold $(M, g, \vol_g)$ as a sample space, with $\mathcal{P}_2(M)$ being the set of probability measures on $M$ under the $L^2$-Wasserstein geometry. 
+
+Now, the core result is the following.
+\begin{theorem}[A characterization of Ricci lower bound]
+    Consider a Riemannian manifold $(M, g, \vol_g)$ and two probability measures $\mu_0 = \varrho_0 \vol_g$, $\mu_1= \varrho_1 \vol_g$ and their W. geodesic $\gamma_t$. Then, the following statements are equivalent:
+\begin{itemize}
+    \item $\Ric \ge K$
+    \item  $\cH_{\vol_g} (\gamma_t) \le (1-t) \cH_{\vol_g} (\mu_0) + t \cH_{\vol_g} (\mu_1) - \frac{K}{2}(1-t)t $
+\end{itemize}
+\end{theorem}
+
+Notice that for $\Ric \ge0$ the equivalent statement is simply convexity of the entropy in the $W^2$ geometry. 
+\\
+
+This equivalent definition is only based on distances and integrals, and allows us to adapt the notion of lower bound on the Ricci curvature to discrete spaces. This is an important tool to use the geometric properties of a space, like a space of Markov Chains, to study the asymptotic behavior of the objects living on it. 
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% This volume measure allows us to define the following.
+% \begin{definition}[Weighted Riemannian manifold]\label{def: weightrm}
+%  A weighted Riemanninan manifold $(M,g,m)$ is a Riemannian manifold $(M,g)$ endowed with a conformal deformation $m=e^{-\psi}\vol_g$ of $\vol_g$, with $\psi \in C^\infty(M)$.
+% \end{definition}
+% To look at an analogy, a weighted Euclidean space $(\mathbb{R}^n, ||\cdot||, m)$ is an Euclidean space with a measure $m=e^{-\psi}\vol_n$ where $\vol_n$ is the Lebesgue volume measure.
+
+% \begin{theorem}[Ricci curvature controls $\vol_g$]
+%    The Bishop-Gromov volume comparison Theorem states the following. If we assume $\Ric\ge K$ for some $K \in \mathbb{R}$, then for any $p \in M$ and $0<r<R$ 
+% \begin{equation}\label{eq:BG}
+% \frac{\vol_g(B(x,R))}{\vol_g(B(x,r))} \le
+%  \frac{\int_0^R s_{K,n}(t)^{n-1}\,\de{t}}{\int_0^r s_{K,n}(t)^{n-1}\,\de{t}}.
+% \end{equation}
+% \end{theorem}
+
+% We are not interested in the specific form of the bound in inequality \ref{eq:BG}; it is enough to consider that it is a function of $K$ and it implies that a lower bound on the Ricci curvature controls the ratio of the volumes of two balls on the manifold, hence controls the volume $\vol_g$. 
+
+% \begin{definition}[Weighted Ricci curvature]
+%     Given a unit vector $v \in T_pM$ and $N\in[n,\infty]$, the weighted Ricci curvature $\Ric_N(v)$ is defined by:
+% \begin{enumerate}[(1)]
+% \item $\Ric_n(v):=\displaystyle \left\{
+%  \begin{array}{ll} \Ric(v)+\Hess\psi(v,v) & \text{if}\ \langle \nabla\psi(x),v \rangle=0, \\
+%  -\infty & {\rm otherwise}; \end{array} \right.$
+% \item $\Ric_N(v):=\Ric(v) +\Hess\psi(v,v)
+%  -\displaystyle\frac{\langle \nabla\psi(x),v\rangle^2}{N-n}$ for $N \in (n,\infty)$;
+% \item $\Ric_{\infty}(v):=\Ric(v) +\Hess\psi(v,v)$.
+% \end{enumerate}
+% Where $\psi$ is the weight map in Definition (\ref{def: weightrm}) and $\Hess\psi(v,v) = (\nabla^2 \psi(v),v)$. We say that $\Ric_N\ge K$ holds if $\Ric_N (v) \ge K$ holds for all $v \in TM$. 
+% \end{definition}
+
+% \begin{remark}
+%     If the weight $\psi$ is trivial, in the sense that it is constant, then $\Ric_N$ coincides with $\Ric$ for all $N$. 
+% \end{remark}
+% %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+    
+% We first look at the sectional curvature $\mathcal{K}$, with some useful concepts. Then we dive into the Riemannian world adding a metric, we look at some useful concepts and define the Riemannian curvature tensor $R$, and finally the Ricci curvature, which algebraically is a weaker concept derived from the former two. Conceptually, the three stay in a relation like $R \to \mathcal{K}  \rightarrow \Ric$, but this will be clearer later on. 
+
+% In the feeling of \cite{Ohta_2014}, we give a geometric intuition of the sectional curvature through comparison geometry.
+% The sectional curvature $\mathcal{K}$
+
+
+% I also looked at the definition of \textbf{sectional curvature}, starting from tangent vectors. $\mathcal{K}(v,w)$ reflects the asymptotic behavior of the distance function $d(\gamma(t), \eta(t))$ near $t=0$, with $\gamma(t)=\exp(tv)$, $\eta(t)=\exp(tw)$, $v,w \in T_xM$ \cite{Ohta_2014}.
+
+% Then, the \textbf{Ricci curvature} of vector $v\in T_pM : ||v||=1$ is the sum of sectional curvatures of $v$ and all the other $n-1$ vectors that with $v$ form a basis of $T_pM$, namely:
+% \begin{equation}
+%     \Ric(v) :=\sum_{i=1}^{n-1} \mathcal{K}(v,e_i)
+% \end{equation}
+% such that $\{e_i\}_{i=1}^{n-1} \cup v$ is a basis of $T_pM$. Hence, $\Ric(v) = \text{Tr}(\mathcal{K}( v, \cdot))$. When we refer to properties of the Ricci curvature of a whole manifold $M$, we mean that the property holds for all unit vectors $v \in TM$, e.g. $\Ric \ge K$ means $\Ric(v) \ge K \,\, \forall v\in TM$.
+
