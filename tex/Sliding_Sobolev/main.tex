@@ -46,51 +46,195 @@ non-negative Ricci curvature \\~\\ \small M. Erbar and M. Fathi}
     \tableofcontents
 \end{frame}
 
-\section{Main result: *high-level sentence* for the zero-range process}
+\section{Main result: convergence to equilibrium of the zero-range process}
+
 \subsection{The zero-range process}
-\begin{frame}{The zero-range process}
-    
-\end{frame}
-\subsection{Interpretation of the result *or other high-level sentence*}
-\begin{frame}{Main result and interpretation}
-    % HIGH LEVEL dont even tell them it's called log Sobolev or just mention
-\end{frame}
-\section{From geometry to inequalities}
-\subsection{Setup}
-\begin{frame}{Setup}
-    
-\end{frame}
-\begin{frame}{Distance $\W$}
-    
-\end{frame}
-\subsection{Ricci for discrete processes}
-\begin{frame}{Defining Ricci}
-    
-\end{frame}
-\begin{frame}{Ricci for the zero-range process}
-    
-\end{frame}
-\subsection{Modified Logarithmic Sobolev inequality for discrete processes with non-neg Ricci}
-\begin{frame}{The Modified Log-Sobolev inequality}
-    
-\end{frame}
-\begin{frame}{Modified Log-Sobolev inequality for the zero-range process}
-    
+\begin{frame}[allowframebreaks]{The zero-range process}
+    Consider $K$ interacting particles on the complete graph with $L$ sites.\\~\\
+
+    The state space is $\X_{K,L}=\{\eta \in \mathbb{N}^L: \sum_i \eta_i = K\}$. \\~\\
+
+    The zero-range process with \textbf{constant rates} can be described as:
+    \begin{enumerate}
+        \item Choose a site $i$ uniformly at random
+        \begin{enumerate}
+            \item If $\eta_i=0$, do nothing
+            \item Else, choose another site $j$ uniformly at random and move 1 particle from $i$ to $j$
+        \end{enumerate}
+    \end{enumerate}
+    $\eta^{i,j}$ denotes the new configuration after such a move.
+
+    \begin{equation*}
+    Q_{K,L}(\eta,\theta)=
+    \begin{cases}
+        \frac{1}{L} & \theta=\eta^{i,j} \text{ for some }i, j\\
+        0 & \text{else}
+    \end{cases}
+    \end{equation*}
+    Invariant measure is the uniform measure $\pi_{K,L}$.
+\\~\\
+Good model for:
+\begin{itemize}
+    \item traffic flow
+    \item population dynamics
+    \item particle physics
+    \item ... any system in which deciding to move depends on the surroundings
+\end{itemize}
 \end{frame}
 
+\subsection{Bound on mixing time and interpretation}
+\begin{frame}{Main result and interpretation}
+    % HIGH LEVEL dont even tell them it's called log Sobolev or just mention
+    \begin{block}{Convergence to equilibrium}
+        The constant-rate zero range process with $K$ particles and $L$ sites has mixing time bounded by
+        \begin{equation}
+        \tau_{mix}(\varepsilon) \le K L \log L \bigg(\frac{1}{8} - \frac{\log \varepsilon}{c}\bigg)
+        \end{equation}
+        for some universal constant $c$. 
+    \end{block}
+\pause
+\begin{center}\textcolor{blue}{$\star$ This is convergence to equilibrium! $\star$}\end{center}
+\end{frame}
+
+
+\section{From geometry to inequalities}
+\tableofcontents[currentsection]
+\subsection{Setup}
+\begin{frame}{Setup}
+    Finite space of states $\X$, irreducible, reversible Markov kernel $Q$ and stationary measure $\pi$
+  \[
+   Q(x,y)\pi(x)=Q(y,x)\pi(y)
+  \]
+  Operator $L$ acting on functions $\psi:\X \to\R$ is\[L\psi(x)=\sum_{y\in\X}(\psi(y)-\psi(x))Q(x,y)\]
+  is the generator of a continuous time Markov chain.
+
+ Space of probability densities
+  \[
+    \mP(\X)
+    := \Bigl\{\rho:\X\to\R_+ : \sum_{x\in\X} \rho(x)\,\pi(x) = 1\Bigr\}
+  \]
+\end{frame}
+\begin{frame}{Distance $\W$}
+    We define a discrete transport distance, by analogy with the Wasserstein distance. For $\rho_0,\rho_1 \in \mP(\X),$
+    \[
+\W(\rho_0, \rho_1)^2 := 
+\inf_{\rho, \psi} 
+\; \frac{1}{2} 
+\int_0^1 \sum_{x,y \in X} 
+\bigl( \psi_t(x) - \psi_t(y) \bigr)^2 
+\, \hat{\rho}_t(x,y) \, Q(x,y) \, \pi(x) 
+\, dt.
+\]
+where the infimum runs over all sufficiently regular curves satisfying a continuity equation
+\[
+\begin{cases}
+\displaystyle
+\frac{d}{dt}\rho_t(x) 
++ \sum_{y \in \mathcal{X}} 
+\bigl( \psi_t(y) - \psi_t(x) \bigr)
+\hat{\rho}_t(x,y) Q(x,y) 
+= 0, 
+& \forall x \in \mathcal{X}, \\[1.2em]
+\rho|_{t=0} = \rho_0, \quad 
+\rho|_{t=1} = \rho_1.
+\end{cases}
+\]
+and $\hat\rho(x,y)=\theta(\rho(x),\rho(y))$ which is the logarithmic mean.
+\\~\\
+
+Endowing $\X$ with this distance, we obtain that the Markov semigroup $P_t=e^{tL}$ is the gradient flow of Shannon's entropy $\mathcal{H}(\rho)=\sum_{x\in\X} \rho(x) \log \rho(x) \pi(x)$
+\end{frame}
+\subsection{Ricci for discrete processes}
+
+\begin{frame}{Ricci for discrete processes}
+    \begin{block}{Entropic Ricci curvature for discrete space}
+    $(\X,Q,\pi)$ has entropic Ricci curvature bounded from below by $\kappa \in \R$ if for any $\rho_t \in (\mP(\X), \W)$ we have
+    \[
+    \mathcal{H}(\rho_t) \le (1-t)\mathcal{H}(\rho_0) + t\mathcal{H}(\rho_1)- \frac{\kappa}{2}t(1-t)\W(\rho_0,\rho_1)^2
+    \]
+    In this case, we write $\Ric(\X,Q,\pi)\ge \kappa$.
+    \end{block}
+\end{frame}
+\begin{frame}{Ricci for the zero-range process}
+    In another contribution, M. Fathi and J. Maas provide explicit ways of computing bounds on Ricci for discrete processes
+    \\~\\
+    They show that for the ZRP with \textit{increasing} rates, Ricci is positive
+    \\~\\
+    The ZRP with \textit{constant} rates has $\Ric \ge 0$
+\end{frame}
+
+\subsection{Modified Logarithmic Sobolev inequality for discrete processes with non-neg Ricci}
+\begin{frame}[allowframebreaks]{The Modified log-Sobolev inequality}
+\begin{block}{Modified logarithmic Sobolev inequality}
+Bound on the entropy in terms of a norm of the gradient of our observable:
+    \begin{equation*}\tag{MLSI}
+        \mathcal{H}(\rho) \le \frac{1}{2\lambda} \Big\lVert \nabla \log\rho \Big\rVert^2 = \frac{1}{2\lambda} \mathcal{I}(\rho)
+    \end{equation*}
+where $\mathcal{I}$ is the Fisher information.
+\end{block}
+
+Implications:
+\begin{itemize}
+    \item encodes the distribution of the eigenvalues of the Laplacian (generator)
+    \item entropy decay along the heat flow \(\mathcal{H}(P_t \rho) \le e^{-2\lambda t}\mathcal{H}(\rho)\)
+    \item with Poincaré ineq,, it implies \textcolor{blue}{\textbf{convergence to equilibrium}}
+    \item convergence in Wassertsein distance \(\W(\rho_t, \sigma_t) \le e^{-2\lambda t} \W(\rho_0, \sigma_0)\)
+    \item hypercontractivity \(\lVert P_t \rho\rVert\le \lVert\rho \rVert\)
+\end{itemize}
+
+We look at convergence to equilibrium in terms of the \textbf{mixing time} of the Markov chain. 
+
+\begin{block}{Total variation mixing time of a Markov chain}
+    For $\varepsilon > 0$, 
+    \[
+    \tau_{mix}(\varepsilon) := \inf \Big\{t>0 : \lVert P_t^* \delta_x - \pi \rVert_{TV} < \varepsilon \quad \forall x \in \X \Big\}
+    \]
+\end{block}
+
+Since
+\begin{equation*}\tag{Pinsker inequality}
+\lVert \nu - \pi \rVert^2_{TV} \le \frac{1}{2} \mathcal{H}(\nu)
+\end{equation*}
+we can use MLSI to bound $\tau_{mix}$.
+
+\begin{block}{Convergence to equilibrium}
+    Assume $\Ric(\X, Q, \pi)\ge 0$ and the diameter of $(\X,d_{\W})$ is $\le D$. If a MLSI with constant $\lambda= \frac{c}{D^2}$ holds, then
+    \[
+    \tau_{mix}(\varepsilon) \le D^2(1/8-c\log\varepsilon)    \]
+    for some universal constant $c$.
+\end{block}
+\end{frame}
+
+\begin{frame}{Modified Log-Sobolev inequality for the zero-range process}
+    \begin{block}{Diameter bound}
+        There is a constant $c>0$ such that the diameter of $(\X_{K,L}, d_\W)$ is bounded by $cK\sqrt{L\log L}$
+    \end{block}
+
+    So, for the zero range process with constant uniform rates, a MLSI with constant $\frac{c}{K^2 L \log L}$ holds. 
+
+    \begin{block}{Convergence of the ZRP}
+        The total variation mixing time of the zero range process on $\X_{K,L}$ with constant uniform rates is 
+        \[
+        \tau_{mix}(\varepsilon) \le K L \log L \bigg(\frac{1}{8} - \frac{\log \varepsilon}{c}\bigg)
+        \]
+        for some universal constant $c$.
+    \end{block}
+\end{frame}  
+
 \section{Further inequalities}
+\tableofcontents[currentsection]
 \subsection{Poincaré inequality and the spectral gap}
 \begin{frame}{Poincaré inequality}
-    
+    % some facts on spectral gap (see notes on log sobolev)
 \end{frame}
 \subsection{Isoperimetric inequality and Cheeger constant}
-\begin{frame}{Isoperimetric inequality}
-    
+\begin{frame}{Isoperimetric inequality and Cheeger constant}
+    % notes from prof
 \end{frame}
 
 \section{Other applications}
 \begin{frame}{example 1}
-    
+    % notes from prof
 \end{frame}
 \begin{frame}{example 2}
     

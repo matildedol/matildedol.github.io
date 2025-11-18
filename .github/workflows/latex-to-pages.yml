@@ -2,7 +2,7 @@ name: Build multiple LaTeX projects and publish PDFs to Pages
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   workflow_dispatch:
 
 permissions:
@@ -26,52 +26,44 @@ jobs:
         uses: xu-cheng/latex-action@v3
         with:
           root_file: tex/cv/cv.tex
-          args: -r tex/.latexmkrc              # use your shared rc
-          tlmgr_repo: https://mirror.ctan.org/systems/texlive/tlnet
-          pre_compile: |
-            tlmgr update --self --all
-            tlmgr install subfiles
-
+          work_in_root_file_dir: true
+          args: -r ../.latexmkrc
+          texlive_version: 2025
 
       # --- Project: Visiting Ricci ---
       - name: Compile Visiting_Ricci
         uses: xu-cheng/latex-action@v3
         with:
           root_file: tex/Visiting_Ricci/main.tex
-          args: -r tex/.latexmkrc
-          tlmgr_repo: https://mirror.ctan.org/systems/texlive/tlnet
+          work_in_root_file_dir: true
+          args: -r ../.latexmkrc
+          texlive_version: 2025
           pre_compile: |
-            tlmgr update --self --all
             tlmgr install subfiles
-          latexmk_shell_escape: true           # only if required by your doc
+          latexmk_shell_escape: true   # keep true only if your doc actually needs -shell-escape
 
       # --- Project: Sliding Ricci ---
       - name: Compile Sliding_Ricci
         uses: xu-cheng/latex-action@v3
         with:
           root_file: tex/Sliding_Ricci/main.tex
-          args: -r tex/.latexmkrc
-          tlmgr_repo: https://mirror.ctan.org/systems/texlive/tlnet
-          pre_compile: |
-            tlmgr update --self --all
-            tlmgr install subfiles
+          work_in_root_file_dir: true
+          args: -r ../.latexmkrc
+          texlive_version: 2025
 
       # --- Project: Sliding Sobolev ---
       - name: Compile Sliding_Sobolev
         uses: xu-cheng/latex-action@v3
         with:
           root_file: tex/Sliding_Sobolev/main.tex
-          args: -r tex/.latexmkrc
-          tlmgr_repo: https://mirror.ctan.org/systems/texlive/tlnet
-          pre_compile: |
-            tlmgr update --self --all
-            tlmgr install subfiles
+          work_in_root_file_dir: true
+          args: -r ../.latexmkrc
+          texlive_version: 2025
 
       # --- Collect PDFs for Pages ---
       - name: Prepare Pages artifact
         run: |
           mkdir -p public/files
-          # Adjust source filenames if your classes output a different name
           cp tex/cv/cv.pdf                          public/files/cv.pdf
           cp tex/Visiting_Ricci/main.pdf            public/files/Ricci.pdf
           cp tex/Sliding_Ricci/main.pdf             public/files/Sliding_Ricci.pdf
