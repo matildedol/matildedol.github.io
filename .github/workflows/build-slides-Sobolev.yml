@@ -1,0 +1,29 @@
+name: Build Sliding_Sobolev
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "tex/Sliding_Sobolev/**"
+      - ".github/workflows/build_sliding_sobolev.yml"
+      - ".latexmkrc"
+  workflow_dispatch:
+
+jobs:
+  build-sliding-sobolev:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile Sliding_Sobolev
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: tex/Sliding_Sobolev/main.tex
+          work_in_root_file_dir: true
+          args: -r ../.latexmkrc
+          texlive_version: 2025
+      - name: Upload PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: sliding-sobolev-pdf
+          path: tex/Sliding_Sobolev/main.pdf
+          if-no-files-found: error

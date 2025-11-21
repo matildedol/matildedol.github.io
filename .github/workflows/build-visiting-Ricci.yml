@@ -1,0 +1,33 @@
+name: Build Visiting_Ricci
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "tex/Visiting_Ricci/**"
+      - ".github/workflows/build_visiting_ricci.yml"
+      - ".latexmkrc"
+  workflow_dispatch:
+
+jobs:
+  build-visiting-ricci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile Visiting_Ricci
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: tex/Visiting_Ricci/main.tex
+          work_in_root_file_dir: true
+          args: -r ../.latexmkrc
+          texlive_version: 2025
+          pre_compile: |
+            tlmgr update --self
+            tlmgr install subfiles
+          latexmk_shell_escape: true   # leave true only if needed
+      - name: Upload PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: visiting-ricci-pdf
+          path: tex/Visiting_Ricci/main.pdf
+          if-no-files-found: error

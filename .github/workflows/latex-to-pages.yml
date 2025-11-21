@@ -1,8 +1,12 @@
-name: Build multiple LaTeX projects and publish PDFs to Pages
+name: Publish PDFs to Pages
 
 on:
   push:
     branches: ["main"]
+    paths:
+      - "tex/**"
+      - ".github/workflows/deploy_pages.yml"
+      - ".latexmkrc"
   workflow_dispatch:
 
 permissions:
@@ -18,10 +22,9 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
+      - uses: actions/checkout@v4
 
-      # --- Project: CV ---
+      # --- CV ---
       - name: Compile CV
         uses: xu-cheng/latex-action@v3
         with:
@@ -30,7 +33,7 @@ jobs:
           args: -r ../.latexmkrc
           texlive_version: 2025
 
-      # --- Project: Visiting Ricci ---
+      # --- Visiting Ricci ---
       - name: Compile Visiting_Ricci
         uses: xu-cheng/latex-action@v3
         with:
@@ -41,9 +44,9 @@ jobs:
           pre_compile: |
             tlmgr update --self
             tlmgr install subfiles
-          latexmk_shell_escape: true   # keep true only if your doc actually needs -shell-escape
+          latexmk_shell_escape: true
 
-      # --- Project: Sliding Ricci ---
+      # --- Sliding Ricci ---
       - name: Compile Sliding_Ricci
         uses: xu-cheng/latex-action@v3
         with:
@@ -52,7 +55,7 @@ jobs:
           args: -r ../.latexmkrc
           texlive_version: 2025
 
-      # --- Project: Sliding Sobolev ---
+      # --- Sliding Sobolev ---
       - name: Compile Sliding_Sobolev
         uses: xu-cheng/latex-action@v3
         with:
