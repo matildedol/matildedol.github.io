@@ -454,3 +454,100 @@ and checking that $\alpha(0)=...$, $\alpha(\infty)=...$
 By applying ... (change of variables and integrating by parts) we get the result. 
 
 Then, ...
+
+
+\subsubsection{Joining the dots}
+
+\textcolor{blue}{E’ necessario chiarire come tutti questi concetti e queste
+disuguaglianze si combinano per ottenere la stima sul tempo di
+mixing.}
+
+\textcolor{blue}{(1) Cosa centra MLSI con il fatto che il semigruppo è il flusso
+dell’entropia? Questo punto è talmente fondamentale che potresti
+considerare di far vedere il calcolo per ottenere entropy decay}
+
+\textcolor{blue}{(2) Capito (1), come si combina entropy decay e Pinsker per concludere? Anche questo è da esplicitare}
+\\
+
+(1) \textbf{How MLSI + $P_t$ being the heat semigroup + Fisher being the derivative of the entropy imply entorpy decay?}
+
+[Continuous case]
+
+That $P_t$ is the heat semigroup follows by construction of $\W$, and its relation to the gradient flow of the entropy was derived in Section \ref{sec: heat flow antropy}. 
+We show how Fisher is the derivative of the entropy.
+
+Recall that for a probability densty $\rho \in \mP(X)$,
+\begin{align*}
+    &\mathcal{H}(\rho) := \int \rho \log\rho \de \pi \\
+    &\mathcal{I}(\rho) := \int \rho |\nabla \log \rho |^2 \de \pi
+\end{align*}
+
+Then, we have
+\begin{align*}
+    \frac{\de}{\de t} \mathcal{H}(P_t\rho) &= \int \frac{\de}{\de t} P_t\rho \log(P_t\rho)\de \pi \\
+    &= \int \bigg(\frac{\de}{\de t} P_t \rho\bigg) \log P_t \rho + \frac{1}{P_t \rho} P_t \rho \bigg(\frac{\de}{\de t} P_t \rho\bigg) \de \pi \\
+    &= \int \frac{\de}{\de t} P_t \rho\Big( \log P_t \rho + 1\Big) \de \pi = \int \Delta P_t \rho\Big(\log P_t \rho + 1\Big) \de \pi 
+\end{align*}
+where in the last passage $\Delta$ is the Laplacian operator and equality follows from $P_t$ being the heat semigroup. 
+Then, integrating by parts and usnig that $\nabla \log f = \nabla f / f$ we get
+\begin{align*}
+    \frac{\de}{\de t} \mathcal{H}(P_t\rho) = \int \nabla P_t \rho \cdot \frac{\nabla P_t \rho}{P_t \rho} \de \pi = \mathcal{I}(P_t \rho)
+\end{align*}
+
+\begin{remark} Consider the generator of the chain $\mathcal{L}$, the invariant measure $\pi$ and functions $f:X \to \R$. 
+For consistency with most of the literature, define the Dirichlet form as 
+\begin{equation*}
+\mathcal{E}(f,g) := \int_\X f \mathcal{L} g \de \pi
+\end{equation*}
+Then, we define Fisher infromation of a probability denisty $\rho \in \mathcal{P}(X)$ as
+\begin{equation*}
+\mathcal{I}(\rho)= \int_X \lVert \nabla \log\rho \rVert^2 \de \pi
+\end{equation*}
+
+Then, integrating by parts using Gaussian formula we see $\mathcal{E}(\rho, \log\rho)=\mathcal{I}(\rho)$.
+\end{remark}
+
+Now, recall the MLSI:
+\begin{equation}\tag{MLSI}
+    \mathcal{H}(\rho) \le \frac{1}{2 \lambda} \mathcal{I}(\rho)
+\end{equation}
+by using the result above we get that the entropy is bounded by its derivative as 
+\begin{equation*}
+    \mathcal{H}(P_t\rho) \le -\frac{1}{2\lambda} \mathcal{H}'(P_t\rho)
+\end{equation*}
+Notice that this implies
+\begin{equation*}
+    \mathcal{H}'(P_t\rho) \le - 2 \lambda \mathcal{H}(P_t\rho)
+\end{equation*}
+Then, we can apply Gronwall's inequality to obtain entropy decay:
+\begin{equation}
+    \mathcal{H}(P_t \rho) \le e^{-2\lambda t} \mathcal{H}(\rho) 
+\end{equation}
+
+\begin{theorem}[Gronwall's inequality]
+Gronwall's inequality is a fundamental result in evolution problems. It states that a nonnegative function $\phi(t)$ such that there exists a constant $C$ such that $\phi'(t) \le C(t) \phi(t)$ satisfies 
+\begin{equation*}
+\phi(t) \le \phi(0) \exp \bigg(\int_0^t C(\tau) \de \tau\bigg)
+\end{equation*}
+\begin{proof}
+Consider the quantity 
+\begin{equation*}
+    v(t) := \exp \bigg(\int_a^t C(\tau) \de \tau\bigg)
+\end{equation*}
+and observing that $v'(t)= v(t)C(t)$, $v(a)=1$. 
+Then using the quotient formula we have
+\begin{equation*}
+    \frac{\de}{\de t}\frac{\phi(t)}{v(t)} = \frac{\phi'(t)v(t)- v'(t) \phi(t)}{v(t)^2} = \frac{\phi'(t)v(t) - C(t)\phi(t)v(t)}{v^2(t)} \le 0 
+\end{equation*}
+by assumption. Then the function $\phi(t) / v(t)$ is decreasing and hence bounded by its value at the lower extreme $a$. This yields
+\begin{equation*}
+    \frac{\phi(t)}{v(t)}\le \frac{\phi(a)}{v(a)} = \phi (a)
+\end{equation*}
+which by setting $a=0$ yields the result. 
+\end{proof}
+\end{theorem}
+
+I also think that entropy decay is, in general, equivalent to convergence to equilibrium because entropy going to 0 means that the evolution of the chain is converging to a known quantity, and that can only be the invariant measure.
+
+However, next we demonstrate how entropy decay and the pinsker inequality allow us to express convergence to equilibrium in terms of a bound on the mixing time. 
+
