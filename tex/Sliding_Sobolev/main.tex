@@ -45,6 +45,38 @@ non-negative Ricci curvature \\~\\ \small M. Erbar and M. Fathi}
 \begin{frame}{Overview of the talk}
     \tableofcontents
 \end{frame}
+\section{Introduction}
+
+\begin{frame}
+    \centering
+    We present the paper \\
+    {\color{blue}\textit{Poincaré, modified logarithmic Sobolev and
+    isoperimetric inequalities for Markov chains with
+    non-negative Ricci curvature}}\\
+    as a follow up of \\
+
+    \textit{Ricci curvature of finite markov chains via convexity of the entropy}
+\pause
+\\~\\
+    \begin{enumerate}
+        \item The main goal (of the first paper) is to introduce a new geometric structure in the study of Markov semigroups (Markov chains)
+        \pause
+        \item This is done via an interpratation of the semigroup as a gradient flow of the Shannon entropy
+        \item Leading to a synthetic notion of Ricci curvature to study contraction properties
+    \end{enumerate}
+\pause
+    {\color{blue} New ingredients (content of the new paper):} functional inequalities and applications to bounds on the mixing time of the chain and to its convergence to equilibrium
+\end{frame}
+
+\begin{frame}
+    \begin{itemize}
+        \item Geometric structure on space of Markov chains
+        \item Synthetic notion of Ricci curvature ($\Ric \ge 0$)
+        \item Analogous version of functional inequalities for Markov chains
+        \item Bounds on mixing time and rate of convergence to equilibrium (among others)
+    \end{itemize}
+\end{frame}
+
 
 \section{Main result: convergence to equilibrium of the zero-range process}
 
@@ -79,6 +111,9 @@ Good model for:
     \item population dynamics
     \item particle physics
     \item ... any system in which deciding to move depends on the surroundings
+
+
+    {\color{blue}EB: se trovi il nome specifico di modelli in traffico flow, population design, etc. aggiungili}
 \end{itemize}
 \end{frame}
 
@@ -88,12 +123,17 @@ Good model for:
     \begin{block}{Convergence to equilibrium}
         The constant-rate zero range process with $K$ particles and $L$ sites has mixing time bounded by
         \begin{equation}
-        \tau_{mix}(\varepsilon) \le K L \log L \bigg(\frac{1}{8} - \frac{\log \varepsilon}{c}\bigg)
+        \tau_{\rm mix}(\varepsilon) \le K L \log L \bigg(\frac{1}{8} - \frac{\log \varepsilon}{c}\bigg)
         \end{equation}
         for some universal constant $c$. 
+
+
+{\color{blue}EB: se non scrive altro nella slide (e va benissimo) dovi spendere molto tempo per spiegare la notazione a parole (o magari usando la lavagna). In particolare dovresti spiegare cos'è $\tau_{\rm mix}$, qual'è il ruolo di $\varepsilon$ in questa definizione, cosa vuol dire in termini del processo.}
+
+        
     \end{block}
 \pause
-\begin{center}\textcolor{blue}{$\star$ This is convergence to equilibrium! $\star$}\end{center}
+\begin{center}{\color{blue} $\star$ This is exponential convergence to equilibrium! $\star$}\end{center}
 \end{frame}
 
 
@@ -139,16 +179,18 @@ where the infimum runs over all sufficiently regular curves satisfying a continu
 \rho|_{t=1} = \rho_1.
 \end{cases}
 \]
-and $\hat\rho(x,y)=\theta(\rho(x),\rho(y))$ which is the logarithmic mean.
+and $\hat\rho(x,y):=\theta(\rho(x),\rho(y))$ which is the logarithmic mean.
 \\~\\
-
-Endowing $\X$ with this distance, we obtain that the Markov semigroup $P_t=e^{tL}$ is the gradient flow of Shannon's entropy $\mathcal{H}(\rho)=\sum_{x\in\X} \rho(x) \log \rho(x) \pi(x)$
+\centering
+Endowing $\X$ with this distance, we interpret the Markov semigroup $P_t=e^{tL}$ as a gradient flow of Shannon's entropy $\mathcal{H}(\rho):=\sum_{x\in\X} \rho(x) \log \rho(x) \pi(x)$
 \end{frame}
 \subsection{Ricci for discrete processes}
 
 \begin{frame}{Ricci for discrete processes}
     \begin{block}{Entropic Ricci curvature for discrete space}
-    $(\X,Q,\pi)$ has entropic Ricci curvature bounded from below by $\kappa \in \R$ if for any $\rho_t \in (\mP(\X), \W)$ we have
+    $(\X,Q,\pi)$ has entropic Ricci curvature bounded from below by $\kappa \in \R$ if for any geodesic \{$\rho_t\}_{t\in[0,1]}$ on $ (\mP(\X), \W)$ 
+    %EB: intendi una geodetica rispetto a quella struttrura metrica? Non userei questa notazione 
+    we have
     \[
     \mathcal{H}(\rho_t) \le (1-t)\mathcal{H}(\rho_0) + t\mathcal{H}(\rho_1)- \frac{\kappa}{2}t(1-t)\W(\rho_0,\rho_1)^2
     \]
@@ -175,9 +217,9 @@ where $\mathcal{I}$ is the Fisher information.
 
 Implications:
 \begin{itemize}
-    \item encodes the distribution of the eigenvalues of the Laplacian (generator)
+    \item encodes the distribution of the eigenvalues of the Laplacian (generator $L)
     \item entropy decay along the heat flow \(\mathcal{H}(P_t \rho) \le e^{-2\lambda t}\mathcal{H}(\rho)\)
-    \item with Poincaré ineq,, it implies \textcolor{blue}{\textbf{convergence to equilibrium}}
+    \item {\color{blue}\textbf{convergence to equilibrium}}
     \item convergence in Wassertsein distance \(\W(\rho_t, \sigma_t) \le e^{-2\lambda t} \W(\rho_0, \sigma_0)\)
     \item hypercontractivity \(\lVert P_t \rho\rVert\le \lVert\rho \rVert\)
 \end{itemize}
@@ -187,7 +229,7 @@ We look at convergence to equilibrium in terms of the \textbf{mixing time} of th
 \begin{block}{Total variation mixing time of a Markov chain}
     For $\varepsilon > 0$, 
     \[
-    \tau_{mix}(\varepsilon) := \inf \Big\{t>0 : \lVert P_t^* \delta_x - \pi \rVert_{TV} < \varepsilon \quad \forall x \in \X \Big\}
+    \tau_{\rm mix}(\varepsilon) := \inf \Big\{t>0 : \lVert P_t^* \delta_x - \pi \rVert_{TV} < \varepsilon \quad \forall x \in \X \Big\}
     \]
 \end{block}
 
@@ -195,7 +237,7 @@ Since
 \begin{equation*}\tag{Pinsker inequality}
 \lVert \nu - \pi \rVert^2_{TV} \le \frac{1}{2} \mathcal{H}(\nu)
 \end{equation*}
-we can use MLSI to bound $\tau_{mix}$.
+we can use MLSI to bound $\tau_{\rm mix}$.
 
 \begin{block}{Convergence to equilibrium}
     Assume $\Ric(\X, Q, \pi)\ge 0$ and the diameter of $(\X,d_{\W})$ is $\le D$. If a MLSI with constant $\lambda= \frac{c}{D^2}$ holds, then
@@ -203,6 +245,20 @@ we can use MLSI to bound $\tau_{mix}$.
     \tau_{mix}(\varepsilon) \le D^2(1/8-c\log\varepsilon)    \]
     for some universal constant $c$.
 \end{block}
+
+
+{\color{blue} EB: E' necessario chiarire come tutti questi concetti e queste disuguaglianze si combinano per ottenere la stima sul tempo di mixing. 
+
+(1) Cosa centra MLSI con il fatto che il semigruppo è il flusso dell'entropia? Questo punto è talmente fondamentale che potresti considerare di far vedere il calcolo per ottenere entropy decay
+
+(2) Capito (1), come si combina entropy decay e Pinsker per concludere? Anche questo è esplicitabile.
+
+
+}
+
+
+
+
 \end{frame}
 
 \begin{frame}{Modified Log-Sobolev inequality for the zero-range process}
@@ -215,31 +271,36 @@ we can use MLSI to bound $\tau_{mix}$.
     \begin{block}{Convergence of the ZRP}
         The total variation mixing time of the zero range process on $\X_{K,L}$ with constant uniform rates is 
         \[
-        \tau_{mix}(\varepsilon) \le K L \log L \bigg(\frac{1}{8} - \frac{\log \varepsilon}{c}\bigg)
+        \tau_{\rm mix}(\varepsilon) \le K L \log L \bigg(\frac{1}{8} - \frac{\log \varepsilon}{c}\bigg)
         \]
         for some universal constant $c$.
     \end{block}
 \end{frame}  
 
-\section{Further inequalities}
-\tableofcontents[currentsection]
-\subsection{Poincaré inequality and the spectral gap}
-\begin{frame}{Poincaré inequality}
-    % some facts on spectral gap (see notes on log sobolev)
-\end{frame}
-\subsection{Isoperimetric inequality and Cheeger constant}
-\begin{frame}{Isoperimetric inequality and Cheeger constant}
-    % notes from prof
-\end{frame}
 
-\section{Other applications}
-\begin{frame}{example 1}
-    % notes from prof
-\end{frame}
-\begin{frame}{example 2}
+% \section{Further inequalities}
+% \tableofcontents[currentsection]
+% \subsection{Poincaré inequality and the spectral gap}
+% \begin{frame}{Poincaré inequality}
+%     % some facts on spectral gap (see notes on log sobolev)
+% \end{frame}
+% \subsection{Isoperimetric inequality and Cheeger constant}
+% \begin{frame}{Isoperimetric inequality and Cheeger constant}
+%     % notes from prof
+% \end{frame}
+
+% \section{Other applications}
+% \begin{frame}{example 1}
+%     % notes from prof
+% \end{frame}
+% \begin{frame}{example 2}
+    
+% \end{frame}
+
+\begin{frame}{Other examples}
     
 \end{frame}
 
-% other examples of what this theoreitical framework allows us to get    
+% other examples of what this theoreitical framework allows us to get     
 
 \end{document}
