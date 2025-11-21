@@ -13,7 +13,8 @@
 **/*.nav
 **/*.snm
 **/*.vrb
-
+**/update-tlmgr-latest.sh
 # VS Code
 .vscode/
 .DS_Store
+.Rhistory
