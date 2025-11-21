@@ -39,6 +39,7 @@ jobs:
           args: -r ../.latexmkrc
           texlive_version: 2025
           pre_compile: |
+            tlmgr update --self
             tlmgr install subfiles
           latexmk_shell_escape: true   # keep true only if your doc actually needs -shell-escape
 

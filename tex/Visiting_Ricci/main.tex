@@ -1,15 +1,14 @@
-\documentclass[a4paper,14.5pt,reqno]{amsbook}
-%\usepackage{times} % Basic Times font
-%\usepackage{mathpazo} % Palatino text with math support
-%\usepackage{charter}
+\documentclass[a4paper,12pt,reqno]{amsbook}
+\linespread{1.2}
 
 \usepackage{subfiles}
+
 \usepackage{xcolor}
 \usepackage{graphicx}
 \usepackage{amsmath}
 \usepackage{libertinus}
-\usepackage[numbers,sort&compress]{natbib}
-\bibliographystyle{plain}
+\usepackage[authoryear,round]{natbib}
+\bibliographystyle{plainnat}
 \usepackage{blindtext}
 \usepackage{graphicx}
 \usepackage{thmtools}
@@ -130,23 +129,19 @@
 \newtheorem*{example}{Example}
 \newtheorem*{remark}{Remark}
 
-\title{Notes on Ricci curvature of finite Markov chains}
+
+\title{Notes on Ricci curvature of finite markov chains}
 \author{matilde dolfato}
-\thanks{Under superivsion of: Prof. Elia Brué}
-\date{may 2025}
+\date{May 2025}
 
 \begin{document}
-\frontmatter            % optional but recommended for amsbook
 \maketitle
-
-\mainmatter
-
-This is a collection of notes on the study behind the paper \textit{Ricci Curvature of Finite Markov Chains via Convexity of the Entropy}, Erbar and Maas (2011).
+This is a collection of notes on the study behind the topic of \textit{Ricci Curvature of Finite Markov Chains}, Erbar and Maas (2011), Erbar and Fathi (2016). 
 \\
 
 Geometry $\leftrightarrow$ Optimal Transport $\leftrightarrow$ Statistics and Statistical Mechanics.
 
-Sections 1 to 4 are on the theory behind the paper. Section 5 goes over the study. 
+Chapters 1 to 4 are on the mathematical areas behind the paper. Chapter 5 relates them in the rationale of the paper. Chapters 6 and 7 address the content of the studies. 
 \tableofcontents
 \newpage
 \chapter*{High-level logical idea}
@@ -1414,7 +1409,7 @@ Convergence of the heat semigroup (gradient contractivity) is related to the abo
 \newpage
 \include{paper2}
 
-\bibliographystyle{unsrtnat}  
+\bibliographystyle{plain}
 \bibliography{refs}
 
 \appendix
@@ -1423,3 +1418,4 @@ Convergence of the heat semigroup (gradient contractivity) is related to the abo
 \chapter{Extra}
 \input{extra}
 \end{document}
+cd ..
