@@ -42,11 +42,7 @@ non-negative Ricci curvature \\~\\ \small M. Erbar and M. Fathi}
 \frame{\titlepage}
 % % comment on title
 
-\begin{frame}{Overview of the talk}
-    \tableofcontents
-\end{frame}
 \section{Introduction}
-
 \begin{frame}
     \centering
     We present the paper \\
@@ -68,15 +64,21 @@ non-negative Ricci curvature \\~\\ \small M. Erbar and M. Fathi}
     {\color{blue} New ingredients (content of the new paper):} functional inequalities and applications to bounds on the mixing time of the chain and to its convergence to equilibrium
 \end{frame}
 
-\begin{frame}
+\begin{frame}{Road from old paper to present}
     \begin{itemize}
         \item Geometric structure on space of Markov chains
+        \item[]
         \item Synthetic notion of Ricci curvature ($\Ric \ge 0$)
+        \item[] 
         \item Analogous version of functional inequalities for Markov chains
+        \item[] 
         \item Bounds on mixing time and rate of convergence to equilibrium (among others)
     \end{itemize}
 \end{frame}
 
+\begin{frame}{Overview of the talk}
+    \tableofcontents
+\end{frame}
 
 \section{Main result: convergence to equilibrium of the zero-range process}
 
@@ -132,12 +134,16 @@ Good model for:
 
         
     \end{block}
-\pause
-\begin{center}{\color{blue} $\star$ This is exponential convergence to equilibrium! $\star$}\end{center}
+    \pause
+    \bigskip
+    \centering{\color{blue} $\star$ This is exponential convergence to equilibrium! $\star$}
 \end{frame}
 
+\begin{frame}{Overview of the talk}
+    \tableofcontents[currentsection]
+\end{frame}
 
-\section{From geometry to inequalities}
+\section{Synthetic geometric structure}
 \tableofcontents[currentsection]
 \subsection{Setup}
 \begin{frame}{Setup}
@@ -154,50 +160,70 @@ Good model for:
     := \Bigl\{\rho:\X\to\R_+ : \sum_{x\in\X} \rho(x)\,\pi(x) = 1\Bigr\}
   \]
 \end{frame}
+
+\subsection{Distance $\W$}
 \begin{frame}{Distance $\W$}
-    We define a discrete transport distance, by analogy with the Wasserstein distance. For $\rho_0,\rho_1 \in \mP(\X),$
-    \[
-\W(\rho_0, \rho_1)^2 := 
-\inf_{\rho, \psi} 
-\; \frac{1}{2} 
-\int_0^1 \sum_{x,y \in X} 
-\bigl( \psi_t(x) - \psi_t(y) \bigr)^2 
-\, \hat{\rho}_t(x,y) \, Q(x,y) \, \pi(x) 
-\, dt.
-\]
-where the infimum runs over all sufficiently regular curves satisfying a continuity equation
-\[
-\begin{cases}
-\displaystyle
-\frac{d}{dt}\rho_t(x) 
-+ \sum_{y \in \mathcal{X}} 
-\bigl( \psi_t(y) - \psi_t(x) \bigr)
-\hat{\rho}_t(x,y) Q(x,y) 
-= 0, 
-& \forall x \in \mathcal{X}, \\[1.2em]
-\rho|_{t=0} = \rho_0, \quad 
-\rho|_{t=1} = \rho_1.
-\end{cases}
-\]
-and $\hat\rho(x,y):=\theta(\rho(x),\rho(y))$ which is the logarithmic mean.
-\\~\\
-\centering
-Endowing $\X$ with this distance, we interpret the Markov semigroup $P_t=e^{tL}$ as a gradient flow of Shannon's entropy $\mathcal{H}(\rho):=\sum_{x\in\X} \rho(x) \log \rho(x) \pi(x)$
+    We define a discrete transport distance, by analogy with the Wasserstein distance. For $\rho_0,\rho_1 \in \mP(\X)$,
+    \begin{equation*}
+    \W{(\rho_0, \rho_1)}^2 := \inf_{\rho, \psi} 
+    \; \frac{1}{2} 
+    \int_0^1 \sum_{x,y \in X} 
+    {(\psi_t(x) - \psi_t(y))}^2 
+    \, \hat{\rho}_t(x,y) \, Q(x,y) \, \pi(x) 
+    \, dt
+    \end{equation*}
+    where the infimum runs over all sufficiently regular curves satisfying a continuity equation
+    \begin{equation*}
+    \begin{cases}
+    \displaystyle
+    \frac{d}{dt}\rho_t(x) 
+    + \sum_{y \in \mathcal{X}} 
+    \bigl( \psi_t(y) - \psi_t(x) \bigr)
+    \hat{\rho}_t(x,y) Q(x,y) 
+    = 0, 
+    & \forall x \in \mathcal{X}, \\
+    \rho|_{t=0} = \rho_0, \quad 
+    \rho|_{t=1} = \rho_1.
+    \end{cases}
+    \end{equation*}
+    and $\hat\rho(x,y):=\theta(\rho(x),\rho(y))$ which is the logarithmic mean.
 \end{frame}
-\subsection{Ricci for discrete processes}
+
+\begin{frame}{Markov semigroup as gradient flow}
+{\small    \begin{equation*}
+        \W{(\rho_0, \rho_1)}^2 := \inf_{\rho, \psi} 
+        \; \frac{1}{2} 
+        \int_0^1 \sum_{x,y \in X} 
+        {(\psi_t(x) - \psi_t(y))}^2 
+        \, \hat{\rho}_t(x,y) \, Q(x,y) \, \pi(x) 
+        \, dt
+        \end{equation*}
+    \begin{equation*}
+        {\rm s.t.} \quad
+        \frac{d}{dt}\rho_t(x) 
+        + \nabladot (\hat{\rho}(x,y)\nabla \psi(x,y)) =0
+    \end{equation*}}
+\centering
+    Endowing $\X$ with this distance, we can interpret the Markov semigroup $P_t=e^{tL}$ as a gradient flow of Shannon's entropy \begin{equation*}
+        \mathcal{H}(\rho):=\sum_{x\in\X} \rho(x) \log \rho(x) \pi(x)
+    \end{equation*}
+\end{frame}
+
+
+\subsection{Ricci curvature for discrete processes}
 
 \begin{frame}{Ricci for discrete processes}
     \begin{block}{Entropic Ricci curvature for discrete space}
-    $(\X,Q,\pi)$ has entropic Ricci curvature bounded from below by $\kappa \in \R$ if for any geodesic \{$\rho_t\}_{t\in[0,1]}$ on $ (\mP(\X), \W)$ 
+    $(\X,Q,\pi)$ has entropic Ricci curvature bounded from below by $\kappa \in \R$ if for any geodesic ${\{\rho_t\}}_{t\in[0,1]}$ on $ (\mP(\X), \W)$ 
     %EB: intendi una geodetica rispetto a quella struttrura metrica? Non userei questa notazione 
     we have
     \[
-    \mathcal{H}(\rho_t) \le (1-t)\mathcal{H}(\rho_0) + t\mathcal{H}(\rho_1)- \frac{\kappa}{2}t(1-t)\W(\rho_0,\rho_1)^2
+    \mathcal{H}(\rho_t) \le (1-t)\mathcal{H}(\rho_0) + t\mathcal{H}(\rho_1)- \frac{\kappa}{2}t(1-t)\W{(\rho_0,\rho_1)}^2
     \]
     In this case, we write $\Ric(\X,Q,\pi)\ge \kappa$.
     \end{block}
 \end{frame}
-\begin{frame}{Ricci for the zero-range process}
+\begin{frame}{Ricci for the zero-range process (in brief)}
     In another contribution, M. Fathi and J. Maas provide explicit ways of computing bounds on Ricci for discrete processes
     \\~\\
     They show that for the ZRP with \textit{increasing} rates, Ricci is positive
@@ -205,30 +231,43 @@ Endowing $\X$ with this distance, we interpret the Markov semigroup $P_t=e^{tL}$
     The ZRP with \textit{constant} rates has $\Ric \ge 0$
 \end{frame}
 
-\subsection{Modified Logarithmic Sobolev inequality for discrete processes with non-neg Ricci}
-\begin{frame}[allowframebreaks]{The Modified log-Sobolev inequality}
-\begin{block}{Modified logarithmic Sobolev inequality}
-Bound on the entropy in terms of a norm of the gradient of our observable:
-    \begin{equation*}\tag{MLSI}
-        \mathcal{H}(\rho) \le \frac{1}{2\lambda} \int \rho | \nabla \log \rho |^2 \de \pi = \frac{1}{2\lambda} \mathcal{I}(\rho)
-    \end{equation*}
-where $\mathcal{I}$ is the Fisher information.
-\end{block}
-\pause
-Implications:
-\begin{itemize}
-    \item encodes the distribution of the eigenvalues of the Laplacian (generator $L$)
-    \item entropy decay along the heat flow \(\mathcal{H}(P_t \rho) \le e^{-2\lambda t}\mathcal{H}(\rho)\)
-    \item {\color{blue}\textbf{convergence to equilibrium}}
-    \item convergence in Wassertsein distance \(\W(\rho_t, \sigma_t) \le e^{-2\lambda t} \W(\rho_0, \sigma_0)\)
-    \item hypercontractivity \(\lVert P_t \rho\rVert\le \lVert\rho \rVert\)
-\end{itemize}
+\section{Modified log-Sobolev inequality}
 
+\begin{frame}{Overview of the talk}
+    \tableofcontents[currentsection]
 \end{frame}
 
+\begin{frame}{The Modified log-Sobolev inequality}
+\begin{block}{Modified logarithmic Sobolev inequality}
+It is a \textbf{bound on the entropy} in terms of a norm of the gradient of our observable:
+    \begin{equation*}\tag{MLSI($\lambda$)}
+        \mathcal{H}(\rho) \le \frac{1}{2\lambda} \mathcal{I}(\rho)
+    \end{equation*}
+where $\mathcal{I}$ is the Fisher information $\mathcal{I}(\rho):= \int \rho | \nabla \log \rho |^2 \de \pi = \lVert \nabla \log \rho \rVert_\rho ^2$
+\end{block}
+
+\pause[]
+\bigskip
+Many implications on convergence property, spectrum of the Laplacian and hypercontractivity!
+
+\bigskip\centering
+{\color{blue}  $\star$ Our focus: how MLSI allows to bound the mixing time of the chain via entropy decay  $\star$ }
+\end{frame}
+
+\section{From MLSI to convergence to equilibrium}
+\begin{frame}{Overview of the talk}
+    \tableofcontents[currentsection]
+\end{frame}
 \begin{frame}{From MLSI to entropy decay}
-    Interpreting the markov semigroup $P_t$ as the heat semigroup, we get that fisher information is the derivative of the entropy. 
-    
+{   \small
+    \begin{equation*}\tag{MLSI($\lambda$)}
+        \mathcal{H}(\rho) \le \frac{1}{2\lambda} \mathcal{I}(\rho)
+    \end{equation*}}
+    When $P_t$ is the heat semigroup,
+    \begin{equation*}
+        \frac{\de}{\de t} \mathcal{H}(P_t \rho) = -\mathcal{I}(P_t \rho)
+    \end{equation*}
+    \\~\\
     Hence
     \begin{equation*}\tag{MLSI}
         \mathcal{H}(P_t\rho) \le \frac{1}{2\lambda} \frac{\de}{\de t}\mathcal{H}(P_t \rho)
@@ -270,13 +309,7 @@ we can use MLSI to bound $\tau_{\rm mix}$.
 (1) Cosa centra MLSI con il fatto che il semigruppo è il flusso dell'entropia? Questo punto è talmente fondamentale che potresti considerare di far vedere il calcolo per ottenere entropy decay
 
 (2) Capito (1), come si combina entropy decay e Pinsker per concludere? Anche questo è esplicitabile.
-
-
 }
-
-
-
-
 \end{frame}
 
 \begin{frame}{Modified Log-Sobolev inequality for the zero-range process}
@@ -319,9 +352,43 @@ we can use MLSI to bound $\tau_{\rm mix}$.
     lalaland
 \end{frame}
 
-\begin{frame}{Additional formulas}
-    The distance $\W$ on $\mP(\X)$ induces a distance on $\X$ by restricting to Dirac masses, i.e. for $x,y\in\X$
-    \[d_\W(x,y) := \W(\delta_x, \delta_y)\]
+\begin{frame}[allowframebreaks]{Additional formulas}
+    \begin{block}{Distance $d_\W$ on $\X$}
+        The distance $\W$ on $\mP(\X)$ induces a distance on $\X$ by restricting to Dirac masses, i.e. for $x,y\in\X$
+        \begin{equation*}
+            d_\W(x,y) := \W(\delta_x, \delta_y)
+        \end{equation*}
+    \end{block}
+
+    \begin{block}{Induced Riemannian structure on $\X$}
+        \begin{equation*}
+            {(\Psi,\Phi)}_\rho:=\frac{1}{2}\sum_{x,y}\Psi(x,y)\Phi(x,y)\hat{\rho}(x,y)Q(x,y)\pi(x)
+        \end{equation*}
+    \end{block}
+
+    \begin{block}{Discrete gradient and divergence}
+        \begin{align*}
+            \nabla \psi(x,y) &= \psi(y) - \psi(x)\\[4pt]
+            \nabladot (\nabla \psi)(x) &= \tfrac{1}{2}\sum_y \big(\nabla\psi(x,y) - \nabla\psi(y,x)\big) Q(x,y)\\
+            &= \tfrac{1}{2}\sum_y \big(\psi(y) - \psi(x) - \psi(x) + \psi(y)\big) Q(x,y)\\
+            &= \sum_y (\psi(y)-\psi(x)) Q(x,y)
+        \end{align*}
+    \end{block}
+    \begin{block}{Heat flow as gradient flow of entropy}
+        Heat equation $\rho'_t=\Delta \rho_t = \nabladot \nabla \rho_t$\\
+        Continuity equation $\rho'_t + \nabladot(\hat{\rho}\nabla\psi)=0$\\
+        The heat equation can be re-written as a continuity equation if $\nabla\psi_t=-\frac{\nabla\rho_t}{\hat\rho_t}$ \\
+        The gradient of the entropy is $\text{grad}_\W \cH(\rho_t)=\nabla \log \rho_t$
+
+        Hence, we get that the heat flow is the gradient flow of the entropy if \begin{equation*}
+        \nabla \psi_t = -\frac{\nabla\rho_t}{\hat\rho_t} = -\nabla \log \rho_t;
+        \end{equation*}
+        which gives
+        \begin{equation}\label{eq: condition}
+            \frac{\nabla\rho_t}{\hat\rho_t} = \nabla \log \rho_t
+        \end{equation}
+        i.e. precisely that $\hat\rho_t$ is the logarithmic mean.
+    \end{block}
 \end{frame}
 
 % other examples of what this theoreitical framework allows us to get     
