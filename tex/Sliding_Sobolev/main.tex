@@ -128,7 +128,7 @@ Good model for:
         for some universal constant $c$. 
 
 
-{\color{blue}EB: se non scrive altro nella slide (e va benissimo) dovi spendere molto tempo per spiegare la notazione a parole (o magari usando la lavagna). In particolare dovresti spiegare cos'è $\tau_{\rm mix}$, qual'è il ruolo di $\varepsilon$ in questa definizione, cosa vuol dire in termini del processo.}
+% {\color{blue}EB: se non scrive altro nella slide (e va benissimo) dovi spendere molto tempo per spiegare la notazione a parole (o magari usando la lavagna). In particolare dovresti spiegare cos'è $\tau_{\rm mix}$, qual'è il ruolo di $\varepsilon$ in questa definizione, cosa vuol dire in termini del processo.}
 
         
     \end{block}
@@ -210,20 +210,38 @@ Endowing $\X$ with this distance, we interpret the Markov semigroup $P_t=e^{tL}$
 \begin{block}{Modified logarithmic Sobolev inequality}
 Bound on the entropy in terms of a norm of the gradient of our observable:
     \begin{equation*}\tag{MLSI}
-        \mathcal{H}(\rho) \le \frac{1}{2\lambda} \Big\lVert \nabla \log\rho \Big\rVert^2 = \frac{1}{2\lambda} \mathcal{I}(\rho)
+        \mathcal{H}(\rho) \le \frac{1}{2\lambda} \int \rho | \nabla \log \rho |^2 \de \pi = \frac{1}{2\lambda} \mathcal{I}(\rho)
     \end{equation*}
 where $\mathcal{I}$ is the Fisher information.
 \end{block}
-
+\pause
 Implications:
 \begin{itemize}
-    \item encodes the distribution of the eigenvalues of the Laplacian (generator $L)
+    \item encodes the distribution of the eigenvalues of the Laplacian (generator $L$)
     \item entropy decay along the heat flow \(\mathcal{H}(P_t \rho) \le e^{-2\lambda t}\mathcal{H}(\rho)\)
     \item {\color{blue}\textbf{convergence to equilibrium}}
     \item convergence in Wassertsein distance \(\W(\rho_t, \sigma_t) \le e^{-2\lambda t} \W(\rho_0, \sigma_0)\)
     \item hypercontractivity \(\lVert P_t \rho\rVert\le \lVert\rho \rVert\)
 \end{itemize}
 
+\end{frame}
+
+\begin{frame}{From MLSI to entropy decay}
+    Interpreting the markov semigroup $P_t$ as the heat semigroup, we get that fisher information is the derivative of the entropy. 
+    
+    Hence
+    \begin{equation*}\tag{MLSI}
+        \mathcal{H}(P_t\rho) \le \frac{1}{2\lambda} \frac{\de}{\de t}\mathcal{H}(P_t \rho)
+    \end{equation*}
+
+    Using Gronwall's inequality, this yields an estimate on entropy decay
+    \begin{equation*}
+        \mathcal{H}(P_t \rho) \le e^{-2\lambda t} \mathcal{H}(\rho)
+    \end{equation*}
+    that quantifies {\color{blue} convergence to equilibrium}. 
+\end{frame}
+
+\begin{frame}{From entropy decay to bound on mixing time}
 We look at convergence to equilibrium in terms of the \textbf{mixing time} of the Markov chain. 
 
 \begin{block}{Total variation mixing time of a Markov chain}
@@ -297,8 +315,13 @@ we can use MLSI to bound $\tau_{\rm mix}$.
     
 % \end{frame}
 
-\begin{frame}{Other examples}
-    
+\begin{frame}[allowframebreaks]{Other examples}
+    lalaland
+\end{frame}
+
+\begin{frame}{Additional formulas}
+    The distance $\W$ on $\mP(\X)$ induces a distance on $\X$ by restricting to Dirac masses, i.e. for $x,y\in\X$
+    \[d_\W(x,y) := \W(\delta_x, \delta_y)\]
 \end{frame}
 
 % other examples of what this theoreitical framework allows us to get     
