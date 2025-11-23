@@ -551,3 +551,81 @@ I also think that entropy decay is, in general, equivalent to convergence to equ
 
 However, next we demonstrate how entropy decay and the pinsker inequality allow us to express convergence to equilibrium in terms of a bound on the mixing time. 
 
+
+(2) \textbf{How entropy decay + Pinsker inequality imply bound on mixing time?}
+
+\begin{definition}[Total variation distance]
+Given two probability measures $\mu, \nu \in \mP(\X)$, the total variation (TV) distance between them is:
+\begin{equation*}
+    \lVert \mu-\nu\rVert_{TV}:= \max_{A\subseteq\X} |\mu(A)-\nu(A)|
+    \end{equation*}
+\end{definition}
+
+The TV distance is attained taking the subset of events where one probability distribution dominates the other, otherwise contribution would cancel out and the total sum of differences would be lower.\\
+
+Moreover, it stays in the following relation with the $L_1$ distance $\lVert \mu-\nu\rVert_1 := \sum_{\X}|\mu(x)-\nu(x)|$,
+\begin{equation*}
+    \lVert \mu-\nu \rVert_{TV} = \frac{1}{2} \lVert \mu-\nu \rVert_1
+\end{equation*}
+
+To see this, just notice that the probability mass in which $\mu\ge\nu$ must be equal to the probability mass in which the contrary happens, for the two to sum to 1. 
+
+\begin{theorem}{Pinsker's inequality}
+    Let $\mu$ and $\nu$ be two probability distributions over $\X$. Then
+    \begin{equation*}
+        \lVert\mu-\nu\rVert_{TV}^2 \le \frac{1}{2} D_{KL}(\mu||\nu)
+    \end{equation*}
+    
+    \begin{proof}
+        By what said above, we can equivalently prove that
+        \begin{equation*}
+            \frac{1}{2} \lVert\mu-\nu\rVert^2_1 \le D_{KL}(\mu||\nu)
+        \end{equation*}
+
+        Now, let $A= \{\mu(x)\ge\nu(x)\}$ and define the two Bernoulli random variables
+        \begin{align*}
+            &\mu_A := \begin{cases}
+                1 & {\rm w.p}. \sum_{x\in A} \mu(x)\\
+                0 & {\rm w.p}. \sum_{x \notin A} \mu(x)\\
+            \end{cases}\\
+            &\nu_A := \begin{cases}
+                1 & {\rm w.p}. \sum_{x\in A} \nu(x)\\
+                0 & {\rm w.p}. \sum_{x\notin A} \nu(x)\\
+            \end{cases}
+        \end{align*}
+        Consider the following function
+        \begin{equation*}
+            f(\mu_A,\nu_A) := D_{KL}(\mu_A||\nu_A) - \frac{1}{2}{\lVert \mu_A-\nu_A\rVert_1}^2
+        \end{equation*}
+        Let us define $p:=\sum_{x\in A} \mu(x)$ and $q=\sum_{x\in A} \nu(x)$ to study $f$. 
+        Clearly, if $p=q$ then $f=0$. Assuming w.l.o.g. $p\ge q$, we have that $f$ decreases with $q$: this is verifiable by making $f$ explicit and studying the derivative, seeing that the term in $D_{KL}$ (=$-\frac{1}{q(1-q)}$) leads the derivative over the term in the 1-norm (=4).  
+
+        Then, we have that the function is decreasing in $q$ and =0 if $p=q$. Hence for $p\ge q$ we have $f\ge 0$ hence 
+        \begin{equation*}
+            D_{KL}(\mu_A || \nu_A) \ge \frac{1}{2}\lVert \mu_A - \nu_A \rVert^2_1
+        \end{equation*}
+        We have 
+        \begin{align*}
+            &D_{KL}(\mu || \nu) \ge D_{KL}(\mu_A || \nu_A) \\
+            &\lVert \mu_A - \nu_A \rVert_1 = \lVert \mu - \nu \rVert_1
+        \end{align*}
+
+        where first inequality follows from the data processing inequality: the intuition is that the distance between $\mu_A$ and $\nu_A$ depends on the true distributions but also on the probability that $x \in A$, hence there is an additional potential cofounding variable between the variables $\mu_A,\nu_A$ w.r.t. $\mu,\nu$; 
+        the second one is easily observable by computing the 1-norm splitting the summation into $x\in A$ and $x \notin A$.
+        Putting together the three inequalities yields the result:
+        \begin{equation*}
+            D_{KL}(\mu || \nu) \ge D_{KL}(\mu_A || \nu_A) \ge \frac{1}{2}{\lVert \mu - \nu \rVert_1}^2 = 2 \lVert \mu - \nu \rVert^2_{TV}
+        \end{equation*}
+    \end{proof}
+\end{theorem}
+
+For our aims it makes sense to consider $\nu =\pi$ where $\pi$ is the unifrom measure, and Pinsker's inequality becomes
+\begin{equation}\tag{Pinsker}
+    \lVert\mu-\pi\rVert_{TV}^2 \le \frac{1}{2} \mathcal{H}(\mu)
+\end{equation} 
+
+Recall also the entropy decay result
+\begin{equation*}
+    \mathcal{H}(P_t \rho) \le e^{-2\lambda t}\mathcal{H}(\rho)
+\end{equation*}
+
