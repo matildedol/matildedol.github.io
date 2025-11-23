@@ -10,6 +10,7 @@
 \usepackage{amsfonts}
 \usepackage{amssymb}
 \usepackage{amsmath}
+\usepackage{mathtools}
 % \usepackage[utf8]{inputenc}
 
 % Beamer setup
@@ -27,9 +28,7 @@
 % Math commands
 \input{math}
 
-
-
-%Information to be included in the title page:
+%Title page:
 \title[Inequalities for Markov chains with non-neg Ricci]{Poincaré, modified logarithmic Sobolev and
 isoperimetric inequalities for Markov chains with
 non-negative Ricci curvature \\~\\ \small M. Erbar and M. Fathi} 
@@ -76,12 +75,10 @@ non-negative Ricci curvature \\~\\ \small M. Erbar and M. Fathi}
     \end{itemize}
 \end{frame}
 
+\section{Convergence to equilibrium of the zero-range process}
 \begin{frame}{Overview of the talk}
-    \tableofcontents
+    \tableofcontents[currentsection]
 \end{frame}
-
-\section{Main result: convergence to equilibrium of the zero-range process}
-
 \subsection{The zero-range process}
 \begin{frame}[allowframebreaks]{The zero-range process}
     Consider $K$ interacting particles on the complete graph with $L$ sites.\\~\\
@@ -134,16 +131,11 @@ Good model for:
 
         
     \end{block}
-    \pause
     \bigskip
     \centering{\color{blue} $\star$ This is exponential convergence to equilibrium! $\star$}
 \end{frame}
 
-\begin{frame}{Overview of the talk}
-    \tableofcontents[currentsection]
-\end{frame}
-
-\section{Synthetic geometric structure}
+\section{Geometric structure}
 \tableofcontents[currentsection]
 \subsection{Setup}
 \begin{frame}{Setup}
@@ -237,40 +229,48 @@ Good model for:
     \tableofcontents[currentsection]
 \end{frame}
 
-\begin{frame}{The Modified log-Sobolev inequality}
+\begin{frame}{The Modified log-Sobolev inequality I}
 \begin{block}{Modified logarithmic Sobolev inequality}
 It is a \textbf{bound on the entropy} in terms of a norm of the gradient of our observable:
-    \begin{equation*}\tag{MLSI($\lambda$)}
+    \begin{equation}\tag{MLSI($\lambda$)}\label{eq: MLSI}
         \mathcal{H}(\rho) \le \frac{1}{2\lambda} \mathcal{I}(\rho)
-    \end{equation*}
+    \end{equation}
 where $\mathcal{I}$ is the Fisher information $\mathcal{I}(\rho):= \int \rho | \nabla \log \rho |^2 \de \pi = \lVert \nabla \log \rho \rVert_\rho ^2$
 \end{block}
-
 \pause[]
 \bigskip
-Many implications on convergence property, spectrum of the Laplacian and hypercontractivity!
-
-\bigskip\centering
-{\color{blue}  $\star$ Our focus: how MLSI allows to bound the mixing time of the chain via entropy decay  $\star$ }
+\begin{block}{MLSI for $\Ric \ge 0$}
+If $\Ric(\X,Q,\pi)\ge 0$ and the diameter of $(\X,d_\W)$ is bounded
+by $D$, then the modified logarithmic Sobolev inequality (\ref{eq: MLSI}) holds with constant \[\lambda=\frac{c}{D^2}\] for some universal constant $c$.
+\end{block}
 \end{frame}
 
+\begin{frame}{The Modified log-Sobolev inequality II}
+    The MLSI has many implications on convergence property, spectrum of the Laplacian and hypercontractivity
+\\
+\bigskip
+\centering
+{\color{blue}  $\star$ Our focus: MLSI implies entropy decay, which allows to bound the mixing time $\star$ }
+\begin{equation*}\tag{Entropy decay}
+    \mathcal{H} (P_t \rho) \le e^{-2\lambda t} \mathcal{H}(\rho)
+\end{equation*}
+\end{frame}
 \section{From MLSI to convergence to equilibrium}
 \begin{frame}{Overview of the talk}
     \tableofcontents[currentsection]
 \end{frame}
 \begin{frame}{From MLSI to entropy decay}
 {   \small
-    \begin{equation*}\tag{MLSI($\lambda$)}
-        \mathcal{H}(\rho) \le \frac{1}{2\lambda} \mathcal{I}(\rho)
+    \begin{equation*}
+        \mathcal{H}(\rho) \le \frac{1}{2\lambda} \mathcal{I}(\rho)\quad \rightarrow\quad \mathcal{H} (P_t \rho) \le e^{-2\lambda t} \mathcal{H}(\rho)
     \end{equation*}}
     When $P_t$ is the heat semigroup,
     \begin{equation*}
         \frac{\de}{\de t} \mathcal{H}(P_t \rho) = -\mathcal{I}(P_t \rho)
     \end{equation*}
-    \\~\\
     Hence
-    \begin{equation*}\tag{MLSI}
-        \mathcal{H}(P_t\rho) \le \frac{1}{2\lambda} \frac{\de}{\de t}\mathcal{H}(P_t \rho)
+    \begin{equation*}
+        \mathcal{H}(P_t\rho) \le - \frac{1}{2\lambda} \frac{\de}{\de t}\mathcal{H}(P_t \rho); \quad \frac{\de}{\de t}\mathcal{H}(P_t \rho)\le -2\lambda \mathcal{H}(P_t\rho)
     \end{equation*}
 
     Using Gronwall's inequality, this yields an estimate on entropy decay
@@ -280,45 +280,69 @@ Many implications on convergence property, spectrum of the Laplacian and hyperco
     that quantifies {\color{blue} convergence to equilibrium}. 
 \end{frame}
 
-\begin{frame}{From entropy decay to bound on mixing time}
-We look at convergence to equilibrium in terms of the \textbf{mixing time} of the Markov chain. 
 
-\begin{block}{Total variation mixing time of a Markov chain}
+\begin{frame}{From entropy decay to bound on mixing time}
+%    \begin{center}Our focus: convergence to equilibrium in terms of the \textbf{mixing time} of the Markov chain
+%    \end{center}
+
+   \begin{block}{Total variation mixing time of a Markov chain}
+    Let $P_t$ be the Markov semigroup on the space of densities $\mP(\X)$ and $P^*_t$ be its dual acting on probability measures.\\
     For $\varepsilon > 0$, 
     \[
     \tau_{\rm mix}(\varepsilon) := \inf \Big\{t>0 : \lVert P_t^* \delta_x - \pi \rVert_{TV} < \varepsilon \quad \forall x \in \X \Big\}
     \]
-\end{block}
-
-Since
-\begin{equation*}\tag{Pinsker inequality}
-\lVert \nu - \pi \rVert^2_{TV} \le \frac{1}{2} \mathcal{H}(\nu)
-\end{equation*}
-we can use MLSI to bound $\tau_{\rm mix}$.
-
-\begin{block}{Convergence to equilibrium}
-    Assume $\Ric(\X, Q, \pi)\ge 0$ and the diameter of $(\X,d_{\W})$ is $\le D$. If a MLSI with constant $\lambda= \frac{c}{D^2}$ holds, then
-    \[
-    \tau_{mix}(\varepsilon) \le D^2(1/8-c\log\varepsilon)    \]
-    for some universal constant $c$.
-\end{block}
-
-
-{\color{blue} EB: E' necessario chiarire come tutti questi concetti e queste disuguaglianze si combinano per ottenere la stima sul tempo di mixing. 
-
-(1) Cosa centra MLSI con il fatto che il semigruppo è il flusso dell'entropia? Questo punto è talmente fondamentale che potresti considerare di far vedere il calcolo per ottenere entropy decay
-
-(2) Capito (1), come si combina entropy decay e Pinsker per concludere? Anche questo è esplicitabile.
-}
-\end{frame}
-
-\begin{frame}{Modified Log-Sobolev inequality for the zero-range process}
-    \begin{block}{Diameter bound}
-        There is a constant $c>0$ such that the diameter of $(\X_{K,L}, d_\W)$ is bounded by $cK\sqrt{L\log L}$
+    \end{block}
+\pause
+   {\color{blue} $\rightarrow$ Relation to entropy:}
+    \begin{block}{Pinsker's inequality}
+        Let $\mu$ be a probability distribution and $\pi$ be the uniform distribution over $\X$. Then
+        \begin{equation*}\tag{Pinsker}
+            \lVert \rho -\pi \rVert_{TV}^2 \le \frac{1}{2} \mathcal{H(\rho)}
+        \end{equation*}
     \end{block}
 
-    So, for the zero range process with constant uniform rates, a MLSI with constant $\frac{c}{K^2 L \log L}$ holds. 
+\end{frame}
 
+\begin{frame}[allowframebreaks]{From entropy decay to bound on mixing time}
+    {\small Ingredients:
+    \begin{enumerate}
+        \item Bound on $\mathcal{H}$ in terms of the diameter: $\mathcal{H}(P_t \rho) \le \frac{\W^2(\rho, 1)}{4t}$
+        \item Pinsker's: $\lVert P_t\rho - 1 \rVert_{TV}^2 \le \frac{1}{2} \mathcal{H}(P_t\rho)$
+        \item Entropy decay: $\mathcal{H}(P_t \rho) \le e^{-2\lambda t} \mathcal{H}(\rho)$
+    \end{enumerate}}
+
+    From (1) we obtain $\mathcal{H}(P_t \rho) \le 2$ for 
+    \begin{equation}\tag{bound \#1}
+        t \ge \frac{D^2}{8} \quad\coloneq t_0
+    \end{equation}
+
+    Plug this into (2) and combine with (3) to obtain
+    \begin{equation*}
+        {\lVert P_t \rho - 1 \rVert}_{TV} \le \sqrt{\frac{1}{2}\, \mathcal{H}(P_t\rho)} \le \sqrt{\frac{1}{2} \,e^{-2\lambda t} \,\mathcal{H}(P_{t_0}\rho)} \le e^{-\lambda t}
+    \end{equation*}
+
+    We get $\varepsilon$-closeness for
+    \begin{equation}\tag{bound \#2}
+        t \ge  -\frac{\log\varepsilon}{\lambda}
+    \end{equation}
+
+    Sum the two bounds $t\ge D^2/8$ and $t\ge \log\varepsilon/\lambda$ to obtain an upper bound on the mixing time
+    \begin{equation*}
+        \tau_{\rm mix} \le \frac{1}{8} D^2 -\frac{\log\varepsilon}{\lambda}
+    \end{equation*}
+
+\end{frame}
+
+\begin{frame}{Bound on the mixing time of the zero-range process}
+    {\small     \begin{equation*}
+        \tau_{\rm mix} \le \frac{1}{8} D^2 -\frac{\log\varepsilon}{\lambda}
+    \end{equation*}
+    }
+    {\color{blue} Recall:} The ZRP has $\Ric(\X_{KL},Q_{KL},\pi_{KL})\ge 0$, hence a MLSI with constant $\lambda=\frac{c}{D^2}$ holds
+\\~\\
+    {\color{blue} Moreover:} There exists a constant $c > 0$ such that for any $L, K$ \[D_{KL} \le c K\sqrt{L\log L}\]
+
+    % Plugging this into the bound, we get a bound for the ZRP mixing time 
     \begin{block}{Convergence of the ZRP}
         The total variation mixing time of the zero range process on $\X_{K,L}$ with constant uniform rates is 
         \[
