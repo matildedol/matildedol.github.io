@@ -229,34 +229,34 @@ Good model for:
 \begin{frame}{The Modified log-Sobolev inequality I}
 \begin{block}{Modified logarithmic Sobolev inequality}
 It is a \textbf{bound on the entropy} in terms of a norm of the gradient of our observable:
-    \begin{equation}\tag{MLSI($\lambda$)}\label{eq: MLSI}
+    \begin{equation}\tag{mLSI($\lambda$)}\label{eq: mLSI}
         \mathcal{H}(\rho) \le \frac{1}{2\lambda} \mathcal{I}(\rho)
     \end{equation}
 where $\mathcal{I}$ is the Fisher information $\mathcal{I}(\rho):= \int \rho | \nabla \log \rho |^2 \de \pi = \lVert \nabla \log \rho \rVert_\rho ^2$
 \end{block}
 \pause[]
 \bigskip
-\begin{block}{MLSI for $\Ric \ge 0$}
+\begin{block}{mLSI for $\Ric \ge 0$}
 If $\Ric(\X,Q,\pi)\ge 0$ and the diameter of $(\X,d_\W)$ is bounded
-by $D$, then the modified logarithmic Sobolev inequality (\ref{eq: MLSI}) holds with constant \[\lambda=\frac{c}{D^2}\] for some universal constant $c$.
+by $D$, then the modified logarithmic Sobolev inequality (\ref{eq: mLSI}) holds with constant \[\lambda=\frac{c}{D^2}\] for some universal constant $c$.
 \end{block}
 \end{frame}
 
 \begin{frame}{The Modified log-Sobolev inequality II}
-    The MLSI has many implications on convergence property, spectrum of the Laplacian and hypercontractivity
+    The mLSI has many implications on convergence property, spectrum of the Laplacian and hypercontractivity
 \\
 \bigskip
 \centering
-{\color{blue}  $\star$ Our focus: MLSI implies entropy decay, which allows to bound the mixing time $\star$ }
+{\color{blue}  $\star$ Our focus: mLSI implies entropy decay, which allows to bound the mixing time $\star$ }
 \begin{equation*}\tag{Entropy decay}
     \mathcal{H} (P_t \rho) \le e^{-2\lambda t} \mathcal{H}(\rho)
 \end{equation*}
 \end{frame}
-\section{From MLSI to convergence to equilibrium}
+\section{From mLSI to convergence to equilibrium}
 \begin{frame}{Overview of the talk}
     \tableofcontents[currentsection]
 \end{frame}
-\begin{frame}{From MLSI to entropy decay}
+\begin{frame}{From mLSI to entropy decay}
 {   \small
     \begin{equation*}
         \mathcal{H}(\rho) \le \frac{1}{2\lambda} \mathcal{I}(\rho)\quad \rightarrow\quad \mathcal{H} (P_t \rho) \le e^{-2\lambda t} \mathcal{H}(\rho)
@@ -335,7 +335,7 @@ by $D$, then the modified logarithmic Sobolev inequality (\ref{eq: MLSI}) holds 
         \tau_{\rm mix} \le \frac{1}{8} D^2 -\frac{\log\varepsilon}{\lambda}
     \end{equation*}
     }
-    {\color{blue} Recall:} The ZRP has $\Ric(\X_{KL},Q_{KL},\pi_{KL})\ge 0$, hence a MLSI with constant $\lambda=\frac{c}{D^2}$ holds
+    {\color{blue} Recall:} The ZRP has $\Ric(\X_{KL},Q_{KL},\pi_{KL})\ge 0$, hence a mLSI with constant $\lambda=\frac{c}{D^2}$ holds
 \\~\\
     {\color{blue} Moreover:} There exists a constant $c > 0$ such that for any $L, K$ \[D_{KL} \le c K\sqrt{L\log L}\]
 
@@ -376,15 +376,32 @@ by $D$, then the modified logarithmic Sobolev inequality (\ref{eq: MLSI}) holds 
 % \end{frame}
 
 \begin{frame}{Discussion}
-
+\begin{itemize}
+    \item The main contribution of this paper for the ZRP is a \textit{quantification} of 
+    its convergence (~\cite{ANDJEL200067})
+    \item[]
+    \item The dependence on the diameter is optimal, since it is sharp (up
+    to the values of the constant) for the random walk on the one-dimensional
+    discrete torus
+    \item However, the mLSI constant for ZRP is not believed to be optimal: dependence
+    of curvature on $D$ in high dimensions is not optimal (Gaussian concentration instead)
+    \item Developments in this sense:~\cite{münch2023olliviercurvatureisoperimetryconcentration},~\cite{brannan2020completelogarithmicsobolevinequalities}
+\end{itemize}
 \end{frame}
-\begin{frame}[allowframebreaks]{Other examples}
-    lalaland
+\begin{frame}[allowframebreaks]{Some examples of other applications}
+    mLSI constant (and Poincaré) and implied convergence rate for:
+    \begin{itemize}
+        \item Bernoulli-Laplace model (diffusion of two incompressible gases)
+        \item Random transposition model (random permutations)~\cite{caputo2007convexentropydecaybochnerbakryemery}
+        \item Hard-core models (nearest-neighbour exclusion)
+        \item Glauber dynamics (Ising model)~\cite{glauber}
+    \end{itemize}
 \end{frame}
 
 \begin{frame}[allowframebreaks]{Additional formulas}
     \begin{block}{Distance $d_\W$ on $\X$}
-        The distance $\W$ on $\mP(\X)$ induces a distance on $\X$ by restricting to Dirac masses, i.e. for $x,y\in\X$
+        The distance $\W$ on $\mP(\X)$ induces a distance on $\X$ by restricting to 
+        Dirac masses, i.e. for $x,y\in\X$
         \begin{equation*}
             d_\W(x,y) := \W(\delta_x, \delta_y)
         \end{equation*}
@@ -392,7 +409,8 @@ by $D$, then the modified logarithmic Sobolev inequality (\ref{eq: MLSI}) holds 
 
     \begin{block}{Induced Riemannian structure on $\X$}
         \begin{equation*}
-            {(\Psi,\Phi)}_\rho:=\frac{1}{2}\sum_{x,y}\Psi(x,y)\Phi(x,y)\hat{\rho}(x,y)Q(x,y)\pi(x)
+            {(\Psi,\Phi)}_\rho:=\frac{1}{2}\sum_{x,y}\Psi(x,y)\Phi(x,y)\hat{\rho}
+            (x,y)Q(x,y)\pi(x)
         \end{equation*}
     \end{block}
 
