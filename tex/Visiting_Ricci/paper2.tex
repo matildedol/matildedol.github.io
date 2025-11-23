@@ -456,9 +456,29 @@ By applying ... (change of variables and integrating by parts) we get the result
 Then, ...
 
 
-\subsubsection{Joining the dots}
+\subsubsection{Getting convergence to equilibrium}
 
-\textcolor{blue}{E’ necessario chiarire come tutti questi concetti e queste
+The MLSI estimate for the ZRP is then used to get converegence to equilibrium of the process. In particular, this convergence is expressed in terms of the \textbf{mixing time}. 
+
+The mixing time of a Markov chain is, in general, the smallest time in which the Markov semigroup is $\varepsilon$-close to the invariant measure. We consider in particular the total variation mixing time.
+\begin{definition}[Total variation mixing time]
+    The total variation mixing time is defined for $\varepsilon >0$ as
+    \begin{equation*} 
+        \tau_{\rm mix}(\varepsilon) := \inf \Big\{t>0 : \lVert P_t^* \delta_x - \pi \rVert_{TV} < \varepsilon \quad \forall x \in \X \Big\}
+    \end{equation*}
+\end{definition}
+
+Next we state the main result and clarify all the steps to obtain it.
+
+\begin{theorem}[Bound on mixing time of ZRP]\label{thm: result}
+    \begin{equation}\label{eq: mainresult}
+        \tau_{\rm mix}(\varepsilon) \le K L \log L \bigg(\frac{1}{8} - \frac{\log \varepsilon}{c}\bigg)
+    \end{equation}
+\end{theorem}
+
+We defer the specific definition of total variation distance below. \\
+
+\textcolor{blue}{EB: E’ necessario chiarire come tutti questi concetti e queste
 disuguaglianze si combinano per ottenere la stima sul tempo di
 mixing.}
 
@@ -550,7 +570,7 @@ which by setting $a=0$ yields the result.
 I also think that entropy decay is, in general, equivalent to convergence to equilibrium because entropy going to 0 means that the evolution of the chain is converging to a known quantity, and that can only be the invariant measure.
 
 However, next we demonstrate how entropy decay and the pinsker inequality allow us to express convergence to equilibrium in terms of a bound on the mixing time. 
-
+\\
 
 (2) \textbf{How entropy decay + Pinsker inequality imply bound on mixing time?}
 
@@ -620,12 +640,50 @@ To see this, just notice that the probability mass in which $\mu\ge\nu$ must be 
 \end{theorem}
 
 For our aims it makes sense to consider $\nu =\pi$ where $\pi$ is the unifrom measure, and Pinsker's inequality becomes
-\begin{equation}\tag{Pinsker}
-    \lVert\mu-\pi\rVert_{TV}^2 \le \frac{1}{2} \mathcal{H}(\mu)
+\begin{equation}\tag{Pinsker}\label{eq: Pinsker}
+    \lVert\mu-\pi\rVert_{TV}^2 \le \frac{1}{2} \mathcal{H}(\mu) - \log p_\pi
 \end{equation} 
+where $p_\pi$ is the mass assigned by the uniform distribution on each $x$. 
+In our specific case, we look at the entropy of probability \textit{densities}, and the denisty of mass assigned by the uniform distribution is 1 everywhere, so the log term cancels. 
 
 Recall also the entropy decay result
-\begin{equation*}
+\begin{equation}\tag{Entropy decay}\label{eq: decay}
     \mathcal{H}(P_t \rho) \le e^{-2\lambda t}\mathcal{H}(\rho)
+\end{equation}
+
+Next we show how (\ref{eq: Pinsker}) and (\ref{eq: decay}) combine to obtain inequality (\ref{eq: mainresult}), our main result.
+
+\begin{proof}[Proof of theorem (\ref{thm: result})]
+    First, we use a result that comes from the old paper, sepcifically from the evolutional variational inequality:
+\begin{equation*}
+    \mathcal{H}(P_t \rho) \le \frac{\W(\rho, 1)}{4t}
+\end{equation*}
+This allows us to bound the entropy, $\mathcal{H}(P_t\rho) \le 2 $ for 
+\begin{equation*}\tag{Bound \#1}
+    t \ge \frac{D^2}{8}
 \end{equation*}
 
+Setting $t_0 = \frac{D^2}{8}$, we apply the entropy decay inequality considering this initial time.
+Also, we consider the evolution of the chain in terms of probability \textit{measures}, accoridng to the dual semigroup $P_t^*$, to study convergence to the invariant measure $\pi$.
+
+\begin{equation*}
+    \lVert P_t^* \delta_x - \pi\rVert_{TV} \le \sqrt{\frac{1}{2} \mathcal{H}(P_t^* \delta_x)} \le \sqrt{\frac{1}{2} e^{-2\lambda t} \mathcal{H}(P_{t_0}^* \delta_x)} \le \sqrt{\frac{1}{2} e^{-2\lambda t} 2} = e^{\lambda t}
+\end{equation*}
+
+Then, we study for which $t$ we get $\varepsilon$-close to the invariant measure:
+\begin{equation*}
+    e^{\lambda t} \le \varepsilon; \quad -\lambda t \le \log \varepsilon;  \quad t \ge \frac{\log \varepsilon}{\lambda}
+\end{equation*}
+
+Substituting our constant $\lambda=\frac{c}{D^2}$ for $\Ric \ge 0$, we get the second bound
+\begin{equation}\tag{Bound \#2}
+    t \ge D^2\frac{\log\varepsilon}{c}
+\end{equation}
+
+Then, we sum the two bounds to obtain our resulting bound:
+\begin{equation*}
+    t \ge D^2 \bigg(\frac{1}{8} - \frac{\log\varepsilon}{c}\bigg) 
+\end{equation*}
+As $\tau_{\rm mix}$ is defined as the infimum of such times $t$, we get an upper bound on the mixing time as in (\ref{eq: mainresult}).
+
+\end{proof}
