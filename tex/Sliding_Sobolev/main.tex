@@ -95,8 +95,8 @@ non-negative Ricci curvature \\~\\ \small M. Erbar and M. Fathi, 2016}
             \item Else, choose another site $j$ uniformly at random and move 1 particle from $i$ to $j$
         \end{enumerate}
     \end{enumerate}
-    $\eta^{i,j}$ denotes the new configuration after such a move
-
+    $\eta^{i,j}$ denotes the new configuration after such a move\\
+For $\eta,\theta \in \X_{K,L},$
     \begin{equation*}
     Q_{K,L}(\eta,\theta)=
     \begin{cases}
@@ -104,8 +104,8 @@ non-negative Ricci curvature \\~\\ \small M. Erbar and M. Fathi, 2016}
         0 & \text{else}
     \end{cases}
     \end{equation*}
-    Invariant measure is the uniform measure $\pi_{K,L}$
-\\~\\
+    Stationary measure $\pi_{K,L}$ is the uniform measure 
+\bigskip
 Good model for:
 \begin{itemize}
     \item Traffic-jam formation~\cite{trafficflow}
@@ -121,7 +121,7 @@ Good model for:
     \begin{block}{Convergence to equilibrium}
         The constant-rate zero range process with $K$ particles and $L$ sites has mixing time bounded by
         \begin{equation}
-        \tau_{\rm mix}(\varepsilon) \le K L \log L \bigg(\frac{1}{8} - \frac{\log \varepsilon}{c}\bigg)
+        \tau_{\rm mix}(\varepsilon) \le K^2 L \log L \bigg(\frac{1}{8} - c\log \varepsilon\bigg)
         \end{equation}
         for some universal constant $c$ 
 
@@ -211,15 +211,17 @@ Good model for:
     \[
     \mathcal{H}(\rho_t) \le (1-t)\mathcal{H}(\rho_0) + t\mathcal{H}(\rho_1)- \frac{\kappa}{2}t(1-t)\W{(\rho_0,\rho_1)}^2
     \]
-    In this case, we write $\Ric(\X,Q,\pi)\ge \kappa$.
+    In this case, we write $\Ric(\X,Q,\pi)\ge \kappa$
     \end{block}
 \end{frame}
 \begin{frame}{Ricci for the zero-range process (in brief)}
+\begin{center}
+    {\color{blue} The zero range process with constant rates has $\Ric \ge 0$} \end{center}
     In another contribution, M. Fathi and J. Maas provide explicit ways of computing bounds on Ricci for discrete processes
     \\~\\
     They show that for the ZRP with \textit{increasing} rates, Ricci is positive
     \\~\\
-    The ZRP with \textit{constant} rates has $\Ric \ge 0$
+    This easily extends to showing non-negative Ricci for \textit{constant} rates
 \end{frame}
 
 \section{Modified log-Sobolev inequality}
@@ -330,7 +332,7 @@ by $D$, then the modified logarithmic Sobolev inequality (\ref{eq: mLSI}) holds 
         t \ge  -\frac{\log\varepsilon}{\lambda}
     \end{equation}
 
-    Sum the two bounds $t\ge D^2/8$ and $t\ge \log\varepsilon/\lambda$ to obtain an upper bound on the mixing time
+    Sum the two bounds $t\ge D^2/8$ and $t\ge -\log\varepsilon/\lambda$ to obtain an upper bound on the mixing time
     \begin{equation*}
         \tau_{\rm mix} \le \frac{1}{8} D^2 -\frac{\log\varepsilon}{\lambda}
     \end{equation*}
@@ -350,7 +352,7 @@ by $D$, then the modified logarithmic Sobolev inequality (\ref{eq: mLSI}) holds 
     \begin{block}{Convergence of the ZRP}
         The total variation mixing time of the zero range process on $\X_{K,L}$ with constant uniform rates is 
         \[
-        \tau_{\rm mix}(\varepsilon) \le K^2 L \log L \bigg(\frac{1}{8} - \frac{\log \varepsilon}{c}\bigg)
+        \tau_{\rm mix}(\varepsilon) \le K^2 L \log L \bigg(\frac{1}{8} - c\log \varepsilon\bigg)
         \]
         for some universal constant $c$
     \end{block}
