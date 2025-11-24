@@ -31,7 +31,7 @@
 %Title page:
 \title[Inequalities for Markov chains with non-neg Ricci]{Poincaré, modified logarithmic Sobolev and
 isoperimetric inequalities for Markov chains with
-non-negative Ricci curvature \\~\\ \small M. Erbar and M. Fathi} 
+non-negative Ricci curvature \\~\\ \small M. Erbar and M. Fathi, 2016} 
 \author[Matilde Dolfato]{\small Matilde Dolfato \\ Mentor: Prof. Elia Brué}
 \institute[]{Università Bocconi  \par Visiting Student Initiative - BIDSA}
 \date{\today}
@@ -56,8 +56,10 @@ non-negative Ricci curvature \\~\\ \small M. Erbar and M. Fathi}
     \begin{enumerate}
         \item The main goal (of the first paper) is to introduce a new geometric structure in the study of Markov semigroups (Markov chains)
         \pause
-        \item This is done via an interpratation of the semigroup as a gradient flow of the Shannon entropy
-        \item Leading to a synthetic notion of Ricci curvature to study contraction properties
+        \item This is done via an interpratation of the semigroup as a gradient flow of the Shannon entropy w.r.t. a newly defined metric structure
+        
+        %Magari di a paroile che la struttura metrica è ispirata da wasserstein e la teoria nel constesto continuo
+        \item Leading to a synthetic notion of Ricci curvature {\color{blue}for discrete spaces} to study contraction properties
     \end{enumerate}
 \pause
     {\color{blue} New ingredients (content of the new paper):} functional inequalities and applications to bounds on the mixing time of the chain and to its convergence to equilibrium
@@ -81,9 +83,9 @@ non-negative Ricci curvature \\~\\ \small M. Erbar and M. Fathi}
 \end{frame}
 \subsection{The zero-range process}
 \begin{frame}[allowframebreaks]{The zero-range process}
-    Consider $K$ interacting particles on the complete graph with $L$ sites.\\~\\
+    Consider $K$ interacting particles on the complete graph with $L$ sites\\~\\
 
-    The state space is $\X_{K,L}=\{\eta \in \mathbb{N}^L: \sum_i \eta_i = K\}$. \\~\\
+    The state space is $\X_{K,L}=\{\eta \in \mathbb{N}^L: \sum_i \eta_i = K\}$ \\~\\
 
     The zero-range process with \textbf{constant rates} can be described as:
     \begin{enumerate}
@@ -93,7 +95,7 @@ non-negative Ricci curvature \\~\\ \small M. Erbar and M. Fathi}
             \item Else, choose another site $j$ uniformly at random and move 1 particle from $i$ to $j$
         \end{enumerate}
     \end{enumerate}
-    $\eta^{i,j}$ denotes the new configuration after such a move.
+    $\eta^{i,j}$ denotes the new configuration after such a move
 
     \begin{equation*}
     Q_{K,L}(\eta,\theta)=
@@ -102,7 +104,7 @@ non-negative Ricci curvature \\~\\ \small M. Erbar and M. Fathi}
         0 & \text{else}
     \end{cases}
     \end{equation*}
-    Invariant measure is the uniform measure $\pi_{K,L}$.
+    Invariant measure is the uniform measure $\pi_{K,L}$
 \\~\\
 Good model for:
 \begin{itemize}
@@ -121,7 +123,7 @@ Good model for:
         \begin{equation}
         \tau_{\rm mix}(\varepsilon) \le K L \log L \bigg(\frac{1}{8} - \frac{\log \varepsilon}{c}\bigg)
         \end{equation}
-        for some universal constant $c$. 
+        for some universal constant $c$ 
 
 
 % {\color{blue}EB: se non scrive altro nella slide (e va benissimo) dovi spendere molto tempo per spiegare la notazione a parole (o magari usando la lavagna). In particolare dovresti spiegare cos'è $\tau_{\rm mix}$, qual'è il ruolo di $\varepsilon$ in questa definizione, cosa vuol dire in termini del processo.}
@@ -141,7 +143,7 @@ Good model for:
    Q(x,y)\pi(x)=Q(y,x)\pi(y)
   \]
   Operator $L$ acting on functions $\psi:\X \to\R$ is\[L\psi(x)=\sum_{y\in\X}(\psi(y)-\psi(x))Q(x,y)\]
-  is the generator of a continuous time Markov chain.
+  is the generator of a continuous time Markov chain
 
  Space of probability densities
   \[
@@ -172,10 +174,10 @@ Good model for:
     = 0, 
     & \forall x \in \mathcal{X}, \\
     \rho|_{t=0} = \rho_0, \quad 
-    \rho|_{t=1} = \rho_1.
+    \rho|_{t=1} = \rho_1
     \end{cases}
     \end{equation*}
-    and $\hat\rho(x,y):=\theta(\rho(x),\rho(y))$ which is the logarithmic mean.
+    and $\hat\rho(x,y):=\theta(\rho(x),\rho(y))$ is the logarithmic mean
 \end{frame}
 
 \begin{frame}{Markov semigroup as gradient flow}
@@ -230,15 +232,15 @@ Good model for:
 \begin{block}{Modified logarithmic Sobolev inequality}
 It is a \textbf{bound on the entropy} in terms of a norm of the gradient of our observable:
     \begin{equation}\tag{mLSI($\lambda$)}\label{eq: mLSI}
-        \mathcal{H}(\rho) \le \frac{1}{2\lambda} \mathcal{I}(\rho)
+        \mathcal{H}(\rho) \le \frac{1}{2\lambda} \lVert \nabla \log \rho \rVert_\rho ^2
     \end{equation}
-where $\mathcal{I}$ is the Fisher information $\mathcal{I}(\rho):= \int \rho | \nabla \log \rho |^2 \de \pi = \lVert \nabla \log \rho \rVert_\rho ^2$
+where $\lVert \nabla \log \rho \rVert_\rho ^2 \eqqcolon \mathcal{I}(\rho)$ is the Fisher information % $\mathcal{I}(\rho):= \int \rho | \nabla \log \rho |^2 \de \pi = \lVert \nabla \log \rho \rVert_\rho ^2$ %{\color{blue}EB: displayed?}
 \end{block}
 \pause[]
 \bigskip
 \begin{block}{mLSI for $\Ric \ge 0$}
 If $\Ric(\X,Q,\pi)\ge 0$ and the diameter of $(\X,d_\W)$ is bounded
-by $D$, then the modified logarithmic Sobolev inequality (\ref{eq: mLSI}) holds with constant \[\lambda=\frac{c}{D^2}\] for some universal constant $c$.
+by $D$, then the modified logarithmic Sobolev inequality (\ref{eq: mLSI}) holds with constant \[\lambda=\frac{c}{D^2}\] for some universal constant $c$
 \end{block}
 \end{frame}
 
@@ -264,37 +266,42 @@ by $D$, then the modified logarithmic Sobolev inequality (\ref{eq: mLSI}) holds 
     When $P_t$ is the heat semigroup,
     \begin{equation*}
         \frac{\de}{\de t} \mathcal{H}(P_t \rho) = -\mathcal{I}(P_t \rho)
-    \end{equation*}
-    Hence
-    \begin{equation*}
-        \mathcal{H}(P_t\rho) \le - \frac{1}{2\lambda} \frac{\de}{\de t}\mathcal{H}(P_t \rho); \quad \frac{\de}{\de t}\mathcal{H}(P_t \rho)\le -2\lambda \mathcal{H}(P_t\rho)
+        {\color{blue} \overset{{\rm mLSI}}{\le} -2\lambda \mathcal{H}(P_t\rho)}
     \end{equation*}
 
+% {\color{blue}EB: di a parole che questo è il punto in cui tutta la struttura entra in gioco: (1) $P_t \rho$ è gradient flow di entropy, quindi time derivative=gradient of entropy. (2) In the W structure, gradient of entropy is Fisher
+
+% \\
+
+% Puoi chiudere la disuguaglianza in una sola riga invece che in due come ho fatto sopra (magari correggi l'errore che ho causato :))}
+\pause
     Using Gronwall's inequality, this yields an estimate on entropy decay
     \begin{equation*}
         \mathcal{H}(P_t \rho) \le e^{-2\lambda t} \mathcal{H}(\rho)
     \end{equation*}
-    that quantifies {\color{blue} convergence to equilibrium}. 
+    that quantifies {\color{blue} convergence to equilibrium}
 \end{frame}
 
 
 \begin{frame}{From entropy decay to bound on mixing time}
-%    \begin{center}Our focus: convergence to equilibrium in terms of the \textbf{mixing time} of the Markov chain
-%    \end{center}
+{   \small
+    \begin{equation*}
+        \mathcal{H} (P_t \rho) \le e^{-2\lambda t} \mathcal{H}(\rho) \quad \rightarrow
+        \quad \tau_{\rm mix} \le \frac{1}{8} D^2 -\frac{\log\varepsilon}{\lambda}
+    \end{equation*}}
 
    \begin{block}{Total variation mixing time of a Markov chain}
-    Let $P_t$ be the Markov semigroup on the space of densities $\mP(\X)$ and $P^*_t$ be its dual acting on probability measures.\\
+    Let $P_t$ be the Markov semigroup on the space of densities $\mP(\X)$ and $P^*_t$ be its dual acting on probability measures\\
     For $\varepsilon > 0$, 
     \[
     \tau_{\rm mix}(\varepsilon) := \inf \Big\{t>0 : \lVert P_t^* \delta_x - \pi \rVert_{TV} < \varepsilon \quad \forall x \in \X \Big\}
     \]
     \end{block}
 \pause
-   {\color{blue} $\rightarrow$ Relation to entropy:}
-    \begin{block}{Pinsker's inequality}
-        Let $\mu$ be a probability distribution and $\pi$ be the uniform distribution over $\X$. Then
+    \begin{block}{$\rightarrow$ Relation to entropy: Pinsker's inequality}
+        Let $\mu, \pi$ be two probability distributions over $\X$. Then
         \begin{equation*}\tag{Pinsker}
-            \lVert \rho -\pi \rVert_{TV}^2 \le \frac{1}{2} \mathcal{H(\rho)}
+            \lVert \mu -\pi \rVert_{TV}^2 \le \frac{1}{2} \mathcal{H(\mu | \pi)}
         \end{equation*}
     \end{block}
 
@@ -343,9 +350,9 @@ by $D$, then the modified logarithmic Sobolev inequality (\ref{eq: mLSI}) holds 
     \begin{block}{Convergence of the ZRP}
         The total variation mixing time of the zero range process on $\X_{K,L}$ with constant uniform rates is 
         \[
-        \tau_{\rm mix}(\varepsilon) \le K L \log L \bigg(\frac{1}{8} - \frac{\log \varepsilon}{c}\bigg)
+        \tau_{\rm mix}(\varepsilon) \le K^2 L \log L \bigg(\frac{1}{8} - \frac{\log \varepsilon}{c}\bigg)
         \]
-        for some universal constant $c$.
+        for some universal constant $c$
     \end{block}
 \end{frame}  
 
@@ -435,7 +442,7 @@ by $D$, then the modified logarithmic Sobolev inequality (\ref{eq: mLSI}) holds 
         \begin{equation}\label{eq: condition}
             \frac{\nabla\rho_t}{\hat\rho_t} = \nabla \log \rho_t
         \end{equation}
-        i.e. precisely that $\hat\rho_t$ is the logarithmic mean.
+        i.e. precisely that $\hat\rho_t$ is the logarithmic mean
     \end{block}
 \end{frame}
 
