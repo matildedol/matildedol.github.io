@@ -294,17 +294,17 @@ by $D$, then the modified logarithmic Sobolev inequality (\ref{eq: mLSI}) holds 
     \end{equation*}}
 
    \begin{block}{Total variation mixing time of a Markov chain}
-    Let $P_t$ be the Markov semigroup on the space of densities $\mP(\X)$ and $P^*_t$ be its dual acting on probability measures\\
+    Let $P_t$ be the Markov semigroup on the space of densities $\mP(\X)$.
     For $\varepsilon > 0$, 
     \[
-    \tau_{\rm mix}(\varepsilon) := \inf \Big\{t>0 : \lVert P_t^* \delta_x - \pi \rVert_{TV} < \varepsilon \quad \forall x \in \X \Big\}
+    \tau_{\rm mix}(\varepsilon) := \inf \Big\{t>0 : \lVert P_t \rho - 1 \rVert_{TV} < \varepsilon \quad \forall x \in \X \Big\}
     \]
     \end{block}
 \pause
     \begin{block}{$\rightarrow$ Relation to entropy: Pinsker's inequality}
-        Let $\mu, \pi$ be two probability distributions over $\X$. Then
+        Let $\rho, \sigma$ be two probability densities over $\X$. Then
         \begin{equation*}\tag{Pinsker}
-            \lVert \mu -\pi \rVert_{TV}^2 \le \frac{1}{2} \mathcal{H(\mu | \pi)}
+            \lVert \rho -\sigma \rVert_{TV}^2 \le \frac{1}{2} \mathcal{H(\rho | \sigma)}
         \end{equation*}
     \end{block}
 
