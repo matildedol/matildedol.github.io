@@ -1,0 +1,29 @@
+name: Build BSc Thesis
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "tex/bscthesis/**"
+      - ".github/workflows/build_bscthesis.yml"
+      - ".latexmkrc"
+  workflow_dispatch:
+
+jobs:
+  build-cv:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile BSc Thesis
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: tex/bscthesis/bscthesis.tex
+          work_in_root_file_dir: true
+          args: -r ../.latexmkrc
+          texlive_version: 2025
+      - name: Upload PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: bscthesis-pdf
+          path: tex/bscthesis/bscthesis.pdf
+          if-no-files-found: error
