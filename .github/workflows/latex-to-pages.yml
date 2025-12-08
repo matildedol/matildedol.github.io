@@ -73,6 +73,15 @@ jobs:
           args: -r ../.latexmkrc
           texlive_version: 2025
 
+      # --- OT BAMS ---
+      - name: Compile OT BAMS
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: tex/ot_bams/main.tex
+          work_in_root_file_dir: true
+          args: -r ../.latexmkrc
+          texlive_version: 2025
+
       # --- Collect PDFs for Pages ---
       - name: Prepare Pages artifact
         run: |
@@ -82,6 +91,7 @@ jobs:
           cp tex/Sliding_Ricci/main.pdf             public/files/Sliding_Ricci.pdf
           cp tex/Sliding_Sobolev/main.pdf           public/files/Sliding_Sobolev.pdf
           cp tex/bscthesis/bscthesis.pdf            public/files/bscthesis.pdf
+          cp tex/ot_bams/main.pdf                   public/files/ot_bams.pdf
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

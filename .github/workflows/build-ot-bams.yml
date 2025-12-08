@@ -1,0 +1,29 @@
+name: Build OT BAMS
+
+on:
+  push:
+    branches: ["main"]
+    paths:
+      - "tex/ot_bams/**"
+      - ".github/workflows/build_ot_bams.yml"
+      - ".latexmkrc"
+  workflow_dispatch:
+
+jobs:
+  build-sliding-ricci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Compile OT_BAMS
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: tex/ot_bams/main.tex
+          work_in_root_file_dir: true
+          args: -r ../.latexmkrc
+          texlive_version: 2025
+      - name: Upload PDF
+        uses: actions/upload-artifact@v4
+        with:
+          name: ot-bams-pdf
+          path: tex/ot_bams/main.pdf
+          if-no-files-found: error

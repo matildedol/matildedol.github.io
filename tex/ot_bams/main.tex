@@ -1,0 +1,276 @@
+\documentclass{beamer}
+
+% Set up
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{amsthm}
+\usepackage{mathrsfs}  
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{hyperref}
+% \usepackage[utf8]{inputenc}
+
+% Beamer setup
+\usetheme{default}
+\usecolortheme{default}
+% \AtBeginSection[]
+% {
+%   \begin{frame}
+%     \frametitle{Table of Contents}
+%     \tableofcontents[currentsection]
+%   \end{frame}
+% }
+\usefonttheme[onlymath]{serif}
+
+% Math commands
+\input{math}
+
+
+
+%Information to be included in the title page:
+\title{Relaxed intro to Optimal Transport} 
+\author[BAMS]{BAMS}
+\date{\today}
+
+\begin{document}
+
+\frame{\titlepage}
+    
+\begin{frame}{Introduction}
+    \begin{itemize}
+        \item Problem of transporting mass in an efficient way
+        \item Monge 1781: most efficient way of transporting soil from the ground to a given place
+        \item Kantorovich 1975: Nobel prize for Economics ``for their contributions to the theory of optimum allocation of resources"
+        \item Many formulations: we will focus on two, discrete and continuous versions
+        \item Many applications!!!
+    \end{itemize}
+
+\begin{columns}[t]
+\begin{column}{0.6\textwidth}
+\centering
+  \includegraphics[scale=.3]{deblais_remblais.png}
+\end{column}
+\begin{column}{0.2\textwidth}
+\centering
+  \includegraphics[scale=.25]{gaspard.png}
+\end{column}%
+\begin{column}{0.3\textwidth}
+\centering
+  \includegraphics[scale=.25]{leonard.png}
+\end{column}
+\end{columns}
+\pause
+\centering
+Disclaimer: attempted to be a soft and not 100\% formal introduction to OT! :) 
+\end{frame}
+
+
+\begin{frame}[allowframebreaks]{Why are we doing this}
+    \begin{figure}
+        \centering
+        \includegraphics[width=1\linewidth]{cafe1.png}
+        \caption{Supplying all cafes from bakery 1}
+        \label{fig:placeholder}
+    \end{figure}
+
+        \begin{figure}
+        \centering
+        \includegraphics[width=1\linewidth]{cafe2.png}
+        \caption{Organizing supply using optimal transport!}
+        \label{fig:placeholder}
+    \end{figure}
+
+    \begin{figure}
+        \centering
+        \includegraphics[width=1\linewidth]{image.png}
+        \caption{Optimally allocating color}
+        \label{fig:placeholder}
+    \end{figure}
+\end{frame}
+
+\begin{frame}[allowframebreaks]{Convexity}
+    \begin{block}{Convex Set}
+        A set $C \subseteq \mathbb{R}^n$ is convex if for any $x,y \in C$ and any $\lambda \in [0,1]$, we have
+        \[
+        \lambda x + (1-\lambda)y \in C.
+        \]
+        Intuitively, any line segment between two points in $C$ stays inside $C$.
+    \end{block}
+
+    \begin{block}{Extremal Points}
+        A point $x \in C$ is an \emph{extremal point} of a convex set $C$ if
+        \[
+        x = \lambda y + (1-\lambda)z \,\, \Rightarrow\,\, y = z
+        \]
+        for $y,z \in C$ and $\lambda \in (0,1)$. 
+
+        E.g. the extremal points of a polygon are its vertices.
+    \end{block}
+
+    \begin{block}{Convex Function}
+        A function $f:C\to\mathbb{R}$ defined on a convex set $C$ is convex if
+        \[
+        f(\lambda x + (1-\lambda)y) \le \lambda f(x) + (1-\lambda)f(y)
+        \]
+        for all $x,y \in C$, $\lambda \in [0,1]$.  
+        Geometrically, its graph lies below the chord joining any two points.
+    \end{block}
+
+    \begin{block}{Polyhedra}
+        A polyhedron is the intersection of finitely many hyperplanes, i.e. for $b\in\R^n$ and $A\in\R^{n\times n}$
+        \[
+        P = \{x \in \mathbb{R}^n : Ax \le b\}.
+        \]
+        If $P$ is bounded, it is a polytope.
+    \end{block}
+
+    
+    \begin{block}{Polytope}
+        A polytope is a bounded convex set obtained as the convex hull of finitely many points.  
+        Example: a triangle, cube, or any convex polygon/polyhedron.
+    \end{block}
+
+    \begin{block}{Convex Optimization}
+        A convex optimization problem is one of the form
+        \[
+        \min_{x \in C} f(x)
+        \]
+        where $C$ is convex and $f$ is convex.  
+        Nice property: any local minimum is also a global minimum.
+    \end{block}
+\end{frame}
+
+\begin{frame}{Discrete Monge formulation}
+\begin{itemize}
+    \item Two clouds of points $\{x_i\}_{i=1,\cdots,n}$, $\{y_i\}_{i=1,\cdots,n}$ 
+    \item Two probability measures (distribution of masses) on them
+    \item The cost of transporting mass $x_i$ to $y_j$ is $C_{ij}$ 
+\end{itemize}
+\begin{block}{Permutation}
+    Given an interval $I\subset\mathbb
+    N, I =\{1,\cdots,n\}$, a permutation is a bijective function $\sigma:I \to I$. \\
+    We indicate $\sym(I)$ or just $\sym(n)$ the set of all permutations on $I=\{1,\cdots,n\}$.
+\end{block}
+ \\~\\ \pause
+\begin{block}{Monge's formulation}
+    \begin{equation}\tag{D1}\label{D1}
+        \min_{\sigma \in \sym(n)} \sum_{i,j} C_{i, \sigma(j)}
+    \end{equation}
+\end{block}
+
+\end{frame}
+
+\begin{frame}{Discrete Kantorovich formulation}
+
+Kantorovich's extension: we are allowed to ``divide" masses! yay!
+\vspace{20pt}
+
+\begin{block}{Bistochastic matrices}
+    A matrix $P\subset\R_+^{n\times n}$ is a bistochastic matrix if $\sum_jP_{ij}=1$, $\sum_iP_{ij}=1$, i.e. its rows and its columns sum to 1. \\
+    We indicate $B_n$ the set of bistochastic matrices in $\R_+^{n\times n}$.
+\end{block}
+\\~\\ \pause
+\begin{block}{Kantorovich's formulation}
+        \begin{equation}\tag{D2}\label{D2}
+            \min_{P\in B_n} \sum_{ij}P_{ij}C_{ij}
+        \end{equation}
+\end{block}
+\end{frame}
+
+\begin{frame}{Connecting Monge and Kantorovich}
+    
+We can rewrite permutations as in Monge's formulation via permutations matrices \[P_n:= B_n \cap \{0,1\}^{n \times n}\]
+Then Monge's problem becomes:
+\begin{equation}\tag{D1$^\prime$}
+    \min_{P\in P_n} \sum_{ij}P_{ij}C_{ij}
+\end{equation}
+\\~\\ \pause
+\begin{alertblock}{Important remarks}
+\begin{enumerate}
+    \item $B_n \subset [0,1]^{n \times n}$ is a polyhedra
+    \item $P_n= \rm Ext(B_n)$ (Von Neumann)
+    \item Kantorovich formulation is a \textbf{convex relaxation} of Monge's one 
+    \item OT problem as in \ref{D2} can be solved efficiently via linear programming
+\end{enumerate}
+\end{alertblock}
+\end{frame}
+
+\begin{frame}{Probability measures}
+
+% sigma algebra ?
+
+    \begin{block}{Probability measure}
+     A probability measure on (a $\sigma$-algebra $\mathcal{A}$ of) a set $X$ is a measure $\mu:\mathcal{A}\to [0,1]$ such that $\mu(X)=1$. We indicate as $\mathcal{P}(X)$ the set of measures on $X$. 
+    \end{block}
+\\~\\ \pause
+    \begin{block}{Push-forward measure}
+        Given a function $T:X \to Y$, we define the push forward operator $T_\#: \mathcal{P}(X) \to \mathcal{P}(Y)$ by
+    \[
+    T_\#\mu(A) = \mu(T^{-1}(A)) \quad \forall A \in \mathcal{B}(Y)
+    \]
+    and call $T_\#\mu$ push forward measure.
+    \end{block}
+
+    The push forward measure is the measure assigning to a set the measure of its \textbf{pre-image} according to a map $T$.
+\end{frame}
+
+\begin{frame}{Transport via functions}
+Given
+    \begin{itemize}
+    \item two spaces $X$ and $Y$ 
+    %what spaces are these hihi? 
+        \item probability measures $\mu \in \mP(X)$, $\nu \in \mP(Y)$
+        \item  cost function $c:X\to Y$
+    \end{itemize} 
+    \begin{block}{Monge's formulation}
+        \begin{equation}\tag{C1}
+            \min_{T | T_\#\mu=\nu} \int_Xc(x,T(x)) \de \mu(x)
+        \end{equation}
+    \end{block}
+\end{frame}
+
+\begin{frame}[allowframebreaks]{Transport via transport plans}
+\begin{block}{Transport plan}
+A transport plan is a probability measure $\pi \in \mP(X \times Y)$ such that $\pi(A\times Y) = \mu(A), \pi(X\times B) = \nu(B)$. \\
+We indicate $\Gamma (\mu, \nu)$ the set of all transport plans for $\mu$ and $\nu$.
+\end{block}
+
+Transport plans are another way of carrying mass from $X$ to $Y$, and in particular $\pi(A\times B)$ is the mass that was in $A \subset X$ and has been sent to $B \subset Y$.\\
+\vspace{5 pt}
+For stats buddies: transport plans are like joint probability measures! 
+
+\begin{block}{Kantorovich's formulation}
+\begin{equation}\tag{C2}
+    \min_{\pi \in \Gamma(\mu,\nu)} \int_{X\times Y} c(x,y) \,\,\de{\pi}(x,y)
+\end{equation}
+\end{block}
+\end{frame}
+
+\begin{frame}{Connecting Monge and Kantorovich, again}
+    For any transport \textit{map} $T$, there exists a transport \textit{plan} $\pi_T$:
+    \[
+    T \longmapsto (\id \times\, T)_\#\mu =: \pi_T
+    \]
+    Moreover, it can be checked $\mathcal{C}(T) = \mathcal{C}(\pi_T)$ where $\mathcal{C}$ is the total cost attained by a transport map/plan. \\
+\vspace{10 pt}
+Thus, 
+\[
+\text{inf}_{M} \ge \text{inf}_{K}
+\]
+\end{frame}
+
+\begin{frame}{Useful resources}
+\begin{itemize}
+\item Brué Ambrosio Semola Lecture on Optimal Transport
+\item \href{http://elenaher.dinauz.org/B07D.StFlour.pdf}{Villani Optimal Transport Old and New}
+    \item \href{https://optimaltransport.github.io/book/}{Peyré and Cuturi Computational Optimal Transport}
+    \item \href{https://optimaltransport.github.io/slides-peyre/course-note-ot-basics.pdf}{Peyré slides on discrete part}
+    \item \href{https://matildedol.github.io/files/Ricci.pdf}{Mati's notes chapter 3}
+\end{itemize}
+Beware: there's a sea out there, only check out topics we went over or ask for more!
+\end{frame}
+
+\end{document}
