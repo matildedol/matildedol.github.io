@@ -154,7 +154,7 @@ Disclaimer: attempted to be a soft and not 100\% formal introduction to OT! :)
     N, I =\{1,\cdots,n\}$, a permutation is a bijective function $\sigma:I \to I$. \\
     We indicate $\sym(I)$ or just $\sym(n)$ the set of all permutations on $I=\{1,\cdots,n\}$.
 \end{block}
- \\~\\ \pause
+\pause
 \begin{block}{Monge's formulation}
     \begin{equation}\tag{D1}\label{D1}
         \min_{\sigma \in \sym(n)} \sum_{i,j} C_{i, \sigma(j)}
@@ -172,7 +172,7 @@ Kantorovich's extension: we are allowed to ``divide" masses! yay!
     A matrix $P\subset\R_+^{n\times n}$ is a bistochastic matrix if $\sum_jP_{ij}=1$, $\sum_iP_{ij}=1$, i.e. its rows and its columns sum to 1. \\
     We indicate $B_n$ the set of bistochastic matrices in $\R_+^{n\times n}$.
 \end{block}
-\\~\\ \pause
+\pause
 \begin{block}{Kantorovich's formulation}
         \begin{equation}\tag{D2}\label{D2}
             \min_{P\in B_n} \sum_{ij}P_{ij}C_{ij}
@@ -187,7 +187,7 @@ Then Monge's problem becomes:
 \begin{equation}\tag{D1$^\prime$}
     \min_{P\in P_n} \sum_{ij}P_{ij}C_{ij}
 \end{equation}
-\\~\\ \pause
+\pause
 \begin{alertblock}{Important remarks}
 \begin{enumerate}
     \item $B_n \subset [0,1]^{n \times n}$ is a polyhedra
@@ -205,7 +205,7 @@ Then Monge's problem becomes:
     \begin{block}{Probability measure}
      A probability measure on (a $\sigma$-algebra $\mathcal{A}$ of) a set $X$ is a measure $\mu:\mathcal{A}\to [0,1]$ such that $\mu(X)=1$. We indicate as $\mathcal{P}(X)$ the set of measures on $X$. 
     \end{block}
-\\~\\ \pause
+\pause
     \begin{block}{Push-forward measure}
         Given a function $T:X \to Y$, we define the push forward operator $T_\#: \mathcal{P}(X) \to \mathcal{P}(Y)$ by
     \[
