@@ -1,0 +1,117 @@
+\section{Riemannian geometry}
+
+Seminar 15 apr, Prof. Pigati. [Next meeting is May 13, then May 27 ]
+% THERE IS NO AUDIO :((((
+% connections 
+% concepts in riem. geometry 
+
+Connections:
+a way to perform derivatives on a manifold
+
+\begin{definition}[Section of a map] A smooth section $s:M \to E$ is a smooth map such that $s(p) \in \pi^{-1}(p) \,\, \forall p\in M$
+\end{definition}
+When $E = TM$, a section is called a vector field. 
+(Recall $E$ is our vector bundle with associated map $\pi$, and $X=\sum_{i=1}^n X^i\frac{\partial}{\partial x_i}$.
+
+\begin{definition}[Connection]
+    A connection on $E$, denoted $\nabla$, takes a section $s$ of $E$ and a vector field $X$, and gives a new section $\nabla_Xs$ that satisfies the following properties:
+\begin{itemize}
+    \item $C^\infty(M)$-linear in $X$: $\nabla_{fX+gY} s=f\nabla_X s + g\nabla_Y s \quad \forall f,g: M \to \mathbb{R}$
+    \item $\mathbb{R}$-linear in s
+    \item Leibniz rule: $\nabla_X(fs) = f \nabla_x s + X(f) s$
+\end{itemize}
+Where $X(f)$ indicates differentiating $f$ along direction $X$.  
+\end{definition}
+
+\begin{remark}
+    $\nabla_X s(p)$ depends only on $s|_U$ for an arbitrary small neighborhood $U$ and on $X(p)$.
+\end{remark}
+
+\begin{remark}
+    In a trivialization $\pi^{-1} \cong \mathbb{R}^k \times U$ we always have the following structure:
+    \[
+    s(x) = (v(x), x)
+    \]
+    \[
+    \nabla_X s(x) = Ds(x) [X(x)] + X^iA_i(x) s(x)
+    \]
+    Where $A$ is a $k\times k$ matrix, not necessarily invertible. 
+\end{remark}
+
+\begin{remark}
+    If $\nabla$ is a connection, any other connection has the form $\tilde{\nabla} = \nabla + \alpha$ where $\alpha(x):\pi^{-1}(x) \otimes T_x^*M \to \pi^{-1}(x)$ is a linear map. Namely, $\tilde \nabla_X s = \nabla_X s + \alpha(X) s$, where $\alpha(X) s$ is the ``0-th order term". 
+\end{remark}
+
+Hence, the space of all connections is an \textbf{affine space}. 
+
+In computations, assuming $U$ trivializes $E$ and is included in a chart, we can write \[\nabla_{\frac{\partial}{\partial x_i}}e_j= \sum_{l=1}^{\text{rank}} \Gamma_{ij}^l e_l\] where $\{e_1, \ldots, e_k\}$ is a canonical basis of $\mathbb{R}^k \cong \pi^{-1}(x)$. $\Gamma_{ij}^l (x)$ are called \emph{Christoffel symbols}. 
+
+$A_i(x)$ has coefficient $\Gamma_{ij}^l $ in position $(l,j)$.
+
+\[
+\nabla_{\frac{\partial}{\partial x^i}}
+\begin{pmatrix}
+c_1(x)\\
+\vdots\\
+c_k(x)
+\end{pmatrix}
+=
+\begin{pmatrix}
+\frac{\partial c_1}{\partial x^i}\\[6pt]
+\vdots\\[6pt]
+\frac{\partial c_k}{\partial x^i}
+\end{pmatrix}
+\;+\;
+A_i
+\begin{pmatrix}
+c_1(x)\\
+\vdots\\
+c_k(x)
+\end{pmatrix}\,.
+\]
+
+\begin{remark}
+    For $E=TM$ we just need to take $U$=domain of chart. Then $TM|_U$ is trivialized by $c_1(x)\frac{\partial}{\partial x^1} + \ldots + c_n(x)\frac{\partial}{\partial x^n}$ and $\nabla_{\frac{\partial}{\partial x^i}} (\frac{\partial}{\partial x^j}) = \sum_{l=1}^n \Gamma_{ij}^l \frac{\partial}{\partial x^l}$
+\end{remark} 
+
+\subsection{Parallel Transport}
+Given a smooth curve $\gamma: [0, T] \to M$, a section along $\gamma$ is $s:[0,T] \to E$ (smooth) s.t. $s(t) \in \pi^{-1}(\gamma(t))$
+
+\begin{example}
+    Given any $v_0 \in \pi^{-1}(\gamma(0)$ there is a unique section $s(t)$ along $\gamma$ s.t. $\nabla_{\gamma'(t)} s(t) = 0.$ What does $\nabla_{\gamma'(t)}$ mean? In Rimeannian geometry, it is called the \emph{covariant derivative} along a curve $\gamma$.
+\end{example}
+
+Locally in $t$ we can always write
+\[
+s(t) = \sum_m c_m(t) s_m(\gamma(t))
+\]
+with $s_m$ section in the usual sense, define near $\gamma(t)$, and we let \[\nabla_{\gamma'(t)}:= \sum c_m(t) \nabla_{\gamma'(t)} s_m + \sum c_m'(t) s_m(\gamma(t))\]
+
+What we get $v_0(s(0) \mapsto s(T))$ is called \emph{parallel transport} along $\gamma$ and gives an isomorphism $\pi^{-1}(\gamma(0)) \overset{\sim}\longrightarrow \pi^{-1}(\gamma(T)) $. However, two curves will produce different isomorphisms $\pi^{-1}(p) \to \pi^{-1}(q)$. 
+
+What is the \emph{curvature} of a connection? It measure the failure of parallel transport along loops to be an identity. 
+\[F_\nabla \Bigl(\frac{\partial}{\partial x^i}, \frac{\partial}{\partial x^j} \Bigr) s := \nabla_{\frac{\partial}{\partial x^i}} (\nabla_{\frac{\partial}{\partial x^j}} s ) - \nabla_{\frac{\partial}{\partial x^j}} (\nabla_{\frac{\partial}{\partial x^i}} s) = B_{ij} s\]
+is a 0-order thing. 
+Hence, parallel transport = $\text{Id} + \varepsilon^2 \cdot F_\nabla \bigl(\frac{\partial}{\partial x^i}, \frac{\partial}{\partial x^j}\bigr)$
+
+\subsection{Riemannian manifold}
+A Riemannian manifold $(M,g)$ is a manifold endowed with a positive definite scalar product $g(p)$ on each $T_pM$, depending smoothly on $p$. 
+
+\begin{example}
+    IF $M \subseteq \mathbb{R}^N$, we can take $g(p):=$ restriction of the inner product in $\mathbb{R}^N$, e.g. $S^N \subset \mathbb{R}^{N+1}$
+\end{example}
+
+\begin{theorem}
+    On $TM$, $ $ connection, called \emph{Levi-Civita connection}, s.t.
+    \begin{itemize}
+        \item$ X(g(Y,Z)) = g(\nabla_XY,Z) + g(Y, \nabla_X Z)$
+    \end{itemize}
+\end{theorem}
+
+The Riemannian tensor on ($M, g$) is defined as
+\[
+R(X,Y)Z := \nabla_X\nabla_YZ - \nabla_Y \nabla_X Z
+\]
+and is a section of $TM \otimes T^*M \otimes T^*M \otimes T^*M$.
+
+[...]

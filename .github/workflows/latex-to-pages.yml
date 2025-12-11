@@ -74,10 +74,19 @@ jobs:
           texlive_version: 2025
 
       # --- OT BAMS ---
-      - name: Compile OT BAMS
+      - name: Compile OT_BAMS
         uses: xu-cheng/latex-action@v3
         with:
           root_file: tex/ot_bams/main.tex
+          work_in_root_file_dir: true
+          args: -r ../.latexmkrc
+          texlive_version: 2025
+
+      # --- Infromation Geometry ---
+      - name: Compile Information_Geometry
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: tex/Information_Geometry/main.tex
           work_in_root_file_dir: true
           args: -r ../.latexmkrc
           texlive_version: 2025
@@ -92,6 +101,7 @@ jobs:
           cp tex/Sliding_Sobolev/main.pdf           public/files/Sliding_Sobolev.pdf
           cp tex/bscthesis/bscthesis.pdf            public/files/bscthesis.pdf
           cp tex/ot_bams/main.pdf                   public/files/ot_bams.pdf
+          cp tex/Information_Geometry/main.pdf      public/files/info_geo.pdf
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3

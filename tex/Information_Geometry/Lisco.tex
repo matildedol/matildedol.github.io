@@ -1,0 +1,97 @@
+\subsection{Tangent spaces}
+We can get an intuition of \textit{tangent spaces} by means of a useful analogy. Just like we can approximate a smooth function to a linear one, by taking its Taylor expansion, any manifold can be approximated to a tangent space. 
+
+Let $p \in M^n$. If $n=0$ we simply define $T_pM \coloneq \{0\}$. Now, assume $n>0$. We give two possible definitions of the tangent space at $p$ and we will later comment on their equivalence. The first one is more visual, you think of vectors in the tangent space as velocities of curves starting at $p$. The second approach is more algebraic, you think of the tangent space as all the possible ways to perform a directional derivative of a function. 
+
+\bigskip
+\emph{First approach (visual)}: Consider the space of all smooth curves $\gamma: [0, \varepsilon] \to M$, $\gamma(0)=p$ starting from $p$. We declare two such curves equivalent if their velocity is equal when read in every chart. Formally, for any $\gamma_1: [0, \varepsilon_1] \to M$ and $\gamma_2: [0, \varepsilon_2]\to M$, $\gamma_1 \sim \gamma_2$ if for any chart $\varphi: U \to V \subseteq \mathbb{R}^n$  around $p$, it holds $(\varphi \circ \gamma_1)'(0) = (\varphi \circ \gamma_2)'(0)$. Then $T_pM$ will be defined as the set of all equivalence classes.
+
+A few remarks are in order. 
+
+\begin{remark}
+    It is enough to check the condition in the definition only for one chart. Indeed, when changing chart, the velocity is transformed by applying the differential of the change of chart map (which we recall to be smooth by the definition of smooth manifold).
+\end{remark}
+
+\begin{remark}
+    $T_pM$ is indeed a vector space and its dimension is the same as the one of the manifold. To see this, fix any chart centered at $p$ (we can always choose such a chart up to translation and moreover the choice is irrelevant by the previous remark) $\varphi:U \to V$ with $p \in U$ and consider for any $w \in \mathbb{R}^n$ the curve $\gamma_w(t) \coloneq \varphi^{-1}(tw)$, that is, the preimage through the chart of the line spanned by $w$ in $\mathbb{R}^n$. One can show that the map $w \mapsto [\gamma_w]$ is a bijection between $\mathbb{R}^n$ and $T_pM$. The sum operation on the equivalence classes is then defined by $[\gamma_w]+[\gamma_v]\coloneq [\gamma_{w+v}]$. The vector space structure hereby defined does not depend on the choice of chart.
+\end{remark}
+
+\begin{remark}
+    When the manifold is immersed in some Euclidean space $\mathbb{R}^n$, we can view $T_pM$ as a vector subspace. The affine subspace $p+T_pM$ corresponds to our intuition of a ``Taylor approximation" of $M$. For a surface (2-dimensional manifold) in $\mathbb{R}^3$ that would be the tangent plane to the surface. 
+\end{remark}
+
+\emph{Second approach (algebraic)
+}: Consider the space of real valued smooth functions on M, denoted $C^{\infty}(M)$. We call a map $D: C^{\infty}(M) \to \mathbb{R}$ a \emph{derivation} at $p$ if it is linear and it satisfies the following product rule: $D(fg)=D(f)g(p)+f(p)D(g)$. Derivations are essentially directional derivatives of functions, evaluated at $p$. We define the tangent space as the set of all derivations at $p$, that is, all possible ways of performing a directional derivative of a function. 
+
+\begin{remark}
+    The vector space structure in this second definition is clearer (sums and scalar multiples of derivations are still derivations) but proving that it has dimension $n$ still requires some work. A possible strategy would be proving that, given a derivation $D$ at $p$ and a chart $\varphi:U\to V$ centered at $p$, there exists a vector $w \in \mathbb{R}^n$ such that $D(f)$ is the directional derivative of $f \circ \varphi^{-1}$ in direction $w$ evaluated at $0$. The proof of this fact uses the following factorization lemma:
+    \begin{lemma}
+        For any $f \in C^{\infty}(M), f(x) = f(0) + \sum_{i=1}^nx_ig_i(x)$ for some smooth functions $\{g_i\}$.
+    \end{lemma}
+\end{remark}
+
+The connection between the two definitions is the following. Given an equaivalence class $[\gamma]$ as in the first definition, we get a derivation $D$ by defining $D(f) \coloneq (f \circ \gamma)'(0) \in \mathbb{R}$. Using local charts one can check that this is indeed a bijection.
+
+\begin{example}
+    Consider the sphere $S^n \subseteq \mathbb{R}^{n+1}$. It is conveniently defined as the zero set of a smooth function, namely $h(x) = |x|^2-1$. In such a case, one can show that the tangent space is the zero set of its differential:
+    \begin{equation*}
+        T_pS^n=\ker Dh(p)=\ker (v\mapsto2\langle p,v \rangle)
+    \end{equation*}
+    Hence, the tangent space to the sphere at $p$ is none other than the orthogonal complement $p^\perp$.
+\end{example}
+
+\subsection{Vector bundles}
+We now turn to a different construction, ubiquitous in differential geometry, which is the one of vector bundles. Informally, they provide a smooth way to glue together different vector spaces at each point of a manifold. 
+
+\begin{definition}[Vector bundle] \label{definition:vector bundle}
+    Let $M$ be an n-dimensional manifold and $k$ a positive integer. A \emph{vector bundle} of rank $k$ over $M$ is a manifold $E^{n+k}$ together with a smooth map $\pi:E \to M$, called projection, such that:
+    \begin{enumerate}
+        \item each fiber $E_p :=\pi^{-1}(p)$ has the structure of a $k$-dimensional vector space
+        \item for each $p \in M$ there exists a neighborhood $U$ of $p$ and a diffeomorphism $\Phi: \pi^{-1}(U) \to \mathbb{R}^k \times U$, called \emph{local trivialization}, of the form $\Phi=(F, \pi)$, where $F$ is a vector space isomorphism with $\mathbb{R}^k$ when restricted to each fiber.     \end{enumerate}  
+\end{definition}
+
+Notice that in the definition above, we assumed a smooth structure on the total space $E$ as a datum. However, the way vector bundles arise in practice is from disjoint unions of vector spaces assigned to each point of the manifold. With this in mind, let us see a more operational, yet equivalent, characterization of vector bundles which gives a smooth structure on the total space almost for free, provided that the local trivializations overlap in a specific way.
+
+\begin{proposition}
+    Suppose that for each $p \in M$ we have a real vector space $E_p$ of some fixed dimension $k$ and let $E := \bigsqcup_{p \in M} E_p$. If moreover we have an open cover $\{U_\alpha\}_{\alpha \in A}$ of $M$ and a bijective map $\Phi_\alpha : \pi^{-1}(U_\alpha) \to \mathbb{R}^k  \times U_\alpha$ of the same form as in Definition \ref{definition:vector bundle} (ii) for each $\alpha \in A$ and if it holds that for each $\alpha, \beta \in A$ with $U_\alpha \cap U_\beta \neq \emptyset$, the map $\Phi_\alpha \circ \Phi_\beta^{-1}$ from $ \mathbb{R}^k \times (U_\alpha \cap U_\beta)$ to itself has the form
+    \[
+    \Phi_\alpha \circ \Phi_\beta^{-1}(v, p) = (L_pv, p)
+    \]for some $L_p \in GL(k, \mathbb{R})$ depending smoothly on p, then $E$ has a unique topology and smooth structure making it into a smooth manifold and a smooth rank-$k$ vector bundle over $M$, with the obvious projection $\pi$ and $\{\Phi_\alpha\}$ as smooth local trivializations.
+\end{proposition}
+
+\begin{example} [Tangent Bundle]
+    Denote $TM = \bigsqcup_{p \in M} T_pM$ and by $\pi$ the obvious projection. We want to put a structure of vector bundle of rank $2n$ on $TM$ which will then take the name of \emph{tangent bundle}. This is the prototypical example of a situation where we want to glue together different vector spaces, in this case the tangent spaces, at each point of $M$. In principle, we should construct a topology and a differentiable structure on $TM$, but using the equivalent characterization we just gave, we can bypass this step and directly provide the local trivializations and transition functions, which incidentally are fairly simple in this case. 
+
+    Take a smooth atlas of M (to fix ideas you can take the maximal one) and in the domain of each chart define the map $\Phi: \pi^{-1}(U) \to \mathbb{R}^n \times U$ by
+    \begin{equation*}
+        \Phi\left(\sum_i v^i \left. \frac{\partial}{\partial x^i} \right|_p\right) := ((v^1,\dots,v^n),p)
+    \end{equation*}
+    where $\{\left. \frac{\partial}{\partial x^i} \right|_p\}$ is the basis of $T_pM$ induced by the coordinates of the chart. This is clearly bijective and restricts to a linear isomorphism with $\mathbb{R}^n$ on fibers. Finally, one can easily check that for any two such maps the transition function is given by the differential of the change of coordinates, which is indeed an invertible linear map:
+    \begin{equation*}
+        \Phi_\alpha \circ \Phi_\beta^{-1}(v, p) = (D(\varphi_\alpha\circ\varphi_\beta^{-1})(x)[v], p).
+    \end{equation*}
+\end{example}
+
+We can define a suitable notion of \emph{isomorphism of vector bundles}
+
+\begin{definition}
+    We call two vector bundles $E, E'$ isomorphic if there exists a diffeomorphism $F: E \to E'$ that respects the fibers, that is $E_p$ goes to $E'_{F(p)}$, or more compactly $\pi_{E'}\circ F=\pi_E$, and gives a linear isomorphism on each fiber. Moreover we say that $E$ is \emph{trivial} if is isomorphic to $\mathbb{R}^k\times M$.
+\end{definition}
+
+\begin{example} [$TS^1$ is trivial]
+    Recalling that the tangent space to a point on the sphere is its orthogonal complement we define the vector bundle isomorphism $F:\mathbb{R}\times S^1 \to TS^1$ by $F(t,p) = tRp \in T_pS^1$ where $R$ is a counterclockwise $90$ degrees rotation. 
+\end{example}
+
+\begin{remark}
+    In light of this, we may hypothesize that the tangent bundle of any sphere is trivial. It turns out that it is not true and this fails already in dimension $2$. However, proving that $TS^2$ is not trivial requires a very deep theorem in differential topology, called the \emph{hairy ball theorem} which states that there is no nonvanishing smooth (actually continuous) tangent \emph{vector field} on even-dimensional n-spheres. The connection with triviality of vector bundles comes from the fact that being trivial is equivalent to having a smoothly varying choice of basis of each fiber. If this were the case on the $2-$sphere we would have a smooth nonvanishing vector field on it, thus contradicting the hairy ball theorem. 
+
+    In full generality, $TS^n$ is trivial if and only if $n \in \{1,3,7\}$
+\end{remark}
+
+\begin{example} [$TS^3$ is trivial]
+    To show this, it is convenient to view $S^3$ as a subset of the quaternions: $S^3 := \{a+ib+jc+kd | a^2+b^2+c^2+d^2=1\}$. The map $F:\mathbb{R}^3\times S^3 \to TS^3$ defined by \[ F((t_1,t_2,t_3),p) = t_1pi+t_2pj+t_3pk \in T_pS^3 \] for example, is a vector bundle isomorphism.
+\end{example}
+    
+
+
+

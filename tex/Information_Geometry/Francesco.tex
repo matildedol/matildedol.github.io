@@ -1,0 +1,108 @@
+\documentclass{article}
+\usepackage{graphicx} % Required for inserting images
+
+\title{info}
+\author{Francesco Maria Vinciguerra}
+\date{March 2025}
+
+\begin{document}
+
+
+\maketitle
+
+\section{Introduction}
+
+
+\smallskip
+\[\gamma:[0,1] \rightarrow (\theta_1(t),...,\theta_n(t)) \in \Theta\]
+f-divergence : assuming \(\mathcal{M}\) can be parametrized by only one chart we call :\[ \sigma :\theta \in \Theta \rightarrow P_\theta \in \mathcal M , \ P_\theta =  p_\theta \mu \]
+\[
+D_\varphi(p_\theta, q_\theta) = \int_\Omega \varphi\left(\frac{p_\theta}{q_\theta}\right) q_\theta \, d\mu.
+\]
+
+We would like to compute the Taylor expansion of the f-divergence, under some basic assumptions:\\
+-$f$ is convex\\
+-$f\geq0$\\
+-$f(1)=0$
+\[
+\frac{d}{dh} D_\varphi(p_t, p_{t+h}) = \int_\Omega \left[ \varphi\left( \frac{p_t}{p_{t+h}} \right) - \frac{p_t}{p_{t+h}} \dot{\varphi} \left( \frac{p_t}{p_{t+h}} \right) \right] \frac{d}{dh} p_{t+h} \, d\mu 
+\]
+\\\[= \int_\Omega  \varphi\left( \frac{p_t}{p_{t+h}} \right) \frac{d}{dh} p_{t+h} - \frac{p_t}{p_{t+h}} \dot{\varphi} \left( \frac{p_t}{p_{t+h}} \right) \frac{d}{dh} p_{t+h}   d\mu
+\]
+\\
+
+-evaluating at h = 0
+\\
+\\\[=\varphi\left( 1 \right)\frac{d}{dh} \int_\Omega    p_{t+h} d\mu - \dot{\varphi} \left( 1 \right) \frac{d}{dh}\int_\Omega   p_{t+h}   d\mu = 0
+\]
+
+-then for the second term:
+\[
+\frac{d}{dh} \left(\frac{d}{dh} D_\varphi(p_t, p_{t+h}) \right) =  \frac{d}{dh}\int_\Omega   \left( \varphi\left( \frac{p_t}{p_{t+h}} \right)- \frac{p_t}{p_{t+h}} \dot{\varphi} \left( \frac{p_t}{p_{t+h}} \right) \right) \frac{d}{dh} p_{t+h}  d\mu
+\]
+
+\[
+=\int_\Omega \left(\dot{\varphi}\left( \frac{p_t}{p_{t+h}} \right) \frac{p_t \frac{d}{dh}p_{t+h}} {p_{t+h}^2} - \frac{p_t \frac{d}{dh}p_{t+h}} {p_{t+h}^2} \dot{\varphi}\left( \frac{p_t}{p_{t+h}} \right) + 
+ \ddot{\varphi}\left( \frac{p_t}{p_{t+h}} \right) \frac{p_t \frac{d}{dh}p_{t+h}} {p_{t+h}^2} \frac{p_t}{p_{t+h}}\right)  \frac{d}{dh} p_{t+h} d\mu
+\]
+\[
++ \int_\Omega   \left( \varphi\left( \frac{p_t}{p_{t+h}} \right)- \frac{p_t}{p_{t+h}} \dot{\varphi} \left( \frac{p_t}{p_{t+h}} \right) \right) \frac{{d}^2}{{dh}^2} p_{t+h}  d\mu
+\]
+
+-Evaluating at h = 0
+\[
+\frac{d}{dh} \left(\frac{d}{dh} D_\varphi(p_t, p_{t+h}) \right) 
+=\int_\Omega \ddot{\varphi}\left( \frac{p_t}{p_{t+h}} \right) \frac{p_t \frac{d}{dh}p_{t+h}} {p_{t+h}^2} \frac{p_t}{p_{t+h}}  \frac{d}{dh} p_{t+h} d\mu
+= \int_\Omega  \ddot{\varphi} (1)  \frac{\left({\frac{d}{dh} p_{t+h}}\right) ^2}{p_{t+h}} d\mu
+\]
+
+\[
+\int_\Omega  \ddot{\varphi} (1)  \frac{\left({\frac{d}{dh} p_{t+h}}\right) ^2}{p_{t+h}} d\mu = \ddot{\varphi} (1) \int_\Omega \frac{\left({\frac{d}{dh} p_{t+h}}\right) }{p_{t+h}} \frac{\left({\frac{d}{dh} p_{t+h}}\right) }{p_{t+h}} p_{t+h} d\mu
+\]
+
+\[
+=\ddot{\varphi} (1) \int_\Omega \left( \frac{d}{dh} log( p_{t+h}) \right)^2 p_{t+h} d\mu 
+\]
+we recognize that this is the Fisher metric and we conclude.
+\[
+D_\varphi(p_{\theta(t)}, p_{\theta(t+h)}) = \int_\Omega \varphi\left(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\right) p_{\theta(t+h)} \, d\mu = h^2 g(\dot{\sigma}, \dot{\sigma}) \ddot{\varphi}(1) + o(h^2).
+\]
+
+
+
+
+
+
+%Connecting F divergences to the official information and again the calculation is very universal. It does not depend on the F or phi. This is one of the theorems we might want to study.
+
+%So, Amani is still alive and he's 18. So, let's do our stalking.
+
+%So let's take the tools to our parametric framework. So we have this mapping, and we derive any probability in terms of the fixed regime. That will be the definition of the Fisher-Fisher method.
+
+%Any f, neutrally what we assume is convex, concave, what's the sign you like? And is cosx. It is 0 and 1. And it is positive and basic identity. Is positive positive? It bumps or zeroes? It bumps or what? Positive when the variable is bigger than 1.
+
+%No, it's always positive, because then you can always renormalize it. So you think it's positive. Because linear transformations don't affect it. OK. And then you define, I mean, you should think of it as some sort of distance between measures, but it's not the distance. That's the reason why there's nothing like geology or something like that. So you want to pick two of these, so you have p, theta, and p, theta, right?
+
+%And you define it as like the integral of f of theta over theta prime, theta prime. And one quick fact is that it does not depend on the measure we did here.
+
+%I mean, it looks like you need this property to define itself, but actually we don't. We can check that you don't need that. If you decompose the measure in a different way, you get the decimal object essentially. And now, the fact that f1 is equal to 0, then see that similarly we get 0 here, and that is always positive. The only way to get 0 here is to have 1, f1 0, and then...
+
+%This is equal to zero because of the utility measures. But notice that this is not symmetric. I mean, there's no reason why if I, well, there's a delta prime, there's a delta prime, too. Okay, let's think of it as a distance, not y. So if you have a distance and you wanna capture the utility, decimal behavior of the distance, what you do, well, you look at the curve, and then you use your distance to measure the,
+
+%distance between two points on the curve, and then you try to tailor expand in terms of the distance between the two points along the curve, something like this. So here we have our phase of parameter, which is a subset of IAMU. We can take a curve, and we have probability measures p theta at a certain time t plus h, p theta at time t.
+
+%And we can, I mean, this is a curve, those are moving, and I'm derived by this t. And here I'm just considering two different points of t plus h and t. There's two t plus a small t. And you can compute the distance, or the level of chance between the two. Now the question is,
+
+%What happens when h is very, very small? So I literally want a Taylor expansion. So I'm simply keeping this point fixed and moving this towards p, theta, p. And then I want a Taylor expansion. I want to understand what are the important terms of the d, theta, p. It turns out, this is super cool. You have, of course, when the 0 order term is 0, because when h is equal to 0, you get 1.
+
+%The first order term, which is nothing but the first derivative with respect to h of this guy, is 0 squared. The first meaningful term is the second order. Second order is h squared, the official information applied to the derivative of the curve.
+
+%gamma is the curve, gamma dot, gamma dot. So it's essentially the length, the magnitude of the velocity at time t of the curve measured with the official information. And this does not depend on f. It just depends on f on a specific parameter. Here you have something like f7, 1, which is another. So it depends on f, just a scout.
+
+%It's related to the Fisher structure.
+
+%Then you have a third order, which is non-linear. I still have to fully work out this term, but here you have a third order. And then you have other terms.
+
+
+
+\end{document}

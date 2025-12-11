@@ -1,0 +1,308 @@
+\documentclass[a4paper,14.5pt,reqno]{amsart}
+%\usepackage{times} % Basic Times font
+%\usepackage{mathpazo} % Palatino text with math support
+%\usepackage{charter}
+
+\usepackage{subfiles}
+
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{libertinus}
+\usepackage{natbib}
+\bibliographystyle{plain}
+\usepackage{blindtext}
+
+
+\usepackage{graphicx}
+\usepackage{thmtools}
+\usepackage{cancel}
+\usepackage[english]{babel}
+\usepackage{amsthm}
+\usepackage{mathrsfs}  
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{bm}
+\usepackage{bbm}
+\usepackage[utf8]{inputenc}
+\usepackage{blindtext}
+%\usepackage{titlesec}
+\usepackage{mathabx}
+\makeatletter
+%\renewcommand{\@secnumpunct}{.\quad}
+\makeatother
+\newcommand{\longrightharpoonup}{\relbar\joinrel\rightharpoonup}
+\usepackage{harpoon}% <---
+
+
+\usepackage{pgfplots}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+\usepgfplotslibrary{patchplots}
+
+\theoremstyle{definition} % Ensures normal (upright) text inside the theorem
+
+\newtheorem*{customthm}{} % Unnumbered theorem, no default label
+
+\newenvironment{namedthm}[1]{%
+    \smallskip % Adds space before the theorem
+    \noindent\textbf{#1.} % No indentation, no auto punctuation, controlled spacing
+}{%
+    \par % Ensures proper paragraph formatting
+}
+
+
+\usepackage[dvipsnames]{xcolor}  % allows named colors like "blue", "magenta"
+\usepackage{hyperref}
+
+\hypersetup{
+    colorlinks,       % disable colored text, use boxes
+    %linkbordercolor = Cyan,   % color of internal document links
+    %urlbordercolor = Melon, % color of external URL links
+    %citebordercolor = NavyBlue,  % color of citation links
+    %pdfborder = {0 0 1},      % thickness of link border
+    linkcolor={black!50!black},
+    citecolor={black!50!black},
+    urlcolor={blue!50!black}
+}
+
+\usepackage[a4paper, total={6in, 8in}]{geometry}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+
+\usepackage{xcolor}
+
+
+\newcommand*\de{\mathop{}\!\mathrm{d}}
+\usepackage[thinc]{esdiff}
+
+%\renewcommand*{\thefootnote}{\fnsymbol{footnote}}
+
+\newcommand{\1}{\mathbbm{1}}
+\DeclareMathOperator*{\argmin}{arg\,min}
+\DeclareMathOperator*{\argmax}{arg\,max}
+\DeclareMathOperator*{\supp}{supp}
+
+\DeclareMathOperator{\imm}{Im}
+\DeclareMathOperator{\lalpha}{\overline{\alpha}}
+\DeclareMathOperator{\aconv}{\alpha \textit{x}+\overline{\alpha}\textit{y}}
+\DeclareMathOperator{\bconv}{\beta \textit{x}+\overline{\beta}\textit{y}}
+
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{corollary}[definition]{Corollary}
+\newtheorem{lemma}[definition]{Lemma}
+
+\theoremstyle{remark}
+\newtheorem*{example}{Example}
+\newtheorem*{remark}{Remark}
+
+
+\title{Information Geometry}
+\author{}
+\date{}
+
+\begin{document}
+
+The field of \textit{Information Geometry} has been defined by some of its pioneers as ``a method of exploring the world of information by
+means of modern geometry" \cite{Amari}, ``the field that studies the geometry of decision making" \cite{Niels}, and ``the differential geometric treatment of statistical models" \cite{AJVLS}. In general, it is a discipline that lies at the intersection of mathematics and statistics and uses the language of differential geometry. %aggiunto da matilde si può togliere
+
+The language of information geometry is the same as that of differential geometry, but the purpose is to study the instersection between mathematics and statistics.
+
+The key geometric object is the so-called \textit{statistical manifold}, and it is formalized as a triple $$(\mathcal M, g, T),$$ where $\mathcal M$ is just a smooth manifold, usually finite-dimendional, and $g$ is the so-called \textit{Fisher-Rao metric} which, in coordinates, we can just think of as a matrix. The pair $(\mathcal M, g)$ is the standard framework in Riemannian geometry. Here, we have an additional object, $T$, which is the \textit{Amari Chenstov tensor} and is slightly more complicated than a metric: it takes as input three vectors and outputs one number, while the metric takes as input of two vectors.
+
+There is an equivalent phrasing of this framework. We can use the tensor $T$ and the metric $g$ to build an object which is called a \textit{connection}. In Riemannian geometry, given a metric, we can always find a connection $\nabla$, the Levi-Civita connection, which induces the parallel transport, the geodesics, and so on ... and the study of the Levi-Civita connection connection is essentially Riemannian geometry. Here, we don't study the Levi-Civita connection, but we rather build another object, another connection, which depends on both $g$ and $T$. And then, we find its dual $\nabla^*$, which turns out to be another connection, and the equality $$\nabla=\nabla^*$$ is trivial, or we get something self-adjoint, only when the connection we started with was the Levi-Civita connection associated with $g$. But this is just a very particular case and, in general, $\nabla$ is not Levi-Civita. We can check that this is a real duality, in the sense that taking the dual is an involution, i.e. $\nabla^{**}=\nabla$ always holds. And the case where $\nabla$ is flat, this duality is exactly the well-known Legendre duality from convex analysis. 
+
+The natural question is: why do we care about this very abstract structure? The motivation comes from statistics. The natural metric to put on our manifold and the natural three-tensorial Amari Chenstov tensor are essentially universal objects coming out of the \textit{Fisher information}. Let's consider the standard framework in parametric statistics: pick a sample space $\Omega$, with some sigma algebra, $\mathscr F$, then the pair $(\Omega, \mathscr F)$ is our \textit{sample}, or \textit{state}, \textit{space}. Then we consider a subset $\mathcal M\subset \mathcal P(\Omega)$ of the space of probability measures over $\Omega$, with some substructure. We assume these subsets are very regular, they are smooth finite-dimensional submanifolds, which we can think of a sphere or embedded in the Euclidean space of dimension $n$. Given a manifold, it's rather natural to use coordinates or parameterize, at least locally, our probability measures over it. We consider good subsets $\Omega\subseteq\mathbb R^n$, such as an open set, and the mapping: $$\theta\in \Theta\longmapsto P_\theta\in \mathcal M$$ into probability measures in our $\mathcal M$. We want a few good properties for this parameterization: we will assume that this is very smooth with respect to the $\theta$ variable, but, for now, let's only assume that this is injective, so that we can look at the inverse. In many applications, we are able to parameterize the whole manifold with only one \textit{chart}.
+
+[DRAWING]
+
+The main conceptual point to be kept in mind is that we can distinguish two different levels in this framework:
+\begin{itemize}
+    \item[-] the manifold of probability distributions $M$ is an intrinsic object and it is given, it constitutes the \textit{abstract level};
+    \item[-]the parameter space $\Theta$ is a chart we choose and use to parametrize the abstract object, it lies at the \textit{concrete level}.
+\end{itemize}
+
+% $\mathcal M$ is the intrinsic object: it is the subset in the space of probability measures that we are studying. $\Theta$ is just a \textit{chart}, i.e. a way to put coordinates over $\mathcal M$. In many applications, we are able to parameterize the whole manifold with only one \textit{chart}. This is a choice: we decide how to parameterize the certain region of your space, and we can change your mind and change chart accordingly.
+
+Now we need the metric $g$ and the tensor $T$. Actually, $g$ comes from the Fisher information and $T$ a derived measure. We will see that this is essentially the only reasonable choice from the point of view of statistics. 
+
+Let's now see some example of objects in this framework that are already kind of interesting from the geometric standpoint. 
+
+\begin{example} [Normal distributions] Let $\Omega=\mathbb R$ and the family $\mathcal M\subset \mathcal P(\mathbb R)$ be the space of normal distributions, namely we parametrize $\mathcal M$ with $\theta=(\mu, \sigma)\in\Theta=\mathbb R\times \mathbb R_+$ and the mapping $$P_\theta=\frac{1}{\sqrt{2\pi}\sigma}e^{-(\omega-\mu)^2/2\sigma^2}\, \text d\omega.$$  So $\mathcal M$ is literally the space of measures of the Gaussians, and it is diffomorphic to the half space, so it is flat. Morover, this is one of the examples where you can parametrize everything with only one chart. \end{example}
+\begin{example} [Exponential family] Let $\Omega=\mathbb R$, $\theta=\mathbb R^n$ and again we parametrize everything with just one chart via $$P_\theta=\exp(k(\omega)+\langle V(\omega), \theta\rangle-F(\theta))\, \text d\omega$$ where $k:\mathbb R\longrightarrow \mathbb R$ is just a nice function: smooth with compact support, while $V:\mathbb R \longrightarrow \mathbb R^n$ is a similarly nice vector-valued object and $F$ is essentially given. We want this to be a probability measure, so if we integrate in $\omega$, we want to get 1, and this forces the definition $$F(\theta)=\log\int_\Omega\exp(k(\omega)+\langle V(\omega), \theta\rangle)\, \text d\omega.$$ So are we have two degrees of freedom, $k$ and $V$, and we can then parametrize the probability measures over $\mathbb R$
+
+%In principle, we could think of $k_\theta$ and $V_\theta$ as parameters as well, getting an infinite dimension of parameters. 
+
+\end{example}
+
+Let's now write down, informally, the tensor objects $g$ and $T$. We assume that, for every $\theta$, our probability $P_\theta$ is absolutely continuous with respect to a certain measure $\mu$, i.e. $$P_\theta\ll\mu\in \mathcal P(\Omega)$$ so that there is a measure dominating all the probabilities $p_\theta$, or at least locally, and this is the same as writing $P_\theta=p_\theta\mu$.
+
+Now, we want to define $g$, which is essentially a metric, so we have two indices: \begin{align*}g_{ij}(\theta)&=\int_\Omega\frac{\partial}{\partial \theta_i}\log p_\theta(\omega)\frac{\partial}{\partial \theta_j}\log p_\theta(\omega)\, p_\theta(\omega)\, \text d\mu(\omega)\\
+&=\int_\Omega\frac{\partial}{\partial \theta_i}\log p_\theta(\omega)\frac{\partial}{\partial \theta_j}\log p_\theta(\omega)\, P_\theta(\omega)\\
+&=\mathbb E_\theta\left[\frac{\partial}{\partial \theta_i}\log p_\theta(\omega)\frac{\partial}{\partial \theta_j}\log p_\theta(\omega)\right]\end{align*} so we are taking the log-likelihood and differentiating with respect to the variable $\theta$, as $\theta\subset\mathbb R^n$, which has coordinates, so we can differentiate with respect to this variable. We then do the same with respect to another variable, and integrate with respect to the same probability distribution. 
+
+When $i=j$, this is the standard definition of Fisher information. Now, the point is that, given coordinates, again, where $\Theta$ is our choice and is not intrinsic, we can check that this quadratic form is symmetric and positive definite so it induces a metric or a scalar product, which depends on the point $\theta$ we are studying. This is essentially the definition of Riemannian metric. Pick two vectors $v, w\in \mathbb R^n$ and think of them as tangent vectors at a given precise $\theta\in \Theta$, then the inner product between the two is going to be $$g_\theta(v, w)=\sum_{i, j}v_iw_jg_{ij}(\theta)$$ where we wrote the two vectors in the standard Euclidean coordinates. In the current frame, we should think of abstract manifolds and abstract tangent spaces attached to these manifolds, but when we write things in coordinates, we are just looking at open sets of an $\mathbb R^n$, and these concepts kind of collapse into basic concepts of linear algebra. In the abstract picture, $\mathcal M$ is a manifold of measures, and $g$ will always take that Fisher-like form.
+
+The 3-tensor $T$ depends on three indices: $$T_{ijk}(\theta)=\int_\Omega\frac{\partial}{\partial \theta_i}\log p_\theta(\omega)\frac{\partial}{\partial \theta_j}\log p_\theta(\omega)\frac{\partial}{\partial \theta_k}\log p_\theta(\omega)\, p_\theta(\omega)\, \text d\mu(\omega)$$ and can no longer be represented as a matrix.
+
+It is now clear that we can go on with this kind of definition and define some $k$-tensor depending on $k$ indices as the integral of $p_\theta\prod_{\ell=1}^k\partial\log p_\theta/\partial \theta_\ell$. We would still get universal invariant objects as $g$ and $T$. The first order one is, instead, simply 0: $$\int_\Omega\frac{\partial \log p_\theta}{\partial \theta_i}\, p_\theta=\int_\Omega\frac{1}{p_\theta}\frac{\partial p_\theta}{\partial \theta_i}\, p_\theta=\frac{\partial}{\partial \theta_i}\,\int_\Omega p_\theta=\frac{\partial}{\partial \theta_i}1=0.$$ So, the first meaningful tensor is $g$.
+
+For the statistical invariance we were hinting to, the Fisher-Rao metric $g$ and the Amari Chenstov tensor $T$ are, up to scaling factors, the only reasonable choices and, a posteriori, we will see that for vectors $X, Y, Z$: $$T(X, Y, Z)=g(\nabla_XY-\nabla_X^*Y, Z)$$ for a connection $\nabla_X$.
+
+
+Let's go back to our previous examples to see the form these objects take.
+
+\begin{example}
+    In the Gaussians example, $g$ is a metric in this space of normal distributions, which, in coordinates, is a metric in the half space. It turns out that this is the hyperbolic metric $$g=\begin{pmatrix} 1/\sigma^2 && 0\\
+    0 && 2/\sigma^2\end{pmatrix}$$ with constant curvature equal to $-1$. So, Gaussians with this natual metric are like a model for the hyperbolic geometry. 
+
+Moreover, this metric blows up as $\sigma\uparrow+\infty$ which, geometrically means that the boundary of this half space is being sent to infinity. Namely, we should think of it as a two-dimensional plane with a metric with constant negative curvature, and not as a half space. However, the constant -1 curvature is the geometry induced in terms of the Levi-Civita connection associated to $g$, but this is not the framework of information geometry, where we should ask about the geometry of the already cited connection $\nabla$, which we shall define. the right connection is something else and also depends on the Amari tensor.
+
+The fact that the mean has no appearance in the metric, is justified by the hyperbolicity in the $\sigma$-direction of the half-plane, while it is cylindrical in $\mu$ so that, shifting $\mu$ is sort of an isometry in terms of the form of the bell-shaped Gaussian.\end{example}
+\begin{example}
+    For the exponential family case, $$g_{ij}=\frac{\partial}{\partial \theta_i}\frac{\partial}{\partial \theta_j}F(\theta)$$ so the metric is given by the variation of the function $F$. This is one of the models where the connection $\nabla$ is flat, and its duality can be interpreted as the Legendre duality. The dual model to the exponential family is the so-called \textit{mixture family}, which are those probabilities that are linear: their density is just a linear function. \end{example}
+
+    \subsection{Statistical invariance.}
+
+Suppose, now, having a few transformations that we can apply to our model, one of them being to change the sample space or, some mappign $$\kappa:\Omega\longmapsto \Omega$$ we use to modify all the measure in the model by pushing-forward all of them. Otherwise, can do it stochastically using Markov kernels.
+
+If $\kappa$ is somehow a bijection, there's essentially no loss of information, as we are just re-parameterizing $\Omega$: thus, a good metric and Amari tensor, sensible of the statistics of the problem, should have the property that if we compute it in the original model or in the re-parameterized model, we get the same object. From the point of view of differential geometry, say $\Omega$ is a manifold itself, we pick $\kappa$ to be a diffeomorphism the we use to change the model by pushing-forward all the measures, then it is easy to check that $g$ and $T$ don't change. Moreover, they are the only objects invariant under this type of transformation, so they are very, very universal. 
+
+There's some precise results: if we consider a tarnsformation where we're losing information, be something that is highly not injective or coarse, then we have an inequality: in any model, we have something more than that. 
+
+More precisely, in coordinates, pick a diffeomorphism $\kappa$ acting on $\Omega$ and then use this to parameterize probability measures by means of a push-forward measure $$\theta\in \Theta\longmapsto \kappa_\#p_\theta\in \mathcal P(\Omega)$$ where, for every set $A\subset\Omega$, the push-forward measure applied to $A$ is the measure $$\kappa_\#p_\theta(A)=p_\theta(\kappa^{-1}(A))$$ of the pre-image through $\kappa^{-1}$ of the set $A$. 
+So, given another transformation of $\Omega$, we can use it to transform any model by pushing-forward. %And then you can say, well, I have another molecule with a given chart. I mean, the chart now is the rising chart. So I can simply compute the tensor, and it turns out that the tensor is. I suspect that it is pretty obvious that there should be a kind of more robust way to understand this invariance. But, yeah, on top of my other side. So every day coordinates if we are doing it. So there is invariance both in theta and in omega in some sense. Exactly, exactly. The invariance in theta is geometry. It is the fact that we are changing charts. The ambience in data is statistics. It means that there's something statistical environment. That's why I don't understand. So you're saying up to a constant multiple. Exactly, yeah. Now if I have 10 or 15 minutes left, I would like to show another calculation, which again is not variables.
+
+
+
+\smallskip
+
+%\[\text D_\varphi(p_\theta, q_\theta)=\int_\Omega \varphi\left(\frac{p_\theta}{q_\theta}\right)q_\theta\, \text d\mu.\]\\
+
+%\[\frac{d}{dh} D_\varphi(p_t, p_{t+h}) = \int_\Omega \left[ \varphi\left( \frac{p_t}{p_{t+h}} \right) - \frac{p_t}{p_{t+h}}\dot\varphi\left( \frac{p_t}{p_{t+h}} \right) \right]\frac{d}{dh} p_{t+h} \, d\mu\longrightarrow0.\]
+
+%$\text D_\varphi(p_{\theta(t)}, p_{\theta(t+h)})=\int_\Omega \varphi\left(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\right)p_{\theta(t+h)}\,\text d\mu =h^2g(\dot \gamma, \dot \gamma)\ddot \varphi(1)+o(h).$
+
+
+
+
+
+%Connecting F divergences to the official information and again the calculation is very universal. It does not depend on the F or phi. This is one of the theorems we might want to study.
+
+%So, Amani is still alive and he's 18. So, let's do our stalking.
+
+%So let's take the tools to our parametric framework. So we have this mapping, and we derive any probability in terms of the fixed regime. That will be the definition of the Fisher-Fisher method.
+
+%Any f, neutrally what we assume is convex, concave, what's the sign you like? And is cosx. It is 0 and 1. And it is positive and basic identity. Is positive positive? It bumps or zeroes? It bumps or what? Positive when the variable is bigger than 1.
+
+%No, it's always positive, because then you can always renormalize it. So you think it's positive. Because linear transformations don't affect it. OK. And then you define, I mean, you should think of it as some sort of distance between measures, but it's not the distance. That's the reason why there's nothing like geology or something like that. So you want to pick two of these, so you have p, theta, and p, theta, right?
+
+%And you define it as like the integral of f of theta over theta prime, theta prime. And one quick fact is that it does not depend on the measure we did here.
+
+%I mean, it looks like you need this property to define itself, but actually we don't. We can check that you don't need that. If you decompose the measure in a different way, you get the decimal object essentially. And now, the fact that f1 is equal to 0, then see that similarly we get 0 here, and that is always positive. The only way to get 0 here is to have 1, f1 0, and then...
+
+%This is equal to zero because of the utility measures. But notice that this is not symmetric. I mean, there's no reason why if I, well, there's a delta prime, there's a delta prime, too. Okay, let's think of it as a distance, not y. So if you have a distance and you wanna capture the utility, decimal behavior of the distance, what you do, well, you look at the curve, and then you use your distance to measure the,
+
+%distance between two points on the curve, and then you try to tailor expand in terms of the distance between the two points along the curve, something like this. So here we have our phase of parameter, which is a subset of IAMU. We can take a curve, and we have probability measures p theta at a certain time t plus h, p theta at time t.
+
+%And we can, I mean, this is a curve, those are moving, and I'm derived by this t. And here I'm just considering two different points of t plus h and t. There's two t plus a small t. And you can compute the distance, or the level of chance between the two. Now the question is,
+
+%What happens when h is very, very small? So I literally want a Taylor expansion. So I'm simply keeping this point fixed and moving this towards p, theta, p. And then I want a Taylor expansion. I want to understand what are the important terms of the d, theta, p. It turns out, this is super cool. You have, of course, when the 0 order term is 0, because when h is equal to 0, you get 1.
+
+%The first order term, which is nothing but the first derivative with respect to h of this guy, is 0 squared. The first meaningful term is the second order. Second order is h squared, the official information applied to the derivative of the curve.
+
+%gamma is the curve, gamma dot, gamma dot. So it's essentially the length, the magnitude of the velocity at time t of the curve measured with the official information. And this does not depend on f. It just depends on f on a specific parameter. Here you have something like f7, 1, which is another. So it depends on f, just a scout.
+
+%It's related to the Fisher structure.
+
+%Then you have a third order, which is non-linear. I still have to fully work out this term, but here you have a third order. And then you have other terms.
+
+%Probably they are related to higher order fissure tensors.
+
+%vkaj je zelo, da je zelo, da je zelo, da je zelo, da je zelo, da je zelo, da je zelo Vsih je nekaj nekaj nekaj nekaj nekaj nekaj nekaj nekaj nekaj nekaj nekaj nekaj nekaj nekaj To je bilo, da je bilo, da je bilo, da je bilo, da je bilo, da je bilo.
+
+%v...of the Germans were young. But let's compute this. I mean, it's easy, but I think it's too good, and I'm not... So let's compute VGH of this apparelism.
+
+%Zdaj... ...zdaj... ...zdaj... ...zdaj... ...zdaj...
+
+%Pist, ovo čekaj, kaj je kajte, kajte, kajte, kajte, kajte, kajte, kajte, kajte, kajte,
+
+%Vse je, da je, da je, da je, da je, da je, da je. ... ... ... ... ... ...
+
+%When h is zero here, you get f prime of one, a number, which will be decided. Then you get one, I mean, here you just get one over p in position. And it's in devices with this, so this plus this plus this is going to be one, when h is equal to zero.
+
+%In tako počeš, da je zelo počeš, da je zelo počeš, da je zelo počeš, da je zelo počeš, da je zelo počeš. Kdaj držav je tukaj, kaj je zelo vzelo, je tukaj zelo vzelo, bo to je f1, je tukaj vzelo vzelo, bo tukaj vzelo vzelo, bo tukaj vzelo vzelo, bo tukaj vzelo vzelo, bo tukaj vzelo, bo tukaj vzelo.
+
+%When the derivative, so maybe I want to simplify this and this, then when the derivative falls here, you get the double derivative, you evaluate that one, one, one, double derivative of the n, take n, double derivative of the function one is equal to zero. So again, the only important term is when the derivative falls here.
+
+%minus b, b, h of this. Right? Great. So, let's expand this. There's going to be equal to integral b, b, h in that is plus h f prime r. in then minus, because again I have to differentiate this, and then minus, because again I have to differentiate this, and then minus,
+
+%Kdaj, kaj smo prišli, če smo prišli, če smo prišli, če smo prišli, če smo prišli, če smo prišli, če smo prišli, če smo prišli.
+
+%in tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi.
+
+%h equal to zero. When h is equal to zero, here you get f prime of one and one. So here you get f prime of one. Here you get f prime of one, and it comes as a sample with this f prime of one. And then you get f second x times x, but at zero this is f second one. So only in order you only have f second one times what? So times the integral of
+
+%dVh p delta t plus h squared times 1 over, here only 1 over p delta t survives, 1 over p delta t. But this is efficient, right? Because this is the longer result. dVh of the long is dVh divided by p.
+
+%Zdaj si počusti, da počusti počusti počusti počusti.
+
+%tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi
+
+%Kaj je zelo informacijno-geometrije? Vse nekaj nekaj nekaj nekaj nekaj nekaj nekaj nekaj nekaj nekaj nekaj. in tudi, da bomo počusti, da bomo počusti, da bomo počusti, da bomo počusti.
+
+%Kaj je tudi izgledan geometrički, kaj je tudi izgledan, ki je tudi nekaj zelo.
+
+%kako se počuče, nekaj nekaj nekaj nekaj nekaj nekaj nekaj nekaj nekaj nekaj nekaj nekaj nekaj nekaj
+
+%Kaj je zelo, da je zelo, da je zelo?
+
+%Zelo, nekaj, nekaj, nekaj, nekaj, nekaj, nekaj, nekaj, nekaj, nekaj, nekaj, nekaj, nekaj, nekaj, nekaj. Mislim, da je vsega vsega vsega vsega vsega.
+
+%maybe some sort of kind of inequality to make it all. For the divergence. But we have some sort of... For the divergence. The distance is convex. So the idea is that you want to see how to fix this distance as to... fix the second axis.
+
+%In izgledajte prezentri. In izgledajte prezentri in ideje je, da se prišli, da se prišli, da se prišli, da se prišli, da se prišli, da se prišli, da se prišli, da se prišli, da se prišli, da se prišli, da se prišli, da se prišli, da se prišli, da se prišli, da se prišli.
+
+%Zdaj, kako se počutimo, da ... ... ne, ne, ne, ne, ne, ne, ne, ne, ne, ne, ne, ne, ne, ne, ne, ne, ne, ne, ne, ne, ne, ne, ne, ne, ne ... in vse je zelo, da je pozitivna. Tako druga je, da je to, da je bilo, da je bilo, da je bilo, da je bilo, da je bilo, da je bilo, da je bilo, da je bilo, da je bilo.
+
+%In izgleda je, da je tukaj, da je tukaj, da je tukaj, da je tukaj, da je tukaj, da je tukaj, da je tukaj, da je tukaj, da je tukaj.
+
+%Mi je nekaj nekaj, da sem bilo, da je bilo, da sem bilo, da sem bilo, da sem bilo, da sem bilo, da sem bilo, da sem bilo in zelo vzelo tukaj izgledaj. Musim da se vzelo, da je tukaj, da je tukaj, da je tukaj, da je tukaj, da je tukaj, da je tukaj, da je tukaj, da je tukaj.
+
+%generativ, adrosarial, netrox, in... je zemastika, svoji? Ne, to je objekta, ki je zelo zelo, zespešel je in zelo. Zelo je entropi. Zelo je entropi. Zelo je entropi. Zelo je entropi. Zelo je entropi. Zelo je entropi. Zelo je entropi. Zelo je entropi.
+
+%Tako, da je bilo, da je bilo, da je bilo. Zelo je tukaj, da je začala, da je začala, da je začala, da je začala, da je začala, da je začala, da je začala, da je začala, da je začala, da je začala, da je začala.
+
+%...in spanjšanje, to je tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi tudi...
+
+%kako se zelo zelo zelo zelo zelo zelo zelo
+
+%z valjstvami na kapitalomega. Gamma iskordinacija, da je zelo, da je zelo, da je zelo, da je zelo, da je zelo, da je zelo. Svimone, se tudi atro, nekaj mi je zelo se povrestil.
+
+%Na različenju, tako da ne bomo povedali, da ne bomo povedali, da ne bomo povedali, da ne bomo povedali, da ne bomo povedali.
+
+%Zdaj, nekaj je. ... ... ... ... ...
+
+%In tudi je tudi konnečnjih, kaj je tukaj, kaj je tukaj, kaj je tukaj, kaj je tukaj, kaj je tukaj, kaj je tukaj, kaj je tukaj, kaj je tukaj, kaj je...
+
+%To je nekaj nekaj nekaj nekaj nekaj nekaj nekaj nekaj nekaj nekaj nekaj nekaj nekaj nekaj tako semetrično. Znamenja je, da je to izgleda izgleda izgleda izgleda izgleda izgleda izgleda izgleda izgleda izgleda izgleda izgleda izgleda izgleda izgleda izgleda izgleda izgleda izgleda izgleda.
+
+%početno, da jaz nekaj nekaj nekaj nekaj nekaj nekaj nekaj nekaj %nekaj nekaj nekaj nekaj
+
+%In maybe in this case the tensor is still enough, just because you have seen the third order tensor. I don't see the role of the third order, but the first, the second order tensor should be the same. It's the level of parameters. I think this third order encodes the fact that your divergence is not symmetric.
+
+%Tako, in tukaj, nekaj, nekaj, nekaj, nekaj, nekaj, nekaj, nekaj, nekaj, nekaj, nekaj, nekaj, nekaj, nekaj. Prezat.
+
+
+\end{document}
+
+
+%And then I conclude by making a connection between these objects and at divergences because there's another point of view on how to introduce G and T and it turns out that G and T are essentially the infinitesimal objects induced by the natural infinitesimal objects induced by at divergences.

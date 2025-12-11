@@ -1,0 +1,109 @@
+[Missing lecture May 13]
+% va rivista con registrazione
+\\
+
+Recall that our framework is that of $(M, g, \nabla)$
+\\
+
+[two theorems explained last time]
+[Fenkel duality explained last time]
+
+\begin{definition}[Bregman divergence]
+    Consider $p, q \in M, \, \theta p = \theta(p), \,\theta q=\theta(q)$, and a strongly-convex function $f$. Then we define Bregman divergence as
+    \[
+    D_f(p,q):= f(\theta p) - f(\theta q) - \nabla f(\theta p)(\theta p-\theta q)
+    \]
+\end{definition}
+
+\begin{remark}
+    \begin{itemize}
+        \item[(i)] $D_f(p,q) \ge 0 \,\, \forall p,q \in M$ and $D_g = 0$ if and only if $p=q$;
+        \item[(ii)] $D_f$ is not symmetric.
+    \end{itemize}
+\end{remark}
+
+Analogously, we can define the \emph{dual divergence} as \[
+D_{f^*}(p,q):= f^*(\theta^* p) - f^*(\theta^* q) - \nabla^* f^*(\theta^* p)(\theta^*p-\theta^* q)
+\]
+
+\begin{proposition}
+   $ D_f(p,q) = D_{f^*}(q,p) \quad \forall p,q \in M$
+
+\begin{proof}
+Notice that $\nabla f(\theta q) = \theta^*q$ by definition of $\theta^*$ (Definition \ref{}).
+\begin{align*}
+         D_f(p,q)&=f(\theta p) - f(\theta q) - \nabla f(\theta p)(\theta p-\theta q)  \\
+         &= f(\theta p) - f(\theta q) + \theta q \theta^* q- \theta^*q\theta p\\
+         &= f(\theta p) + f^*(\theta^* q) - \theta^* q\theta p
+\end{align*}
+Where the last equality comes from $-f(\theta q) + \theta q \theta^* q= f^*(\theta^* q)$ by Definition \ref{def: fenkel}. By playing the same game with $D_{f^*}(p,q)$ we get
+\[
+D_{f^*}(p,q) = f^*(\theta^* p) + f(\theta q) - \theta q\theta^* p
+\]
+by using the third point in Definition \ref{def: fenkel} and that the * operation is an involution. The result follows. 
+\end{proof}
+\end{proposition}
+
+\subsubsection{Generalized Pythagorean Theorem}
+Consider3 point $p,q,r \in M$ and 3 curves connecting them. We look at the remainder of the divergence between the 3 in a cycle, in the same fashion of what the Pythagorean theorem does with Euclidean distances. Indeed, we can think of the divergence as a generalized \emph{squared} distance.
+
+\begin{align*}
+D_f(p,q)+D_f(q,r)-D_f(p,r)
+= &
+\bigl[f(\theta_p)-f(\theta_q)-\theta_q^*(\theta_p-\theta_q)\bigr] + 
+\bigl[f(\theta_q)-f(\theta_r)-\theta_r^*(\theta_q-\theta_r)\bigr] \\
+&-\bigl[f(\theta_p)-f(\theta_r)-\theta_r^*(\theta_p-\theta_r)\bigr]\\
+= & \,\theta_r^*(\theta_p-\theta_r)-\theta_q^*(\theta_p-\theta_q)\\
+=&\,(\theta_r^*-\theta_q^*)(\theta_p-\theta_q)
+\end{align*}
+
+Hence, the remainder of this commutator is the inner product between $(\theta_r^*-\theta_q^*)  \text{ and }(\theta_p-\theta_q)$. Let us make sense of this number. 
+
+Consider the $\nabla$-geodesic connecting $p$ and $q$:
+\[
+\gamma_{p,q}(t)= \theta p(\-t) + t\theta q
+\]
+and the $\nabla^*$-geodesic connecting $q$ and $r$:
+\[
+\gamma_{q,r}(t)= \theta^* q(1-t) + t\theta^* r
+\]
+Now, velocities of the two curves are explicit:
+\[
+\dot \gamma _{p,q}(t) = \sum_i (\theta q - \theta p)_i \frac{\partial}{\partial \theta_i}
+\]
+\[
+\dot\gamma _{q,r}= \sum_i (\theta^*r - \theta^* q)_i\frac{\partial}{\partial \theta^*_i}
+\]
+and similarly for $\dot \gamma_{q,r}$.
+
+By inspecting Figure \ref{fig: pyth}, we see that the pink angle between the two geodesics is the inner product between (minus) the velocity of $\gamma _{p,q}$ at $t=1$ (pink arrow) and the velocity of $\gamma _{q,r}$ at $t=0$ (blue arrow), i.e. 
+\[
+g\Bigl(-\sum_i (\theta q - \theta p)_i \frac{\partial}{\partial \theta_i}, \,\sum_j (\theta^*r - \theta^* q)_j\frac{\partial}{\partial \theta^*_j}\Bigr) = (\theta_p-\theta_q)(\theta_r^*-\theta_q^*)
+\]
+Where the result is just the Euclidean inner product between the two quantities. Hence, if $\dot \gamma_{p,q} \perp \dot \gamma_{q,r}$, their inner product equals 0. \\
+The result is that if the $\nabla$-geodesic $\gamma_{p,q}$ is orthogonal to the $\nabla^*$-geodesic $\gamma_{q,r}$, then:
+\[
+D_f(p,q)+D_f(q,r)-D_f(p,r) = (\theta_p-\theta_q)(\theta_r^*-\theta_q^*) = 0\, 
+\]
+Implying:
+\begin{equation}\label{eq: pyth}
+    D_f(p,q)+D_f(q,r)=D_f(p,r)
+\end{equation}
+
+
+\begin{remark}
+    We can state a more general statement. Indeed, to get result \ref{eq: pyth} we just need that the velocities of the curves connecting $p$ and $r$ to $q$ are orthogonal at $q$ (at $t=1$ and $t=0$ respectively). This means that any two curves connecting $p$ to $q$ and $r$ to $q$, that have the same first-order behavior of the $\nabla$ and $\nabla^*$ geodesics at $t=1$ and $t=0$ respectively, are suitable. 
+\end{remark}
+
+This result is widely used in optimization, to characterize minimizers in terms of velocity of geodesics, for instance minimizing the entropy as a specific kind of divergence. 
+\begin{figure}
+    \centering
+    \includegraphics[width=0.3\linewidth]{images/pyth.jpg}
+    \caption{}
+    \label{fig: pyth}
+\end{figure}
+
+[parte di ottimizzazione]
+\\
+
+[parte degli esponenziali]

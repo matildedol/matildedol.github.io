@@ -1,0 +1,97 @@
+\subsection{$f$-divergences.}
+As S. Amari states, information geometry has emerged from studies of invariant geometrical
+structure involved in statistical inference.
+In this section we link together some concepts mentioned above, namely that the choices of $g$ and $T$ are motivated by their property of invariance. Indeed, these metrics can be derived from an $f$-divergence, which is invariant. %da capire meglio
+
+Consider the map we previously defined
+\[
+\Theta \ni \theta \longrightarrow  p_\theta \in M
+\]
+and a function $f$ convex, positive, and such that $f(1)=0$. Then, the \textit{f-divergence} between two maps $p_\theta$ and $p_{\theta^{\prime}}$ is:
+\[
+D_f (p_\theta, p_{\theta^{\prime}}) = \int_{\Omega} f \Bigl(\frac{p_\theta}{p_{\theta^{\prime}}}\Bigr)p_{\theta^{\prime}} \,\,d{\mu}
+\]
+
+We want to look at a curve $\gamma$ parametrized by $t$ on the parameter space $\Theta$ and consider $\theta = \theta(t) $ and an increment along the curve $ \theta^{\prime}=\theta(t+h)$. We can compute the divergence between the distributions at these two values, namely $D_f (p_\theta, p_{\theta^{\prime}})$. \\Our question is: what happens if the increment $h$ is very very little?
+That is, what happens if we Taylor expand the divergence $D_f$? \\
+Of course, the 0-th order term is 0. It turns out that the first-order term is 0 as well, and the first meaningful terms are the second-order term, that depends on the Fisher information $g$ and on $f$ only by a number, and the third-order term that depends on the 3-tensor $T$.   
+\\
+Let us compute this surprising result. 
+%computations
+Looking at the first-order term we have:
+\[
+\begin{aligned}
+    &\frac{d}{dh} D_f(p_{\theta(t)}, p_{\theta(t+h)}) = \int \frac{d}{dh} p_{\theta (t+ h)} f\Bigl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\Bigr)\, d\mu - \int p_{\theta(t+h)} f^{\prime}\Bigl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\Bigr) \frac{p_{\theta(t)}}{p{^2}_{\theta(t+h)}} \frac{d}{dh}p_{\theta(t+h)} \, d\mu
+\end{aligned}
+\]
+Now, evaluating this at $h=0$, in the second term we get $f'(1)$ evaluated at $h$, which is 0, bringing the whole term to 0; in the first term we exchange the integral and the derivative and get $\frac{d}{dh} \int p_{\theta(t)} \, d\mu = 0$ as the integral of a density function is equal to 1. Hence, the whole term goes to 0. \\
+Let us look at the second-order term:
+\[
+\begin{aligned}
+   \frac{d^2}{d^2h} D_f(p_{\theta(t)}, p_{\theta(t+h)}) &=  \frac{d}{dh}\int \frac{d}{dh} p_{\theta (t+ h)} f\Bigl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\Bigr)\, d\mu - \frac{d}{dh}\int f^{\prime}\Bigl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\Bigr) \frac{p_{\theta(t)}}{p_{\theta(t+h)}} \frac{d}{dh}p_{\theta(t+h)} \, d\mu \\&= -\int \Bigl(\frac{d}{dh} p_{\theta(t+h)}\Bigr)^2 f^{\prime} \Bigl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\Bigr) \frac{p_{\theta(t)}}{p{^2}_{\theta(t+h)}} \, d\mu\, \\
+   &+\int \Bigl(\frac{d}{dh} p_{\theta(t+h)}\Bigr)^2 \Biggl[f^{\prime\prime} \Bigl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\Bigr) \frac{p_{\theta(t)}}{p_{\theta(t+h)}} \frac{p_{\theta(t)}}{p{^2}_{\theta(t+h)}} \frac{d}{dh} p_{\theta (t+ h)}
+    + f^{\prime} \Bigl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\Bigr)  \frac{p_{\theta(t)}}{p{^2}_{\theta(t+h)}}\frac{d}{dh} p_{\theta (t+ h)}\Biggr]\, d\mu \\
+    &= \int \Bigl(\frac{d}{dh} p_{\theta(t+h)}\Bigr)^2 f^{\prime\prime} \Bigl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\Bigr)  \frac{p{^2}_{\theta(t)}}{p{^3}_{\theta(t+h)}} \, d\mu\\
+\end{aligned}
+\]
+Where between the first and second line we evaluate the two derivatives of a product only when the derivative doesn't fall at $\frac{d}{dh} p_{\theta(t)}$ because we already now it goes to 0 for $h=0$; then, between the second and forth line we have a nice cancellation and we are left only with one term of the sum. 
+Evaluating this at $h=0$, we are left with:
+\[
+\begin{aligned}
+\frac{d^2}{d^2h} D_f(p_{\theta(t)}, p_{\theta(t+h)})\Biggr|_{h=0} &= f^{\prime\prime} (1) \int \Bigl(\frac{d}{dh} p_{\theta(t)}\Bigr)^2 \frac{1}{p_{\theta(t)}} \, d\mu \\
+&= f^{\prime\prime}(1) \int  \frac{\frac{d}{dt}p_{\theta(t)}}{p_{\theta(t)}}\frac{\frac{d}{dt}p_{\theta(t)}}{p_{\theta(t)}} p_{\theta(t)} d\mu \\
+&= f^{\prime\prime}(1) \int  \frac{d}{dt} \log [p_{\theta(t)}] \frac{d}{dt} \log [p_{\theta (t)}]\,p_{\theta(t)} d\mu \\
+&= f^{\prime\prime} (1)\, g(\gamma^., \gamma^.) 
+\end{aligned}
+\]
+Where at this point we can equivalently evaluate the derivative at $t$, we multiply above and below by $p_{\theta(t)}$ and use the derivative of the log $\frac{d}{dt} \log p_{\theta(t)} = \frac{1}{p_{\theta(t)}} \frac{d}{dt} p_{\theta(t)}$.
+We get a term depending only on a constant $f(1)$ and the Fisher information $g$ evaluated at a very specific derivative, which is the derivative along the curve, which is nothing but the velocity of the curve. 
+
+Now, turn to the third-order term, we have to take the derivative of what we found above:
+\[
+\begin{aligned}
+    \frac{d^3}{d^3h} D_f(p_{\theta(t)}, p_{\theta(t+h)}) &= \frac{d}{dh} \int \Bigl(\frac{d}{dh} p_{\theta(t+h)}\Bigr)^2 f^{\prime\prime} \Bigl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\Bigr)  \frac{p{^2}_{\theta(t)}}{p{^3}_{\theta(t+h)}} \, d\mu\\
+    &=\int\frac{d}{dh}\Biggl[\Bigl(\frac{d}{dh} p_{\theta(t+h)}\Bigr)^2 f^{\prime\prime} \Bigl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\Bigr)  \frac{p{^2}_{\theta(t)}}{p{^3}_{\theta(t+h)}}\Biggr]  \, d\mu\\
+    &=\int \frac{d}{dh} \Bigl[ f^{\prime\prime} \Bigl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\Bigr) \frac{p{^2}_{\theta(t)}}{p{^3}_{\theta(t+h)}}\Bigr] \Bigl(\frac{d}{dh} p_{\theta(t+h)} \Bigr)^2 + \frac{d}{dh}\Bigl[ \Bigl(\frac{d}{dh} p_{\theta(t+h)}\Bigr)^2 \Bigr] f^{\prime\prime} \Bigl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\Bigr)  \frac{p{^2}_{\theta(t)}}{p{^3}_{\theta(t+h)}}\, d\mu
+\end{aligned}
+\]
+
+
+Let's compute the first term, when the derivative falls on $f^{\prime\prime} \bigl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\big) \frac{p{^2}_{\theta(t)}}{p{^3}_{\theta(t+h)}}$.
+\[
+\begin{aligned}
+    \int\biggl(\frac{d}{dh} p_{\theta(t+h)}\biggr)^2 \Biggl[- f^{\prime\prime\prime}\biggl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\biggr) \frac{p_{\theta(t)}^3}{p_{\theta(t+h)}^5} \frac{d}{dh}p_{\theta(t+h)} - 3f^{\prime\prime}\biggl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\biggr) \frac{p_{\theta(t)}^2}{p_{\theta(t+h)}^4} \frac{d}{dh}p_{\theta(t+h)} \Biggr] \, d\mu 
+\end{aligned}
+\]
+Evaluating it at $h=0$:
+\[
+\begin{aligned}
+    &\int\Bigl(\frac{d}{dt} p_{\theta(t)}\Bigr)^3  \Bigl(- f^{\prime \prime \prime} (1) \frac{1}{p{^2}_{\theta(t)}} - 3f^{ \prime \prime} (1) \frac{1}{p{^2}_{\theta(t)}}\Bigr) \,\, d\mu  \\
+    &=- \bigl(f^{\prime \prime \prime} (1) +3 f^{\prime \prime} (1)\bigr)\int \Bigl(\frac{d}{dt} p_{\theta(t)}\Bigr)^3\frac{1}{p{^2}_{\theta(t)}} \,\, d\mu \\
+\end{aligned}
+\]
+And using the same trick as above we get:
+\[
+\begin{aligned}
+     &= - \bigl(f^{\prime \prime \prime} (1) +3 f^{\prime \prime} (1)\bigr) \int\frac{d}{dt} \log p_{\theta(t)}\frac{d}{dt} \log p_{\theta(t)}\frac{d}{dt} \log p_{\theta(t)}\,\, p_{\theta(t)}\, d\mu \\
+    &=- \bigl(f^{\prime \prime \prime} (1) +3 f^{\prime \prime} (1)\bigr) \, T(\gamma ^.,\gamma ^.,\gamma ^.)
+\end{aligned}
+\]
+i.e., we get exactly a term depending on the Amari-Chentsov tensor evaluated at $\gamma^.$\\
+
+Now, let's go back and analyze the case when the derivative falls on $\bigl(\frac{d}{dh} p_{\theta(t+h)}\bigr)^2$:
+\[
+\begin{aligned}
+    & \int\frac{d}{dh} \biggl(\frac{d}{dh} p_{\theta(t+h)}\biggr)^2 f^{\prime\prime}\biggl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\biggr)\frac{p{^2}_{\theta(t)}}{p{^3}_{\theta(t+h)}} \, \, d\mu \\
+\end{aligned}
+\]
+Evaluating this term at $h=0$ we get:
+\[
+\begin{aligned}
+        &=2 \int\frac{d}{dt} p_{\theta(t)} \frac{d^2}{d^2t} p_{\theta(t)} f^{\prime\prime} (1) \frac{1}{p_{\theta(t)}} \, \, d\mu \\
+        &= 2f^{\prime\prime} (1)  \int\frac{d}{dt} \log p_{\theta(t)} \frac{d^2}{d^2t} p_{\theta(t)} \, \, d\mu 
+\end{aligned}  
+\]
+Aaaaaand bo :) [...]\\
+
+Overall, the cool result we get is that Taylor expanding the f-divergence along a curve $\gamma$ on the parameter space $\Theta$, the first significant terms we get are exactly the Fisher-Rao metric $g$ and the Amari-Chentsov $T$ evaluated at the derivative along the curve. 

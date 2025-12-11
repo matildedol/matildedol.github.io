@@ -1,0 +1,178 @@
+
+
+\section{Introduction} 
+The field of \textit{Information Geometry} has been defined by some of its pioneers as ``a method of exploring the world of information by
+means of modern geometry"(Amari\citet{amari2016information}), ``the field that studies the geometry of decision making" (Nielsen\citet{nielsen2020elementary}), and ``the differential geometric treatment of statistical models" (Ay, ...\citet{ay2017information}). In general, it is a discipline that lies at the intersection of mathematics and statistics and uses the language of differential geometry.  \\
+% The central mathematical objects to have before our eyes are a dual structure, which can be seen as a generalization of Legendre duality; the concept of f-divergence; and, at the metric level, the Fisher-Rao metric and the Amari-Chentsov tensor. \\
+% AT SOME POINT, FIX THESE 3 CONCEPTS
+
+The geometric framework at the basis of Information Geometry is a \textit{\textbf{statistical manifold}}, formalized as the triple $(M, g, T)$. $M$ is a smooth manifold, usually finite dimensional, and $g$ is the Fisher-Rao metric. The couple $(M, g)$ forms the standard framework in Riemannian geometry. $T$ is a three-indices tensor, taking three vector in input and spitting out one number, and it is the so-called Amari-Chentsov tensor.
+
+%parte della connection, dual
+Let us understand why this abstract structure is relevant. \\
+Consider a sample space $\Omega$ with a $\sigma$-algebra $\mathcal{F}$. $\mathcal{P}(\Omega)$ is the family of probability distributions over the sample space, of which we consider good, smooth subsets $M \subset \mathcal{P}(\Omega)$.  Then, we can consider a parameter space $\Theta \subset \mathbb{R}^n$ a map \[
+\Theta \ni \theta \longrightarrow  p_\theta \in M
+\]
+which is injective and smooth. We say that $\theta$ locally parametrizes our manifold $M$. Then, we can morally see the Fisher-Rao metric $g$ as the Fisher information, and the tensor as another generalization of the Fisher information with an additional index.
+%expand on this dal libro
+
+In the context of Information Theory, the motivation behind picking these $g$ and $T$ is that they are the only invariant objects respecting the \textit{Data Processing Inequality}, a core result in Information Theory which will be further explained later on. \\
+
+The main conceptual point to be kept in mind is that we can distinguish two different levels in this framework:
+\begin{itemize}
+    \item[-] the manifold of probability distributions $M$ is an intrinsic object and it is given, it constitutes the \textit{abstract level};
+    \item[-]the parameter space $\Theta$ is a chart we choose and use to parametrize the abstract object, it lies at the \textit{concrete level}.
+\end{itemize}
+\\
+
+Some examples of the above framework follow, which already provide interesting results.\\
+
+\begin{example}[Normal Distribution]$
+    \Omega = \mathbb{R}, M \subset \mathcal{P}(\mathbb{R}), 
+    \Theta = \mathbb{R} \times \mathbb{R}^+$\\
+    $\theta = (m, \sigma)$\\
+    $p_\theta = \frac{1}{\sqrt{2\pi\sigma^2}} e^{-\frac{(\omega-m)^2}{2\sigma^2}} \, d\omega \,\,\,\,\,
+    \omega \in M$    
+
+\end{example}
+
+\begin{example}[Exponential family]
+    [...]
+\end{example}
+
+\section{definitions}
+Now, we \textit{informally} define $g$ and $T$. In section \ref{sec:fdiv} we will show how these definitions are derived.  
+
+\begin{definition}[Fisher-Rao metric $g$]
+    Assume $p_\theta << \mu \in \mathcal{P}(\Omega) \Longleftrightarrow p_\theta = p_\theta \cdot \mu$. Then,
+    \[\begin{aligned}
+    g_{ij}(\theta)&:= \int_\Omega \frac{\partial}{\partial \theta_i} \log p_\theta (\omega)\frac{\partial}{\partial \theta_j} \log p_\theta (\omega)\, \,p_\theta(\omega) \,d\mu(\omega)\\
+    &=\mathbb{E}_\theta \Bigl[\frac{\partial}{\partial \theta_i} \log p_\theta \,\frac{\partial}{\partial \theta_j} \log p_\theta\Bigr]\end{aligned}\]
+
+Where $p_\theta$ is the Fisher information. Notice that the metric $g$ can be seen as a scalar product depending on $\theta \longrightarrow$ a Riemannian metric. Indeed, by considering $v,w \in \mathcal{R}^n$ tangent to $\theta \in \Theta$, we get
+\[
+g_\theta(v,w) = \sum_{i,j} v_i w_j g_{ij}(\theta)
+\]
+showing $g$ is a metric. 
+%????? bo ancora da capire :) 
+
+\end{definition}
+Next we define the third element of our statistical manifold, the 3-tensor $T$, by adding one more index. 
+
+\begin{definition}[Amari-Chentsov tensor]
+    \[T_{ijk} (\theta):=\int_{\Omega} \frac{\partial}{\partial \theta_i} \log p_\theta (\omega)\frac{\partial}{\partial \theta_j} \log p_\theta (\omega)\frac{\partial}{\partial \theta_k} \log p_\theta (\omega) \, \,p_\theta(\omega) \,d\mu(\omega)
+    \]
+\end{definition}
+
+By looking back at the examples above, we can derive these tensors for those examples [...]. 
+
+Interestingly, $g$ in the Gaussian case only depends on the variance of the distribution $\sigma^2$, and not on the mean $m$. An intuition could be that the mean $m$ is ``scaling" factor of the distribution, hence the metric does not depend on it. 
+
+\section{Invariance}
+% g and T are invariant under a diff-homorphism or push forwards, and they are the very only objects remaining the same 
+% we distinguish statistical invariance (on Theta) from geometric invariance (on Omega)
+
+[...]
+
+\section{f-divergences}\label{sec:fdiv}
+As S. Amari states, ``information geometry has emerged from studies of invariant geometrical
+structure involved in statistical inference".
+In this section we link together some concepts mentioned above, namely that the choices of $g$ and $T$ are motivated by their property of invariance. Indeed, these metrics can be derived from an $f$-divergence, which is invariant. %da capire meglio
+
+Consider the map we previously defined
+\[
+\Theta \ni \theta \longrightarrow  p_\theta \in M
+\]
+and a function $f$ convex, positive, and such that $f(1)=0$. Then, the \textit{f-divergence} between two maps $p_\theta$ and $p_{\theta^{\prime}}$ is:
+\[
+D_f (p_\theta, p_{\theta^{\prime}}) = \int_{\Omega} f \Bigl(\frac{p_\theta}{p_{\theta^{\prime}}}\Bigr)p_{\theta^{\prime}} \,\,d{\mu}
+\]
+
+We want to look at a curve $\gamma$ parametrized by $t$ on the parameter space $\Theta$ and consider $\theta = \theta(t) $ and an increment along the curve $ \theta^{\prime}=\theta(t+h)$. We can compute the divergence between the distributions at these two values, namely $D_f (p_\theta, p_{\theta^{\prime}})$. \\Our question is: what happens if the increment $h$ is very very little?
+That is, what happens if we Taylor expand the divergence $D_f$? \\
+Of course, the 0-th order term is 0. It turns out that the first-order term is 0 as well, and the first meaningful terms are the second-order term, that depends on the Fisher information $g$ and on $f$ only by a number, and the third-order term that depends on the 3-tensor $T$.   
+\\
+Let us compute this surprising result. 
+%computations
+Looking at the first-order term we have:
+\[
+\begin{aligned}
+    &\frac{d}{dh} D_f(p_{\theta(t)}, p_{\theta(t+h)}) = \int \frac{d}{dh} p_{\theta (t+ h)} f\biggl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\biggr)\, d\mu - \int p_{\theta(t+h)} f^{\prime}\biggl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\biggr) \frac{p_{\theta(t)}}{p{^2}_{\theta(t+h)}} \frac{d}{dh}p_{\theta(t+h)} \, d\mu
+\end{aligned}
+\]
+Now, evaluating this at $h=0$, in the second term we get $f'(1)$ evaluated at $h$, which is 0, bringing the whole term to 0; in the first term we exchange the integral and the derivative and get $\frac{d}{dh} \int p_{\theta(t)} \, d\mu = 0$ as the integral of a density function is equal to 1. Hence, the whole term goes to 0. \\
+Let us look at the second-order term:
+\[
+\begin{aligned}
+   \frac{d^2}{d^2h} D_f(p_{\theta(t)}, p_{\theta(t+h)}) &=  \frac{d}{dh}\int \frac{d}{dh} p_{\theta (t+ h)} f\biggl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\biggr)\, d\mu - \frac{d}{dh}\int f^{\prime}\biggl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\biggr) \frac{p_{\theta(t)}}{p_{\theta(t+h)}} \frac{d}{dh}p_{\theta(t+h)} \, d\mu \\&= -\int \biggl(\frac{d}{dh} p_{\theta(t+h)}\biggr)^2 f^{\prime} \biggl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\biggr) \frac{p_{\theta(t)}}{p{^2}_{\theta(t+h)}} \, d\mu\, \\
+   &+\int \biggl(\frac{d}{dh} p_{\theta(t+h)}\biggr)^2 \Biggl[f^{\prime\prime} \biggl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\biggr) \frac{p_{\theta(t)}}{p_{\theta(t+h)}} \frac{p_{\theta(t)}}{p{^2}_{\theta(t+h)}} \frac{d}{dh} p_{\theta (t+ h)}
+    + f^{\prime} \biggl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\biggr)  \frac{p_{\theta(t)}}{p{^2}_{\theta(t+h)}}\frac{d}{dh} p_{\theta (t+ h)}\Biggr]\, d\mu \\
+    &= \int \biggl(\frac{d}{dh} p_{\theta(t+h)}\biggr)^2 f^{\prime\prime} \biggl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\biggr)  \frac{p{^2}_{\theta(t)}}{p{^3}_{\theta(t+h)}} \, d\mu\\
+\end{aligned}
+\]
+Where between the first and second line we evaluate the two derivatives of a product only when the derivative doesn't fall at $\frac{d}{dh} p_{\theta(t)}$ because we already now it goes to 0 for $h=0$; then, between the second and forth line we have a nice cancellation and we are left only with one term of the sum. 
+Evaluating this at $h=0$, we are left with:
+\[
+\begin{aligned}
+\frac{d^2}{d^2h} D_f(p_{\theta(t)}, p_{\theta(t+h)})\Biggr|_{h=0} &= f^{\prime\prime} (1) \int \Bigl(\frac{d}{dh} p_{\theta(t)}\Bigr)^2 \frac{1}{p_{\theta(t)}} \, d\mu \\
+&= f^{\prime\prime}(1) \int  \frac{\frac{d}{dt}p_{\theta(t)}}{p_{\theta(t)}}\frac{\frac{d}{dt}p_{\theta(t)}}{p_{\theta(t)}} p_{\theta(t)} d\mu \\
+&= f^{\prime\prime}(1) \int  \frac{d}{dt} \log [p_{\theta(t)}] \frac{d}{dt} \log [p_{\theta (t)}]\,p_{\theta(t)} d\mu \\
+&= f^{\prime\prime} (1)\, g(\gamma^., \gamma^.) 
+\end{aligned}
+\]
+Where at this point we can equivalently evaluate the derivative at $t$, we multiply above and below by $p_{\theta(t)}$ and use the derivative of the log $\frac{d}{dt} \log p_{\theta(t)} = \frac{1}{p_{\theta(t)}} \frac{d}{dt} p_{\theta(t)}$.
+We get a term depending only on a constant $f(1)$ and the Fisher information $g$ evaluated at a very specific derivative, which is the derivative along the curve, which is nothing but the velocity of the curve. 
+
+Now, turn to the third-order term, we have to take the derivative of what we found above:
+\[
+\begin{aligned}
+    \frac{d^3}{d^3h} D_f(p_{\theta(t)}, p_{\theta(t+h)}) &= \frac{d}{dh} \int \biggl(\frac{d}{dh} p_{\theta(t+h)}\biggr)^2 f^{\prime\prime} \biggl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\biggr)  \frac{p{^2}_{\theta(t)}}{p{^3}_{\theta(t+h)}} \, d\mu\\
+    &=\int\frac{d}{dh}\Biggl[\biggl(\frac{d}{dh} p_{\theta(t+h)}\biggr)^2 f^{\prime\prime} \biggl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\biggr)  \frac{p{^2}_{\theta(t)}}{p{^3}_{\theta(t+h)}}\Biggr]  \, d\mu\\
+    &=\int \frac{d}{dh} \biggl[ f^{\prime\prime} \biggl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\biggr) \frac{p{^2}_{\theta(t)}}{p{^3}_{\theta(t+h)}}\biggr] \biggl(\frac{d}{dh} p_{\theta(t+h)} \biggr)^2 + \frac{d}{dh}\biggl[ \biggl(\frac{d}{dh} p_{\theta(t+h)}\biggr)^2 \biggr] f^{\prime\prime} \biggl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\biggr)  \frac{p{^2}_{\theta(t)}}{p{^3}_{\theta(t+h)}}\, d\mu
+\end{aligned}
+\]
+
+
+Let's compute the first term, when the derivative falls on $f^{\prime\prime} \bigl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\big) \frac{p{^2}_{\theta(t)}}{p{^3}_{\theta(t+h)}}$.
+\[
+\begin{aligned}
+    \int\biggl(\frac{d}{dh} p_{\theta(t+h)}\biggr)^2 \Biggl[- f^{\prime\prime\prime}\biggl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\biggr) \frac{p_{\theta(t)}^3}{p_{\theta(t+h)}^5} \frac{d}{dh}p_{\theta(t+h)} - 3f^{\prime\prime}\biggl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\biggr) \frac{p_{\theta(t)}^2}{p_{\theta(t+h)}^4} \frac{d}{dh}p_{\theta(t+h)} \Biggr] \, d\mu 
+\end{aligned}
+\]
+Evaluating it at $h=0$:
+\[
+\begin{aligned}
+    &\int\Bigl(\frac{d}{dt} p_{\theta(t)}\Bigr)^3  \Bigl(- f^{\prime \prime \prime} (1) \frac{1}{p{^2}_{\theta(t)}} - 3f^{ \prime \prime} (1) \frac{1}{p{^2}_{\theta(t)}}\Bigr) \,\, d\mu  \\
+    &=- \bigl(f^{\prime \prime \prime} (1) +3 f^{\prime \prime} (1)\bigr)\int \Bigl(\frac{d}{dt} p_{\theta(t)}\Bigr)^3\frac{1}{p{^2}_{\theta(t)}} \,\, d\mu \\
+\end{aligned}
+\]
+And using the same trick as above we get:
+\[
+\begin{aligned}
+     &= - \bigl(f^{\prime \prime \prime} (1) +3 f^{\prime \prime} (1)\bigr) \int\frac{d}{dt} \log p_{\theta(t)}\frac{d}{dt} \log p_{\theta(t)}\frac{d}{dt} \log p_{\theta(t)}\,\, p_{\theta(t)}\, d\mu \\
+    &=- \bigl(f^{\prime \prime \prime} (1) +3 f^{\prime \prime} (1)\bigr) \, T(\gamma ^.,\gamma ^.,\gamma ^.)
+\end{aligned}
+\]
+Now, let's go back and analyze the case when the derivative falls on $\bigl(\frac{d}{dh} p_{\theta(t+h)}\bigr)^2$:
+\[
+\begin{aligned}
+    & \int\frac{d}{dh} \biggl(\frac{d}{dh} p_{\theta(t+h)}\biggr)^2 f^{\prime\prime}\biggl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\biggr)\frac{p{^2}_{\theta(t)}}{p{^3}_{\theta(t+h)}} \, \, d\mu \\
+\end{aligned}
+\]
+Evaluating this term at $h=0$ we get:
+\[
+\begin{aligned}
+        &=2 \int\frac{d}{dt} p_{\theta(t)} \frac{d^2}{d^2t} p_{\theta(t)} f^{\prime\prime} (1) \frac{1}{p_{\theta(t)}} \, \, d\mu \\
+        &= 2f^{\prime\prime} (1)  \int\frac{d}{dt} \log p_{\theta(t)} \frac{d^2}{d^2t} p_{\theta(t)} \, \, d\mu 
+\end{aligned}  
+\]
+Aaaaaand bo :) I guess we should get 0.\\
+
+
+
+i.e., we get exactly the Amari-Chentsov tensor evaluated at *. I guess $*=\gamma^.$\\
+
+Overall, the cool result we get is that Taylor expanding the f-divergence along a curve $\gamma$ on the parameter space $\Theta$, the first significant terms we get are exactly the Fisher-Rao metric $g$ and the Amari-Chentsov $T$ evaluated at the derivative along the curve. 
+\bibliographystyle{apa}
+\bibliography{references}
+
