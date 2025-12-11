@@ -230,13 +230,13 @@
   {\namefont\@name}
   \vskip 2pt
   \fullline
-  \vskip 3pt
+  \vskip 2pt
   % where do you live?
   \@ifundefined{@addressone}{%
     % do nothing
   }{%
     \leavevmode\hbox to \textwidth
-      {\vbox{\hbox{\@addressone}
+      {\hfill\vbox{\hbox{\@addressone}
 		   \hbox{\@addresstwo}
 		  }%
       }\par
