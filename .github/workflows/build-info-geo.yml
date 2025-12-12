@@ -1,4 +1,4 @@
-name: Build infomration_Geometry
+name: Build information_geometry
 
 on:
   push:
