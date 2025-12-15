@@ -25,5 +25,5 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: 2descent-pdf
-          path: tex/2descent_porposal/main.pdf
+          path: tex/2descent_proposal/main.pdf
           if-no-files-found: error
