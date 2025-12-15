@@ -111,6 +111,7 @@ jobs:
           cp tex/bscthesis/bscthesis.pdf            public/files/bscthesis.pdf
           cp tex/ot_bams/main.pdf                   public/files/ot_bams.pdf
           cp tex/Information_Geometry/main.pdf      public/files/info_geo.pdf
+          cp tex/2descent_proposal/main.pdf         public/files/2descent.pdf
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
