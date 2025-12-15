@@ -1,0 +1,101 @@
+\documentclass[a4paper,11pt]{article}
+\usepackage[left=1in,right=1in,top=1in,bottom=1in]{geometry}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{amsmath}
+\title{Research Proposal}
+\author{Matilde Dolfato}
+\date{}
+
+\begin{document}
+\maketitle
+% - voglio spendere i miei giorni a usare la mate per capire le cose di cs 
+
+The problem I want to work on is {\bf finding the roots of the \textit{double descent} phenomenon}, concerning the stochastic gradient descent algorithm (SGD) for neural networks. 
+The double descent curve was first formalized by \cite{belkin}, and it reconciles the theoretical result of the bias-variance tradeoff, which implies that capacity below the overfitting threshold is preferred, with the empirical findings that large, over-parametrized models perform well. 
+They explain that when training a neural net using SGD, if we increase capacity beyond the overfitting threshold the algorithm will change the shape of the learned model in the regions between data points, while still fitting training data perfectly. According to \cite{belkin}, SGD interpolates in a smooth way, learning a smoother model that generalizes better. Hence, the curve of test error as a function of capacity presents two descents: the classic one, while learning is happening, and a second one after the overfitting threshold, when an overall improved performance is reached. Therefore, a \textit{double descent} curve substitutes the textbook U-shaped curve.
+What is still not clear, however, is what determines this second descent, in the sense that it is observed empirically and only some hypotheses on what motivates it are made. My aim is to explain why the second descent happens with rigorous, mathematical tools. 
+% Because the algorithm is ``just mathematics", I believe that it must be possible to give precise and irrefutable mathematical reasons to explain this phenomenon. 
+This is relevant because it allows us to understand more in depth what is happening and to have a universal formalization of the properties and dynamics of the algorithm. While this field is highly practice-based, a theoretical framework that supports empirical results boosts the development of AI and further discoveries in this field, especially regarding performance and learning dynamics of neural networks.
+The problem can be broken down into the following questions, where 1,2 are my main goals and 3, 4 are natural follow-ups, if time allows. I would tackle them first in the setting of simple two-layer neural networks, following \cite{belkin}, and only later extend the analysis to more complex architectures.
+ \\
+
+
+% trovare le roots del double descent, concerning SGD per reti neurali. una volta che si raggiunge un fit perfetto dei dati, se aumentiamo ancora la capacità l'algoritmo di SGD interpola tra i data points e modifica la forma del modello imparato in quelle regioni. questo viene fatto scegliedno delle funzioin più \textit{smooth}, che poi generalizzano meglio, e dunque ciò diminuisce il test error. 
+% questo fenomeno è stato identificato per la prima volta ufficilamente da Belkin, e unisce teoria su variance/bias tradeoff e pratica su modelli overpar che performano bene. 
+% ciò che ancora non è chiaro è precisamente perché accade, nel senso che è solo visto empiricamente dalla forma della curva del test error all'aumentare della capacità del modello, ma nel caso di reti neurali ci sono solo ipotesi sul motivo per cui accada. 
+
+% il mio obiettivo è quello di spiegare con un framework matematico preciso come mai succede. questo è utile perché ci permette di avere una spiegazione matematcia che giustifica in modo inconfutabile certi risultati e formalizza, rendendo universali, le proprietà dell'algportimo delcidscenten di gradiente. questo da una base forte epr poter anche estendere queste propirietà e risultati e comprendere più a fondo gli oggetti di AI. nonostante il mondo AI si basi molto sui risultati empirici, avre un framework matematico sotto che li definisce e li spiega è importante per lo sviluppo della materia, come dimostrano alcune aree come la crittografia, dove i metodi di fare private key encryption esistevano molto prima della formalzizazione teoric,a ma poi la struttura teorica ha permesso di estenderli e di far avere un forte core alla disciplina. spiegarlo, può farci scoprire cose nuove riguardo all'algoritmo. 
+
+\paragraph{\bf 1. What drives the implicit bias of SGD to choose smoother functions when interpolating?}
+By analyzing the update rule and the loss landscape mathematically, it should be possible to rigorously state what is happening after the overfitting threshold. There are some hypotheses, like the one proposed by \cite{prince}, which compares the algorithm used in practice with its continuous analog, i.e. SGD with an infinitesimal step size. By doing so, we get that descending gradients with a discrete step size is equivalent to performing continuous gradient descent on the loss function
+\begin{equation*}
+    L_{GD}[\phi] =L[\phi] +\frac{\alpha}{4}\Bigg\lVert\frac{\partial L}{\partial\phi}\Bigg\rVert^2
+\end{equation*}
+where a term depending on the norm of the gradient of the loss appears. This motivates the bias for less steep directions in the loss landscape. This result, however, requires to understand the connection between the gradient of the loss and a smoother learned model and it can be enriched with additional explanations and intuition.
+
+% in particolare, le domande sono le seguenti
+% - per quale motivo SGD sceglie funzioni più smooth quando interpola tra i dati? quali meccanismi contribuiscono a determinare questo implicit bias?
+% deve per forza essere motivato matematicamente. 
+% ci sono delle ipotesi, come quella presentata da Prince che confronta l'algoritmo discreto da quello continuo e mostra che nel momento in cui la step size è discretizzata salta fuori un termine che dipende dal gradiente della loss. 
+% % intuition dei calcoli
+% questo però richiede di capire come si passa da un andare in zone con il gradiente della loss piu piccolo al fatto che la funzione imparata è piu smooth. 
+
+\paragraph{\bf 2. Which specific notion of \textit{smoothness} does SGD optimize for?}
+I would like to be able to state something on the lines of ``SGD has an implicit bias for learning smoother models, in the sense that it chooses functions with a lower gradient norm / lower total variation of the gradient / others". In this direction, \cite{notions} tests four different notions of smoothness and finds that SGD optimizes for second-order smoothness. While it is a good starting point, I want to identify this notion of smoothness with necessary mathematical implications, rather than deducing it from empirical results.
+
+% - \textit{smooth} secondo quale nozione di smoothness? qual è la specifica nozione di smoothness per cui SGD ottimizza?
+% io vorrei poter dire una cosa del tipo SGD ha un implicit bias per smoothness, nel senso che sceglie funzioni con questa specifica caratteristica formalizzata in termini matematici, tipo norma del gradiente piu piccola, norma al quadrato del gradiente piu piccola, oppure smoothenss di secondo ordine, ecc. 
+% in questa direzione, c'è questo lavoro che testa 4 nozioni di smoothness e trova per quale delle 4 SGD ottimizza. è un buon punto di partenza, ma il mio obiettivo è quello di poi trovare una nozione specifica e una motivazione matematica necessaria per cui SGD scelga questo tipo di funzioni. 
+
+\paragraph{3. If the underlying data distribution is not \textit{smooth} (according to this notion), does SGD still interpolate in a smoother way? And do we still see the second descent?}
+The first question bridges previous directions with the following ones, and I believe that the answer is yes, based on the hypothesis that the smooth interpolation is due to an implicit bias that is an intrinsic property of the algorithm.
+The second question is very interesting to me and aims at further understanding the phenomenon. My hypothesis is that the answer is yes, because the \textit{smoothness} we are talking about only concerns areas of interpolation between data points, hence if we have a reasonable number of points (a not excessively sparse space), then these areas will be \textit{smooth} independently of the smoothness of the underlying function. Hence, we could try to understand what the algorithm does when a small training set is given and we have greater sparsity.
+%(if I have so little data that I would not learn properly, and in practice I would never try to fit a model, then the result is not meaningful and we could conclude that with a \textit{reasonable} amount of data the double descent curve always happens). This also connects to the following question
+
+
+\paragraph{4. Why does a smoother model generalize better?}
+In the literature (\cite{belkin} and \cite{prince} among others), this is motivated Occam's razor, saying that the simplest explanation compatible with the observations shall be preferred. This is specially suitable for the learning problems we generally consider, based on real-world data, according to \cite{belkin}. But does this have a mathematical motivation?
+Although I find this question extremely stimulating, I believe it should not be a priority, as the explanation provided by Occam's razor seems widely accepted. \\
+
+% - perché un modello più smooth generalizza meglio? 
+% nella letteratura (belkin, prince), questo veine motivato semplicemente con l'Occam's razor, ossia che la spiegazione più smeplice tra quelle isponibili è da preferire. E anche col fatto che i problemi di cui ci si occupa nella gran parte dei casi presentano distribuzioni dal real world, che sono smooth. 
+% Ma ha una motivazione matematica questo? 
+% nonostante io trovi questa domanda estrtemamnete interessante, penso che sia l'ultima da valutare, in quanto la spiegazione con Occam's razor mi sembra generalmente accettata.
+
+The main obstacles I see as of now are two: the wide variety of the combinations of the many design specifications, like initialization and step size, which hinders a universal explanation of the phenomenon; and working in high-dimensional spaces, where it is not clear how smoothness evolves and what happens in the optimization landscape. As for the former, I believe that starting from empirical results can be useful, as these may help discern which theoretical directions to inquire first. For instance, if the second descent changes with different step sizes, ceteris paribus, that would indicate that the step size plays a role. Regarding dimensionality, I believe that we should study the problem with a mathematical mindset and try to generalize from a two-dimensional loss landscape, where the dynamics can be visualized, to a higher-dimensional space relying on tools from functional analysis and geometry (the specific method is not clear to me yet). 
+\\
+
+Overall, I find it interesting to inquire the mathematical roots of the \textit{double descent} phenomenon, as the optimization algorithm, the loss landscape, and the learned model are all ``just math", hence it should be possible to formalize what is happening. Also, it is relevant, because it would enable us to bolster scientific discovery in the area of neural networks and learning. \\ 
+% l'ostacolo maggiore dei primi step è che ci sono un mare di diverse specificazioni che una rete neurale può avere, e dunque render euniversale il modo in cui interagiscono tra di loro e la loro relaizone con il double descent è difficile. i primi approcci per rispondere a questo sono replicare i risultati di Blekin, e poi provare a modificare alcune specificazioni di design per comprendere come varia la m,anifestazione del secondo descente al variare di parametri come la steop size e l'inizializzazione. l'inizializzaione è ipotizzat da Pricne come possibile motivazione, che però mi convince meno. comunque, questo aiuta a discernere quali specificazioni considerare e potrebbe dare degli hint su quali direzioni teoriche indagare. 
+
+% un altro problema è l'alta dimensionalità: qui non è chiaro come la smoothness della dunzione cambi e cosa succeda nell'optimization landscape. inoltre, non è chiaro il rapporto tra la forma della loss function e  quella della distribuzione da imparare.  è strettamente legato anche a capire quale sia la definizione di smooth, e penso che questo legame sia bilaterale, dunque i risultati empirici dovrebbero parlarsi spesso con delle consideraizoni matematiche fatte con "carta e penna".come funziona l'algoritmo, la loss function e la funzioen da imparare sono tutte funzioni matematiche (quest'ultima, specialmente quando stiamo usando delle funzioni conosciute per fare i nostri test), dunque penso sia chiaro che è possibile formalizzare cosa sta succedendo.
+
+
+
+
+
+
+% 1. An identification of one or more open problems that you want to work on, and an understanding of why this is important to the field.
+% 2. A suggestion on how the broad problem can be broken up into specific sub-problems, with some measure of success. Including some mathematical detail can help convey your ideas in a precise way.
+% 3. An understanding of the technical obstacles, and some idea of a first approach on how to solve them.
+
+
+
+% \noindent Yours sincerely,\\
+
+% \noindent Matilde Dolfato\\
+
+\vfill
+% \noindent For any further references on my academic skills and career, please feel free to contact:
+% \begin{itemize}[label={\scriptsize\textbullet}] 
+%     \item Professor Elia Brué, \href{mailto:elia.brue@unibocconi.it}{elia.brue@unibocconi.it}, who has supervised me within the Visiting Student program. I have completed the course Mathematical Methods for Computer Science
+%     \item Professor Giuseppe Savaré, \href{mailto:giuseppe.savare@unibocconi.it}{giuseppe.savare@unibocconi.it}, of whom I am attending the course Introduction to Real Analysis II of the PhD program in Statistics at Bocconi 
+%     \item Professor Mauro Castelli, \href{mailto:mcastelli@novaims.unl.pt}{mcastelli@novaims.unl.pt}, who is supervising me in the research project in Lisbon, at NOVA Information Management School 
+% \end{itemize}
+
+
+\bibliographystyle{plain}
+\bibliography{references}
+
+\end{document}

@@ -91,6 +91,15 @@ jobs:
           args: -r ../.latexmkrc
           texlive_version: 2025
 
+      # --- 2descent Proposal ---
+      - name: Compile 2descent_proposal
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: tex/2descent_proposal/main.tex
+          work_in_root_file_dir: true
+          args: -r ../.latexmkrc
+          texlive_version: 2025
+
       # --- Collect PDFs for Pages ---
       - name: Prepare Pages artifact
         run: |
