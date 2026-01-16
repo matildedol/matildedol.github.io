@@ -171,6 +171,23 @@ $\Rightarrow$ study gradient flow of $f_m$ $\star$}}
 \begin{frame}{Overview}
     \tableofcontents[currentsection]
 \end{frame}
+\begin{frame}{Prerequisits}
+
+    \begin{definition}[Subgradient and subdifferential] Given a function $f:\R^d\to \R$, the \emph{subgradient of $f$ at $x_0$}, $x_0\in\R^d$, is $p\in\R^d$ :
+   \[
+   f(x) \ge f(x_0) + p\cdot (x-x_0) + o(x-x_0) \qquad \forall x\in\R^d
+   \]
+   The set of all such $p$s is called the \emph{subdifferential} of $f$ at $x_0$ and we write $\partial f(x_0)$. The subdifferential is a closed and convex set.
+   \end{definition}
+   
+   \begin{definition}[Gradient flow]
+       A function $x:\R_+ \to \mathrm{Dom}(f)$ is a \emph{gradient flow} of $f:\mathrm{Dom}(f)=\R^d\to\R$ if $x$ is absolutely continuous over $\R_+$ and
+       \[
+       x'(t) \in -\partial f(x(t)) \qquad \text{for a.e. } t\in\R_+
+       \]
+   \end{definition}
+       
+   \end{frame}
 \subsection{Particle gradient flow}
 
 \begin{frame}[allowframebreaks]{Particle gradient flow }
@@ -329,21 +346,4 @@ Setting:
     \end{enumerate}
 \end{frame}
 
-\begin{frame}{Prerequisits}
-
- \begin{definition}[Subgradient and subdifferential] Given a function $f:\R^d\to \R$, the \emph{subgradient of $f$ at $x_0$}, $x_0\in\R^d$, is $p\in\R^d$ :
-\[
-f(x) \ge f(x_0) + p\cdot (x-x_0) + o(x-x_0) \qquad \forall x\in\R^d
-\]
-The set of all such $p$s is called the \emph{subdifferential} of $f$ at $x_0$ and we write $\partial f(x_0)$. The subdifferential is a closed and convex set.
-\end{definition}
-
-\begin{definition}[Gradient flow]
-    A function $x:\R_+ \to \mathrm{Dom}(f)$ is a \emph{gradient flow} of $f:\mathrm{Dom}(f)=\R^d\to\R$ if $x$ is absolutely continuous over $\R_+$ and
-    \[
-    x'(t) \in -\partial f(x(t)) \qquad \text{for a.e. } t\in\R_+
-    \]
-\end{definition}
-    
-\end{frame}
 \end{document}
