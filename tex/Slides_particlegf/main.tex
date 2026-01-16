@@ -1,0 +1,349 @@
+\documentclass{beamer}
+
+% Set up
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{amsthm}
+\usepackage{mathrsfs}  
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{amsmath}
+\usepackage{mathtools}
+% \usepackage[utf8]{inputenc}
+
+% Beamer setup
+\usetheme{default}
+\usecolortheme{default}
+% \AtBeginSection[]
+% {
+%   \begin{frame}
+%     \frametitle{Table of Contents}
+%     \tableofcontents[currentsection]
+%   \end{frame}
+% }
+\usefonttheme[onlymath]{serif}
+
+% Math commands
+\input{math}
+
+
+\title{On the global convergence of gradient descent using optimal transport\\ 
+{\small L. Chizat, F. Bach, NeurIPS 2018}}
+\author{Matilde Dolfato \\
+{\it Introduction to Real Analysis II}, Prof. G. Savaré}
+\date{\today}
+
+\begin{document}
+\maketitle
+
+\begin{frame}{Overview}
+    \tableofcontents
+\end{frame}
+
+\section{Introduction}
+
+\begin{frame}{Introduction}
+
+Classical task in machine learning:
+{\color{blue!60!black}
+\begin{equation}
+     \min_{\alt<2>{\color{blue} \mu \in \mP(\Theta)}{\mu \in \mP(\Theta)}} j(\mu) \qquad j(\mu)= \ell\bigg(\int\phi\de\mu \bigg) + g(\mu)
+\end{equation}}
+
+$\ell: \mathcal{F}\to\R_+$ smooth, convex \textit{loss function}
+
+data lives in a large parametrized set with parameters $p\in\Theta \subset \R^d$
+
+$g:\mP(\Theta)\to\R$ optional convex \textit{regularizer}
+\\~\\
+
+we look for a linear combination $\phi$ mapping features to labels $\phi(p): x\mapsto \sigma(\sum_i p_i x_i + p_d), \, p\in\Theta$
+
+
+\pause 
+\bigskip
+\centering
+{\color{blue}  $\star$ Minimize over the space of measures $\mP(\Theta)$ $\star$ }
+
+% however, è intrattabile
+% tu lo devi discrettizare (particle gradient descent) e il problema discretizzato non è convesso 
+
+
+\end{frame}
+\begin{frame}{Introduction}
+    {\small \begin{equation}\tag{1}
+    \min_{\mu\in\mP(\Theta)}j(\mu)= \ell\bigg(\int\phi\de\mu \bigg) + g(\mu) 
+    %\quad\longrightarrow \quad \min_{w, p} j_m(w,p) = \ell\bigg(\sum_{i=1}^m w_i \phi(p_i) \bigg) 
+\end{equation}} 
+    Convex problem, but intractable
+\pause
+
+$\Rightarrow$ \alt<2>{\color{blue} discretize}{ discretize} {\color{black} the measure into $m$ particles parametrized by {\it weights} and {\it positions}
+\[
+\mu_m := \frac{1}{m}\sum_{i=1}^m w_i \delta_{p_i}
+\]
+{\begin{equation}\label{eq: discrete problem}
+\min_{\alt<2>{\color{blue} \substack{w\in \R \\ p \in \Theta^m}}{\substack{w\in \R^m \\ p \in \Theta^m}}} j_m(w,p) \qquad j_m(w,p):= j(\mu_m) 
+\end{equation}}}
+\pause
+Non-convex problem
+
+\centering
+{\color{blue}$\star$ Idea: use tools from optimal transport to exploit convexity of (1) to study global convergence in (2) $\star$}
+\end{frame}
+
+\begin{frame}{Conceptual key points}
+% metti problmea infinto -> problema 
+% riformulare il problema in modo da poter applicare tecniche di gradient flow (prima cosa che faremo) 
+
+% poi guardi a un continuous time gradient descent come un gradient flow 
+
+% noti che la formulazione infinito dimensionale è una geenralizzazione del caso discreto (Wasserstein gradient flow generalizes particle gradient flow), quindi sfrutti le belle proprietà di (1) 
+\begin{enumerate}
+    \item Problem reformulation (lifting) {\color{black}$j \rightarrow f$}
+    \item To be able to study gradient flow of {\color{black}$f_m$}, {\color{black}$(\mu_{m,t})_t$}
+    \item Look at it as a particular case of infinite-dimensional case 
+    \[\color{black} \text{as } m\to\infty, \,(\mu_{m,t})_t \to (\mu_t)_t\]
+    \item Exploit convex structure of inf-dim case
+    \[
+    \lim_{m,t\to\infty} f(\mu_{m,t}) = \min_{\mu_t\in\mP(\Omega)} f(\mu_t)
+    \]
+    % \item Characterize its limit as a Wasserstein gradient flow of $f$
+    % \item Use global convergence of W. gradient flow to study convergence of gradient descent
+\end{enumerate}
+\end{frame}
+
+
+\section{Problem re-formulation }
+\begin{frame}{Overview}
+    \tableofcontents[currentsection]
+\end{frame}
+\begin{frame}{Lifting}
+{\small    \begin{equation} \tag{1}\min_{\nu\in\mP(\Theta)}j(\nu)= \ell\bigg(\int\phi\de\nu \bigg) + g(\nu)\end{equation} }
+\vspace{-1cm}
+ \begin{center}{ \color{blue!70!black}
+$\downarrow\ {\small h_1^{-1}}$}\end{center}
+{ \color{blue!70!black}\begin{equation}
+\begin{gathered}
+\min_{\mu\in\mP(\Omega)} f(\mu) = \ell\bigg(\int\varphi\de\mu\bigg)+\int v\de\mu
+\end{gathered}
+\end{equation}}
+
+Recovering the lifting:
+\begin{itemize}
+\item $\Omega=\Theta \times \R$
+    \item $\varphi(p,w) = w\phi(p)$
+    \item projection map: $h_1:\Theta \times \R \to \Theta, \,h_1(\mu)(p)= \int_\R w \mu(\de w, p) $
+    \item $g(\nu) = \inf_{\mu\in h_1^{-1}(\nu)} \int v \de \mu$
+    \item then, $\inf_\nu j = \inf_\mu f$
+\end{itemize}
+\end{frame}
+
+\begin{frame}{New problem}
+{\small \begin{equation*}
+\min_{\mu\in\mP(\Omega)} f(\mu) = \ell\bigg(\int\varphi\de\mu\bigg)+\int v\de\mu
+\end{equation*}}
+
+    Discretized problem:
+{\color{blue!70!black}  \begin{equation*}
+    \min_{u\in\Omega} f_m(u) := f\bigg(\underbrace{\frac{1}{m} \sum_{i=1} \delta_{u_i}}_{\mu_m}\bigg) = \ell \bigg(\frac{1}{m} \sum_{i=1}^m \varphi(u_i)\bigg) + \frac{1}{m}\sum_{i=1}^m v(u_i)
+\end{equation*}}
+
+    {\centering
+    {\color{blue} $\star$ Weights $w$ are another coordinate of a particle position $u\in\Omega$ \,\,
+$\Rightarrow$ study gradient flow of $f_m$ $\star$}}
+
+\pause
+\bigskip
+    Assumptions (high-level):
+\begin{itemize}
+    \item $\ell$ is smooth, with Lispchitz and bounded differential $\de \ell$
+    \item $\phi$ is differentiable and $v$ is semiconvex
+    \item there is a family of nested closed convex sets $(Q_r)_r$ on which the (sub)derivatives of $\phi,v$ are Lipschitz and grow sublinearly
+\end{itemize}
+
+\end{frame}
+
+
+\section{Apply gradient flow theory}
+\begin{frame}{Overview}
+    \tableofcontents[currentsection]
+\end{frame}
+\subsection{Particle gradient flow}
+
+\begin{frame}[allowframebreaks]{Particle gradient flow }
+\begin{definition}[Particle gradient flow]
+A gradient flow for $f_m$ is an absolutely continuous function $u:\R_+\to\Omega^m$ such that
+\[
+u'(t) \in -m\,\partial f_m(u(t))
+\]
+
+{\color{black}for almost every $t\in\R_+$. }
+\end{definition}
+
+Properties:
+\begin{enumerate}
+    \item[$(i)$] (existence and uniqueness) for any $u(0)\in\Omega^m$ starting point, there exists a unique gradient flow for $f_m$
+    \item[$(ii)$] (derivative of $f_m$) for a.e. $t\in\R_+$, it holds 
+    \[
+    \frac{\de}{\de s} f_m(u(s)) \,\bigg\vert_{s=t} = \,\,- \vert u'(t) \vert^2
+    \]
+    \item [$(iii)$](form of the velocity) the velocity {\it of the $i$-th particle} $u_i(t)$ is a vector field $v_t:\Omega \to \R^d$ given by $u_i'(t) = v_t(u_i(t))$ where \cite{santambrogio2017euclidean}
+    \[
+    v_t(u_i) = \tilde v_t(u_i) -\proj_{\partial v(u_i)} (\tilde v_t(u_i))\]\[
+    \text{with} \quad \tilde v_t(u_i) = - \Bigg[ \bigg(\ell'\bigg(\int \varphi \de \mu_{m,t}\bigg), \partial_j \varphi(u_i)\bigg) \Bigg]_{j=1}^d
+    \]
+\end{enumerate}
+from \cite{santambrogio2017euclidean}, gradient flow selects subgradients of minimal norm
+
+Observations:
+\begin{itemize}
+    \item velocity is the evaluation at each $u_i$ of the same vector field $v_t$
+    \item given an initialization $u(0) \in \Omega^m$, this defines an atomic measure $\mu_{m,0}$ 
+\end{itemize}
+$\longrightarrow$ {\color{blue} makes sense to generalize to arbitrary measures $\mu_t$}
+\end{frame}
+
+\subsection{Generalize to infinte-dimensional gradient flow}
+\begin{frame}{Generalize to Wasserstein gradient flow I}
+Since 
+\begin{enumerate}
+    \item Evolution of $(\mu_t)_t$ under $(v_t)_t$ satisfies:
+    \[ \partial_t\mu_t = -\mathrm{div}(v_t\mu_t)\] 
+    \item Link between $v_t$ and $f$:\[v_t \in -\partial f'(\mu_{m,t})\]
+        where \(
+        f'(\mu)(u) := \bigg(\ell\bigg(\int\varphi\de\mu\bigg), \varphi(u)\bigg) + v(u)
+        \)
+\end{enumerate}
+\bigskip 
+\centering
+{ \color{blue} $\Rightarrow$ we expect $(\mu_t)_{t}$ is a gradient flow on the space $\mP_2(\Omega)$: \it Wasserstein gradient flow}
+\end{frame}
+
+\begin{frame}{Generalize to Wasserstein gradient flow II}
+\begin{definition}[Wasserstein gradient flow]
+A Wasserstein gradient flow for the functional $f$ on a time interval $[0,T[$ is an absolutely continuous path $(\mu_t)_{t\in [0,T[}$ in $\mP_2(\Omega)$ that satisfies, distributionally on $[0,T[\times \Omega^d$,
+\begin{equation*}\label{eq:gradientflow}
+\partial_t \mu_t = - \mathrm{div} (v_t\mu_t) \quad \textit{ where } \,v_t \in - \partial f'(\mu_t) 
+\end{equation*}
+\end{definition}
+\pause
+{\color{blue} $\rightarrow$ It is well-defined starting from $\mu_0$ concentrated on a convex closed subset of $\Omega$} \cite{ambrosio2005gradient}
+
+\pause 
+\begin{block}{$W_2$ gradient flow generalizes particle}
+    Whenever $(u_t)_t$ is a gradient flow for $f_m$, $t\mapsto \mu_{m,t} := \sum_{i=1}^m \delta_{u_i(t)}$ is a Wasserstein gradient flow for $f$!
+\end{block}
+\end{frame}
+
+\begin{frame}{Many-particle limit}
+    \begin{theorem}[Many particle limit]
+    Consider $(t\mapsto u_{m}(t))_{m\in \mathbb{N}}$ a sequence of classical gradient flows for $f_m$ initialized in a closed convex set. If $\mu_{m,0}$ converges to some $\mu_0\in\mP_2(\Omega)$ for the Wasserstein distance $W_2$, then $(\mu_{m,t})_t$ converges, as $m\to \infty$, to the unique Wasserstein gradient flow of $f$ starting from $\mu_0$.
+\end{theorem}
+\bigskip
+In a nutshell:
+\begin{itemize}
+    \item if $u(0)=(u_1(0),\ldots,u_m(0))$ are distributed according to $\mu_0$, then $\mu_{m,0}$ converges to $\mu_0$ by the law of large numbers
+    \item {\color{blue} $\lim_{m\to\infty }(\mu_{m,t})_t = (\mu_t)_t$}
+\end{itemize}
+\end{frame}
+
+\subsection{Global convergence guarantees}
+% \begin{frame}{Final results}
+% \begin{enumerate}
+% \item The Wasserstein gradient flow exists and is unique for each starting point \cite{ambrosio2005gradient}
+%     \item Under assumptions on $\varphi$ and the initialization, the limit of the particle gradient flow as $m \to \infty$ (if it exists) is the Wasserstein gradient flow
+%     \item If Wasserstein gradient flow converges as $t\to\infty$, its limit is a minimizer for $f$
+%     \item Then, if $(\mu_{m,t})_t$ is a gradient flow for $f_m$,
+%     \[ 
+%     \lim_{m,t\to\infty} f(\mu_{m,t})  = \min_{\mu_t\in\mP(\Omega)} f(\mu_t)
+%     \]
+% \end{enumerate}
+% \end{frame}
+
+\begin{frame}{Global convergence result}
+    Structural assumptions:
+    \begin{itemize}
+        \item $\varphi, v$ are \textbf{2-homogeneous} ($\phi$ 1-homogeneous)
+        \item the support of the initialization of the Wasserstein gradient flow satisfies a \textbf{``separation" property}: $B(0,r_b) \subset \mathbb{S}^{d-1}$ that separates $r_a\mathbb{S}^{d-1}$ and $r_b\mathbb{S}^{d-1}$ for $r_a<r_b$
+    \end{itemize}
+\begin{theorem}[Global convergence of particle gradient descent]
+    Let $(\mu_t)_{t\geq 0}$ be a Wasserstein gradient flow of $f$ such that the support of $\mu_0$ is $S_0 \subset [-r_0,r_0]\times\Theta$ satisfies a separation property.
+ If $(\mu_t)_t$ converges to $\mu_\infty$ in $W_2$, then $\mu_\infty$ is a global minimizer of $f$ over $\mP(\Omega)$. In particular, if $(u_m(t))_{m\in \N,t\geq 0}$ is a sequence of classical gradient flows initialized in $[-r_0,r_0]\times \Theta$ such that $\mu_{m,0}$ converges to $\mu_0$ in $W_2$ then
+\[
+\lim_{t,m\to \infty} f(\mu_{m,t}) = \min_{\mu \in \mP(\Omega)} f(\mu).
+\]
+\end{theorem}
+\end{frame}
+
+\begin{frame}{Application to ReLu neural networks}
+Setting:
+\begin{itemize}
+    \item features live in $\R^{d-2}$, labels in $\R$
+    \item $\ell$ is either the square or logistic loss 
+\item 2-homogeneous case 
+\item domain $\Theta$ is the disjoint union of 2 copies of $\R^d$
+    \item $\varphi(p):x\mapsto \sigma(\sum_{i=1}^{d-1} s(p_i)x_i + s(p_{d})), \quad s(p_i)=p_i\vert p_i\vert$
+    \item regularizer: $v(p)=\vert p\vert^2$ (as if $w=\vert p \vert$)
+
+\end{itemize}
+\begin{figure}
+    \centering
+    \includegraphics[width=0.9\linewidth]{Screenshot 2026-01-16 at 01.29.52.png}
+    \caption{Training neural network with ReLU activation. Overfitting threshold $m=4$. Failure for $m=5$, success $m=10,100$.}
+    \label{fig:placeholder}
+\end{figure}
+    
+\end{frame}
+
+\begin{frame}{Final remarks}
+
+\begin{itemize}
+    \item importance of initialization, as confirmed by extensive empirical literature
+    \item particle gradient flow corresponds to continuous-time gradient descent: what can we say about discrete-step case? (double descent)
+\end{itemize}
+    
+\end{frame}
+
+\begin{frame}{Thank you!}
+    \begin{figure}
+        \centering
+        \includegraphics[width=0.45\linewidth]{Screenshot 2026-01-15 at 18.55.36.png}
+        \label{fig:placeholder}
+    \end{figure}
+\end{frame}
+
+\section{References}
+\begin{frame}[allowframebreaks]{References}
+    \bibliographystyle{plain}
+    \bibliography{refs}
+\end{frame}
+
+\begin{frame}{Recovering the lifting of (3)}
+    \begin{enumerate}
+        \item (equivalence of $\M$ and $\mP$ under homogeneity)
+        \item surjectivity of $h_1$
+        \item define $\varphi, g$ as above and prove equality of $f, j$
+    \end{enumerate}
+\end{frame}
+
+\begin{frame}{Prerequisits}
+
+ \begin{definition}[Subgradient and subdifferential] Given a function $f:\R^d\to \R$, the \emph{subgradient of $f$ at $x_0$}, $x_0\in\R^d$, is $p\in\R^d$ :
+\[
+f(x) \ge f(x_0) + p\cdot (x-x_0) + o(x-x_0) \qquad \forall x\in\R^d
+\]
+The set of all such $p$s is called the \emph{subdifferential} of $f$ at $x_0$ and we write $\partial f(x_0)$. The subdifferential is a closed and convex set.
+\end{definition}
+
+\begin{definition}[Gradient flow]
+    A function $x:\R_+ \to \mathrm{Dom}(f)$ is a \emph{gradient flow} of $f:\mathrm{Dom}(f)=\R^d\to\R$ if $x$ is absolutely continuous over $\R_+$ and
+    \[
+    x'(t) \in -\partial f(x(t)) \qquad \text{for a.e. } t\in\R_+
+    \]
+\end{definition}
+    
+\end{frame}
+\end{document}
