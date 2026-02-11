@@ -1,20 +1,20 @@
-\subsection{$f$-divergences.}
-As S. Amari states, information geometry has emerged from studies of invariant geometrical
-structure involved in statistical inference.
-In this section we link together some concepts mentioned above, namely that the choices of $g$ and $T$ are motivated by their property of invariance. Indeed, these metrics can be derived from an $f$-divergence, which is invariant. %da capire meglio
+\subsection{Obtaining tensors from $f$-divergences}
+As S. Amari states, ``information geometry has emerged from studies of invariant geometrical
+structure involved in statistical inference''.
+In this section we link together some concepts introduced above, mainly showing that the choices of $g$ and $T$ are motivated by their property of invariance. Indeed, these metrics can be derived from an $f$-divergence, which is invariant. %da capire meglio
 
 Consider the map we previously defined
 \[
-\Theta \ni \theta \longrightarrow  p_\theta \in M
+\Theta \ni \theta \mapsto  p_\theta \in \mathcal M
 \]
-and a function $f$ convex, positive, and such that $f(1)=0$. Then, the \textit{f-divergence} between two maps $p_\theta$ and $p_{\theta^{\prime}}$ is:
+and a convex, positive function $f$ such that $f(1)=0$. Then, the \textit{f-divergence} between two maps $p_\theta$ and $p_{\theta^{\prime}}$ is:
 \[
-D_f (p_\theta, p_{\theta^{\prime}}) = \int_{\Omega} f \Bigl(\frac{p_\theta}{p_{\theta^{\prime}}}\Bigr)p_{\theta^{\prime}} \,\,d{\mu}
+D_f (p_\theta, p_{\theta^{\prime}}) = \int_{\Omega} f \bigg(\frac{p_\theta}{p_{\theta^{\prime}}}\bigg)p_{\theta^{\prime}} \,\,d{\mu}
 \]
 
-We want to look at a curve $\gamma$ parametrized by $t$ on the parameter space $\Theta$ and consider $\theta = \theta(t) $ and an increment along the curve $ \theta^{\prime}=\theta(t+h)$. We can compute the divergence between the distributions at these two values, namely $D_f (p_\theta, p_{\theta^{\prime}})$. \\Our question is: what happens if the increment $h$ is very very little?
+We want to look at curves $\theta:I\to\Theta$ parametrized by $t$ on the parameter space $\Theta$, and consider $\theta = \theta(t) $ and an increment along the curve $ \theta^{\prime}=\theta(t+h)$. We can compute the divergence between the distributions at these two values, namely $D_f (p_\theta, p_{\theta^{\prime}})$. \\Our question is: what happens if the increment $h$ is very very little?
 That is, what happens if we Taylor expand the divergence $D_f$? \\
-Of course, the 0-th order term is 0. It turns out that the first-order term is 0 as well, and the first meaningful terms are the second-order term, that depends on the Fisher information $g$ and on $f$ only by a number, and the third-order term that depends on the 3-tensor $T$.   
+Of course, the 0-th order term is 0. It turns out that the first-order term is 0 as well, and the first meaningful terms are the second-order term, which depends on the Fisher information $g$ and on $f$ only by a number, and the third-order term, which depends on the 3-tensor $T$.   
 \\
 Let us compute this surprising result. 
 %computations
@@ -29,7 +29,7 @@ Let us look at the second-order term:
 \[
 \begin{aligned}
    \frac{d^2}{d^2h} D_f(p_{\theta(t)}, p_{\theta(t+h)}) &=  \frac{d}{dh}\int \frac{d}{dh} p_{\theta (t+ h)} f\Bigl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\Bigr)\, d\mu - \frac{d}{dh}\int f^{\prime}\Bigl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\Bigr) \frac{p_{\theta(t)}}{p_{\theta(t+h)}} \frac{d}{dh}p_{\theta(t+h)} \, d\mu \\&= -\int \Bigl(\frac{d}{dh} p_{\theta(t+h)}\Bigr)^2 f^{\prime} \Bigl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\Bigr) \frac{p_{\theta(t)}}{p{^2}_{\theta(t+h)}} \, d\mu\, \\
-   &+\int \Bigl(\frac{d}{dh} p_{\theta(t+h)}\Bigr)^2 \Biggl[f^{\prime\prime} \Bigl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\Bigr) \frac{p_{\theta(t)}}{p_{\theta(t+h)}} \frac{p_{\theta(t)}}{p{^2}_{\theta(t+h)}} \frac{d}{dh} p_{\theta (t+ h)}
+   +\int \Bigl(\frac{d}{dh}& p_{\theta(t+h)}\Bigr)^2 \Biggl[f^{\prime\prime} \Bigl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\Bigr) \frac{p_{\theta(t)}}{p_{\theta(t+h)}} \frac{p_{\theta(t)}}{p{^2}_{\theta(t+h)}} \frac{d}{dh} p_{\theta (t+ h)}
     + f^{\prime} \Bigl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\Bigr)  \frac{p_{\theta(t)}}{p{^2}_{\theta(t+h)}}\frac{d}{dh} p_{\theta (t+ h)}\Biggr]\, d\mu \\
     &= \int \Bigl(\frac{d}{dh} p_{\theta(t+h)}\Bigr)^2 f^{\prime\prime} \Bigl(\frac{p_{\theta(t)}}{p_{\theta(t+h)}}\Bigr)  \frac{p{^2}_{\theta(t)}}{p{^3}_{\theta(t+h)}} \, d\mu\\
 \end{aligned}
