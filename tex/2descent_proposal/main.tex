@@ -11,7 +11,16 @@
 \maketitle
 % - voglio spendere i miei giorni a usare la mate per capire le cose di cs 
 \begin{abstract}
-    In this talk, I present a research proposal on the double descent phenomenon observed when training neural networks with stochastic gradient descent (SGD). After briefly reviewing the classical bias–variance tradeoff and its apparent contradiction with modern over-parameterized models, I focus on the second descent in test error beyond the interpolation threshold. I highlight the absence of a rigorous mathematical explanation for this behavior. I then discuss existing hypotheses on SGD’s implicit bias and empirical results reported in the literature. I identify and motivate the most promising research directions, including a formal explanation of why SGD selects smoother models when interpolating and a precise characterization of the notion of smoothness it implicitly optimizes. I conclude by outlining the main technical obstacles and possible strategies to address them, blending theory and empirical results.
+    The phenomenon of double descent in stochastic gradient descent (SGD) explains why over-parameterized models 
+    outperform under-parameterized ones, challenging the classical bias-variance tradeoff. Although it is well documented empirically, 
+    a precise mathematical explanation is missing. Providing one could lead to a deeper 
+    understanding of SGD and neural network training, contributing to the mathematical foundations of 
+    machine learning.
+    In this talk, I present my current work investigating the mathematical origins of double descent.
+    I begin by discussing existing hypotheses and empirical results. I then identify the most promising research directions, including a 
+    formal explanation of why SGD selects smoother interpolating solutions 
+    and a characterization of the notion of smoothness it implicitly optimizes. I conclude by outlining the main technical 
+    obstacles and possible strategies to address them.
 \end{abstract}
 The problem I want to work on is {\bf finding the roots of the \textit{double descent} phenomenon}, concerning the stochastic gradient descent algorithm (SGD) for neural networks. 
 \paragraph{Background} The double descent curve was first formalized by \cite{belkin}, and it reconciles the theoretical result of the bias-variance tradeoff, which implies that capacity below the overfitting threshold is preferred, with the empirical findings that large, over-parametrized models perform well. 
