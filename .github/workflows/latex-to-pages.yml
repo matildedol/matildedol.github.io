@@ -52,7 +52,7 @@ jobs:
           root_file: tex/Sliding_Ricci/main.tex
           work_in_root_file_dir: true
           args: -r ../.latexmkrc
-          texlive_version: 2026
+          texlive_version: 2025
 
       # --- Sliding Sobolev ---
       - name: Compile Sliding_Sobolev
@@ -61,7 +61,7 @@ jobs:
           root_file: tex/Sliding_Sobolev/main.tex
           work_in_root_file_dir: true
           args: -r ../.latexmkrc
-          texlive_version: 2026
+          texlive_version: 2025
 
       # --- BSc Thesis ---
       - name: Compile BSc Thesis
@@ -70,7 +70,7 @@ jobs:
           root_file: tex/bscthesis/bscthesis.tex
           work_in_root_file_dir: true
           args: -r ../.latexmkrc
-          texlive_version: 2026
+          texlive_version: 2025
 
       # --- OT BAMS ---
       - name: Compile OT_BAMS
@@ -79,7 +79,7 @@ jobs:
           root_file: tex/ot_bams/main.tex
           work_in_root_file_dir: true
           args: -r ../.latexmkrc
-          texlive_version: 2026
+          texlive_version: 2025
 
       # --- Infromation Geometry ---
       - name: Compile Information_Geometry
@@ -88,7 +88,7 @@ jobs:
           root_file: tex/Information_Geometry/main.tex
           work_in_root_file_dir: true
           args: -r ../.latexmkrc
-          texlive_version: 2026
+          texlive_version: 2025
 
       # --- 2descent Proposal ---
       - name: Compile 2descent_proposal
@@ -97,7 +97,7 @@ jobs:
           root_file: tex/2descent_proposal/main.tex
           work_in_root_file_dir: true
           args: -r ../.latexmkrc
-          texlive_version: 2026
+          texlive_version: 2025
 
       # --- Slides Particlegf ---
       - name: Compile Slides_particlegf
@@ -106,7 +106,7 @@ jobs:
           root_file: tex/Slides_particlegf/main.tex
           work_in_root_file_dir: true
           args: -r ../.latexmkrc
-          texlive_version: 2026
+          texlive_version: 2025
 
       # --- Collect PDFs for Pages ---
       - name: Prepare Pages artifact
