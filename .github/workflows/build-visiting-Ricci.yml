@@ -20,7 +20,7 @@ jobs:
           root_file: tex/Visiting_Ricci/main.tex
           work_in_root_file_dir: true
           args: -r ../.latexmkrc
-          texlive_version: 2026
+          texlive_version: 2025
           pre_compile: |
             tlmgr update --self
             tlmgr install subfiles
