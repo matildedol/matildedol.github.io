@@ -113,6 +113,7 @@ jobs:
       - name: Prepare Pages artifact
         run: |
           mkdir -p public/files
+          cp -R files/*                             public/files/
           cp tex/cv/cv.pdf                          public/files/cv.pdf
           cp tex/Visiting_Ricci/main.pdf            public/files/Ricci.pdf
           cp tex/Sliding_Ricci/main.pdf             public/files/Sliding_Ricci.pdf
