@@ -31,7 +31,7 @@ jobs:
           root_file: tex/cv/cv.tex
           work_in_root_file_dir: true
           args: -r ../.latexmkrc
-          texlive_version: 2025
+          texlive_version: 2026
 
       # --- Visiting Ricci ---
       - name: Compile Visiting_Ricci
@@ -40,7 +40,7 @@ jobs:
           root_file: tex/Visiting_Ricci/main.tex
           work_in_root_file_dir: true
           args: -r ../.latexmkrc
-          texlive_version: 2025
+          texlive_version: 2026
           pre_compile: |
             tlmgr update --self
             tlmgr install subfiles
@@ -53,7 +53,7 @@ jobs:
           root_file: tex/Sliding_Ricci/main.tex
           work_in_root_file_dir: true
           args: -r ../.latexmkrc
-          texlive_version: 2025
+          texlive_version: 2026
 
       # --- Sliding Sobolev ---
       - name: Compile Sliding_Sobolev
@@ -62,7 +62,7 @@ jobs:
           root_file: tex/Sliding_Sobolev/main.tex
           work_in_root_file_dir: true
           args: -r ../.latexmkrc
-          texlive_version: 2025
+          texlive_version: 2026
 
       # --- BSc Thesis ---
       - name: Compile BSc Thesis
@@ -71,7 +71,7 @@ jobs:
           root_file: tex/bscthesis/bscthesis.tex
           work_in_root_file_dir: true
           args: -r ../.latexmkrc
-          texlive_version: 2025
+          texlive_version: 2026
 
       # --- OT BAMS ---
       - name: Compile OT_BAMS
@@ -80,7 +80,7 @@ jobs:
           root_file: tex/ot_bams/main.tex
           work_in_root_file_dir: true
           args: -r ../.latexmkrc
-          texlive_version: 2025
+          texlive_version: 2026
 
       # --- Infromation Geometry ---
       - name: Compile Information_Geometry
@@ -89,7 +89,7 @@ jobs:
           root_file: tex/Information_Geometry/main.tex
           work_in_root_file_dir: true
           args: -r ../.latexmkrc
-          texlive_version: 2025
+          texlive_version: 2026
 
       # --- 2descent Proposal ---
       - name: Compile 2descent_proposal
@@ -98,7 +98,7 @@ jobs:
           root_file: tex/2descent_proposal/main.tex
           work_in_root_file_dir: true
           args: -r ../.latexmkrc
-          texlive_version: 2025
+          texlive_version: 2026
 
       # --- Slides Particlegf ---
       - name: Compile Slides_particlegf
@@ -107,7 +107,7 @@ jobs:
           root_file: tex/Slides_particlegf/main.tex
           work_in_root_file_dir: true
           args: -r ../.latexmkrc
-          texlive_version: 2025
+          texlive_version: 2026
 
       # --- Collect PDFs for Pages ---
       - name: Prepare Pages artifact

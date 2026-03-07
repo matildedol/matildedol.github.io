@@ -20,7 +20,7 @@ jobs:
           root_file: tex/Sliding_Ricci/main.tex
           work_in_root_file_dir: true
           args: -r ../.latexmkrc
-          texlive_version: 2025
+          texlive_version: 2026
       - name: Upload PDF
         uses: actions/upload-artifact@v4
         with:
