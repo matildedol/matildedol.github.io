@@ -3,6 +3,8 @@
 \usepackage{enumitem}
 \usepackage{hyperref}
 \usepackage{amsmath}
+\include{math}
+\usepackage{mathtools}
 \title{On a mathematical explanation of double descent in stochastic gradient descent}
 \author{Matilde Dolfato}
 \date{}
@@ -33,11 +35,69 @@ The problem can be broken down into the following questions, where 1,2 are my ma
 
 
 \paragraph{\bf 1. What drives the implicit bias of SGD to choose smoother functions when interpolating?}
-By analyzing the update rule and the loss landscape mathematically, it should be possible to rigorously state what is happening after the overfitting threshold. There are some hypotheses, like the one proposed by \cite{prince}, which compares the algorithm used in practice with its continuous analog, i.e. SGD with an infinitesimal step size. By doing so, we get that descending the gradient of the loss $L$ with a discrete step size $\alpha$ is equivalent to performing continuous gradient descent on the modified loss function $L_{GD}$,
+By analyzing the update rule and the loss landscape mathematically, it should be possible to rigorously state what is happening after the overfitting threshold. There are some hypotheses, like the one proposed by \cite{prince}, which compares the algorithm used in practice with its continuous analog, i.e. SGD with an infinitesimal step size. By doing so, we get that descending the gradient of the loss $\ell$ with a discrete step size $\alpha$ is equivalent to performing continuous gradient descent on the modified loss function.\\
+
+\begin{proposition}
+For a step size $\alpha\in\R$, $t\in \R^+$
+$$
+\theta_{t+\alpha}=\theta_t - \alpha \nabla\ell(\theta)\quad \text{and }\quad \frac{\mathrm{d} \theta}{\de t} = -\nabla\ell(\theta)
+$$
+
+Up to order $\alpha$, SGD corresponds to gradient flow of:
 \begin{equation*}
-    L_{GD}[\phi] :=L[\phi] +\frac{\alpha}{4}\Bigg\lVert\frac{\partial L}{\partial\phi}\Bigg\rVert^2
+\ell_{discr=contin}(\theta) =\ell(\theta)+\frac{\alpha}{4}\big\lVert\nabla\ell(\theta)\big\rVert^2
 \end{equation*}
-where a term depending on the norm of the gradient of the loss appears. This motivates the bias for less steep directions in the loss landscape. This result, however, requires to understand the connection between the gradient of the loss and a smoother learned model and it can be enriched with additional explanations and intuition.
+\begin{proof}
+    Consider the usual (discrete-time) update rule:
+    \begin{equation*}
+        \theta_{\tau+1} = \theta_\tau -\alpha\nabla\ell(\theta_\tau)
+    \end{equation*}
+for $\tau \in \N$, $\alpha$ step size.
+\\
+Let $t=\alpha\tau \in \R$, and consider the finite-difference
+\[
+\theta_{t+1} - \theta_t = -\alpha\nabla\ell(\theta).
+\]
+Now, taking the limit we obtain the continuous-time update rule
+\begin{align*}
+&\lim_{\alpha\to0} \frac{\theta_{t+1} - \theta_t}{\alpha} = \frac{\de \theta}{\de t}\\
+\end{align*}
+\begin{equation}
+    \frac{\de \theta}{\de t}= -\nabla\ell(\theta).
+\end{equation}
+Allowing
+\[\frac{\de \theta}{\de t}= -\nabla\ell(\theta) + \alpha g(\theta),\]
+we want to find the correction  such that the two trajectories converge to the same parameter $\theta$.
+\\~\\
+
+Let us consider the function $\theta(t)$ and inspect its Taylor expansion starting from $\theta_0=\theta(0)$, for a jump $\Delta t=\alpha$ (1 iteration in discrete sense)
+
+    \begin{align*}
+\theta(t) &\approx \theta_0 + \alpha \frac{\de \theta}{\de t}  + \frac{1}{2}\alpha^2 \frac{\de^2 \theta}{\de^2 t} \\
+&= \theta_0 - \alpha \nabla\ell(\theta) + \alpha^2 g(\theta) + \frac{1}{2}\alpha^2 \frac{\de}{\de t} \bigg(-\nabla\ell(\theta) +{\color{red}\alpha g(\theta)}\bigg)\\
+&\approx \theta_0 - \alpha \nabla\ell(\theta) + \alpha^2 \bigg(g(\theta) + \frac{1}{2}\bigg(-\nabla^2\ell(\theta)\frac{\de\theta}{\de t}\bigg)\bigg)\\
+& = \theta_0 - \alpha \nabla\ell(\theta) + \alpha^2 \bigg(g(\theta) + \frac{1}{2}\bigg(\nabla^2\ell(\theta)\bigg(\nabla\ell(\theta) + {\color{red} \alpha g(\theta)}\bigg)\bigg)\bigg)
+\end{align*}
+where the terms in red are of 3rd order in $\alpha$ and disregarded. \\
+
+Then, we impose $\theta(t) = \theta_{\tau+1}$, obtaining
+\begin{align*}
+    & g(\theta) = -\frac{1}{2}\nabla^2\ell(\theta) \nabla\ell(\theta) ;\\
+\end{align*}
+Hence, the following continuous time update rule converges to the same value as the discrete time one:
+\begin{equation}
+    \frac{\de \theta}{\de t} = -\nabla\ell(\theta) - \frac{1}{2}\alpha\nabla^2\ell(\theta)\nabla\ell(\theta)
+\end{equation}
+Lastly, we notice that this is the same as applying the usual continuous-time update rule to the modified loss
+\[
+\tilde\ell(\theta) = \ell(\theta) + \frac{1}{4}\alpha\nabla\ell(\theta)^t \nabla\ell(\theta) = \ell(\theta) + \frac{1}{4}\alpha\big\Vert\nabla\ell(\theta) \big\Vert^2
+\]
+\end{proof}
+\end{proposition}
+
+This motivates the bias for less steep directions in the loss landscape. 
+This result, however, requires to understand the connection between the gradient of the loss and a smoother learned model 
+and it can be enriched with additional explanations and intuition.
 
 \paragraph{\bf 2. Which specific notion of \textit{smoothness} does SGD optimize for?}
 I would like to be able to state something on the lines of ``SGD has an implicit bias for learning smoother models, in the sense that it chooses functions with a lower gradient norm / lower total variation of the gradient / others". In this direction, \cite{notions} tests four different notions of smoothness and finds that SGD optimizes for second-order smoothness. While it is a good starting point, I want to identify this notion of smoothness with necessary mathematical implications, rather than deducing it from empirical results.
