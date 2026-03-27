@@ -215,7 +215,7 @@
 %
 \def\@printcentername{\begingroup
   % print the name on the left and contact info on the right
-  \leavevmode\hbox to \textwidth{\@tablebox{\namefont\@name}\hfil\@tablebox{\@addressone}}\par
+  \leavevmode\hbox to \textwidth{\@tablebox{\namefont\@name}\@tablebox{\@addressone}}\par
   \vskip 2pt
   \fullline
   \vskip 2pt
@@ -236,7 +236,7 @@
     % do nothing
   }{%
     \leavevmode\hbox to \textwidth
-      {\hfill\vbox{\hbox{\@addressone}
+      {\vbox{\hbox{\@addressone}
 		   \hbox{\@addresstwo}
 		  }%
       }\par
