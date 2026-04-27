@@ -8,20 +8,17 @@
 \newcommand{\cB}{\mathcal{B}} % borel
 \newcommand{\W}{\mathcal{W}} % new metric W
 \newcommand{\X}{\mathcal{X}} % space X
-\newcommand{\M}{\mathscr{M}} % space X
-\newcommand{\Real}{\mathrm{Re}}
-\newcommand{\Img}{\mathrm{Im}}
-\newcommand{\expv}{\mathbb{E}}
-\newcommand{\la}{\lambda}
-\newcommand{\tr}{\mathrm{Tr}}
-\newcommand{\cov}{\mathrm{cov}}
-\newcommand{\Var}{\mathrm{Var}}
+\newcommand{\Y}{\mathcal{Y}} % space X
+\newcommand{\expv}{\mathbb{E}} % exp value
 
-\newcommand{\lmax}{\lambda_{\max}}
+\newcommand{\F}{\mathcal{F}} % space F
+\newcommand{\M}{\mathcal{M}} % space of measures
+
+
 
 \newcommand{\nabladot}{\nabla \cdot} % discrete divergence operator
 \newcommand{\A}{\mathcal{A}} % action
-\newcommand*\de{\mathop{}\!\mathrm{d}}
+\newcommand*\de{\mathop{}\!\,\,\mathrm{d}}
 \DeclareMathOperator*{\argmin}{arg\,min}
 \DeclareMathOperator*{\argmax}{arg\,max}
 \DeclareMathOperator*{\supp}{supp}
@@ -33,14 +30,13 @@
 
 %%%%%%%%%%%%%%%%%%%% from the paper
 \newcommand{\R}{\ensuremath{\mathbb{R}}}
-\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
 \newcommand{\N}{\ensuremath{\mathbb{N}}}
-
+\newcommand{\Z}{\ensuremath{\mathbb{Z}}}
 \DeclareMathOperator{\Ric}{Ric}
-\DeclareMathOperator{\vol}{Vol}
+\DeclareMathOperator{\vol}{vol}
 
 \def\diam{\mathop{\mathrm{diam}}\nolimits}
-\def\vol{\mathop{\mathrm{Vol}}\nolimits}
+\def\vol{\mathop{\mathrm{vol}}\nolimits}
 \def\area{\mathop{\mathrm{area}}\nolimits}
 \def\Hess{\mathop{\mathrm{Hess}}\nolimits}
 \def\supp{\mathop{\mathrm{supp}}\nolimits}
@@ -53,4 +49,13 @@
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
+\theoremstyle{plain}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{proposition}[definition]{Proposition}
+\newtheorem{theorem}[definition]{Theorem}
+\newtheorem{corollary}[definition]{Corollary}
+\newtheorem{lemma}[definition]{Lemma}
 
+\theoremstyle{remark}
+\newtheorem*{example}{Example}
+\newtheorem*{remark}{Remark}

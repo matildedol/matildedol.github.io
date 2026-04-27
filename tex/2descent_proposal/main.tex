@@ -1,16 +1,30 @@
-\documentclass[a4paper,11pt]{article}
+\documentclass{amsart}
 \usepackage[left=1in,right=1in,top=0.5in,bottom=1in]{geometry}
 \usepackage{enumitem}
 \usepackage{hyperref}
 \usepackage{amsmath}
-\include{math}
 \usepackage{mathtools}
+\usepackage{amsmath}
+\input{math}
+\usepackage{enumitem}
+\renewcommand{\labelenumi}{$(\roman{enumi})$}
+\renewcommand{\labelitemi}{$\cdot$}
+\usepackage{amssymb}
+\usepackage{fullpage}
+\linespread{1.2}
+\usepackage{xcolor}
+\definecolor{benred}{HTML}{8B0000}
+\definecolor{bluette}{RGB}{0, 123, 255} % bright bluish tone
+\definecolor{darkorange}{RGB}{255, 140, 0}
+\definecolor{pink}{RGB}{255, 130, 190}
+% \theoremstyle{plain}
+
+
 \title{On a mathematical explanation of double descent in stochastic gradient descent}
 \author{Matilde Dolfato}
 \date{}
 
 \begin{document}
-\maketitle
 % - voglio spendere i miei giorni a usare la mate per capire le cose di cs 
 \begin{abstract}
     The phenomenon of double descent in stochastic gradient descent (SGD) explains why over-parameterized models 
@@ -24,24 +38,27 @@
     and a characterization of the notion of smoothness it implicitly optimizes. I conclude by outlining the main technical 
     obstacles and possible strategies to address them.
 \end{abstract}
-The problem I want to work on is {\bf finding the roots of the \textit{double descent} phenomenon}, concerning the stochastic gradient descent algorithm (SGD) for neural networks. 
-\paragraph{Background} The double descent curve was first formalized by \cite{belkin}, and it reconciles the theoretical result of the bias-variance tradeoff, which implies that capacity below the overfitting threshold is preferred, with the empirical findings that large, over-parametrized models perform well. 
-They explain that when training a neural net using SGD, if we increase capacity beyond the overfitting threshold the algorithm will change the shape of the learned model in the regions between data points, while still fitting training data perfectly. According to \cite{belkin}, SGD interpolates in a smooth way, learning a smoother model that generalizes better. Hence, the curve of test error as a function of capacity presents two descents: the classic one, while learning is happening, and a second one after the overfitting threshold, when an overall improved performance is reached. Therefore, a \textit{double descent} curve substitutes the textbook U-shaped curve.
-\paragraph{Research question} What is still not clear, however, is what determines this second descent, in the sense that it is observed empirically and only some hypotheses on what motivates it are made. My aim is to explain why the second descent happens with rigorous, mathematical tools. 
-% Because the algorithm is ``just mathematics", I believe that it must be possible to give precise and irrefutable mathematical reasons to explain this phenomenon. 
-This is relevant because it allows us to understand more in depth what is happening and to have a universal formalization of the properties and dynamics of the algorithm. While this field is highly practice-based, a theoretical framework that supports empirical results boosts the development of AI and further discoveries in this field, especially regarding performance and learning dynamics of neural networks.
-The problem can be broken down into the following questions, where 1,2 are my main goals and 3, 4 are natural follow-ups, if time allows. I would tackle them first in the setting of simple two-layer neural networks, following \cite{belkin}, and only later extend the analysis to more complex architectures.
- \\
+\maketitle
 
+The problem in question is {\bf finding the roots of the \textit{double descent} phenomenon}, concerning the stochastic gradient descent algorithm (SGD) for neural networks. 
+\paragraph{Background} The double descent curve was first formalized by~\cite{belkin}, and it reconciles the theoretical result of the bias-variance tradeoff, which implies that capacity below the overfitting threshold is preferred, with the empirical findings that large, over-parametrized models perform well. 
+They explain that when training a neural net using SGD, if we increase capacity beyond the overfitting threshold the algorithm will change the shape of the learned model in the regions between data points, while still fitting training data perfectly. According to~\cite{belkin}, SGD interpolates in a smooth way, learning a smoother model that generalizes better. Hence, the curve of test error as a function of capacity presents two descents: the classic one, while learning is happening, and a second one after the overfitting threshold, when an overall improved performance is reached. Therefore, a \textit{double descent} curve substitutes the textbook U-shaped curve.
+
+\paragraph{Research question} 
+
+What is still not clear, however, is what determines this second descent, in the sense that it is observed empirically and only some hypotheses on what motivates it are made. My aim is to explain why the second descent happens with rigorous, mathematical tools. 
+% Because the algorithm is ``just mathematics", I believe that it must be possible to give precise and irrefutable mathematical reasons to explain this phenomenon. 
+This allows us to understand more in depth what is happening and to have a universal formalization of the properties and dynamics of the algorithm. While this field is highly practice-based, a theoretical framework that supports empirical results boosts the development of AI and further discoveries in this field, especially regarding performance and learning dynamics of neural networks.
+The problem can be broken down into the following questions, where 1,2 are my main goals and 3, 4 are natural follow-ups, if time allows. I would tackle them first in the setting of simple two-layer neural networks, following~\cite{belkin}, and only later extend the analysis to more complex architectures.
 
 \paragraph{\bf 1. What drives the implicit bias of SGD to choose smoother functions when interpolating?}
-By analyzing the update rule and the loss landscape mathematically, it should be possible to rigorously state what is happening after the overfitting threshold. There are some hypotheses, like the one proposed by \cite{prince}, which compares the algorithm used in practice with its continuous analog, i.e. SGD with an infinitesimal step size. By doing so, we get that descending the gradient of the loss $\ell$ with a discrete step size $\alpha$ is equivalent to performing continuous gradient descent on the modified loss function.\\
+By analyzing the update rule and the loss landscape mathematically, it should be possible to rigorously state what is happening after the overfitting threshold. There are some hypotheses, like the one proposed by~\cite{prince}, which compares the algorithm used in practice with its continuous analog, i.e. SGD with an infinitesimal step size. By doing so, we get that descending the gradient of the loss $\ell$ with a discrete step size $\alpha$ is equivalent to performing continuous gradient descent on the modified loss function.
 
 \begin{proposition}
-For a step size $\alpha\in\R$, $t\in \R^+$
-$$
+For a step size $\alpha\in\R$, $t\in \R$
+\[
 \theta_{t+\alpha}=\theta_t - \alpha \nabla\ell(\theta)\quad \text{and }\quad \frac{\mathrm{d} \theta}{\de t} = -\nabla\ell(\theta)
-$$
+\]
 
 Up to order $\alpha$, SGD corresponds to gradient flow of:
 \begin{equation*}
@@ -66,19 +83,21 @@ Now, taking the limit we obtain the continuous-time update rule
     \frac{\de \theta}{\de t}= -\nabla\ell(\theta).
 \end{equation}
 Allowing
-\[\frac{\de \theta}{\de t}= -\nabla\ell(\theta) + \alpha g(\theta),\]
+\[
+\frac{\de \theta}{\de t}= -\nabla\ell(\theta) + \alpha g(\theta),
+\]
 we want to find the correction  such that the two trajectories converge to the same parameter $\theta$.
-\\~\\
 
 Let us consider the function $\theta(t)$ and inspect its Taylor expansion starting from $\theta_0=\theta(0)$, for a jump $\Delta t=\alpha$ (1 iteration in discrete sense)
 
-    \begin{align*}
+\begin{align*}
 \theta(t) &\approx \theta_0 + \alpha \frac{\de \theta}{\de t}  + \frac{1}{2}\alpha^2 \frac{\de^2 \theta}{\de^2 t} \\
-&= \theta_0 - \alpha \nabla\ell(\theta) + \alpha^2 g(\theta) + \frac{1}{2}\alpha^2 \frac{\de}{\de t} \bigg(-\nabla\ell(\theta) +{\color{red}\alpha g(\theta)}\bigg)\\
+&= \theta_0 - \alpha \nabla\ell(\theta) + \alpha^2 g(\theta) + \frac{1}{2}\alpha^2 \frac{\de}{\de t} \bigg(-\nabla\ell(\theta) +{\color{benred}\alpha g(\theta)}\bigg)\\
 &\approx \theta_0 - \alpha \nabla\ell(\theta) + \alpha^2 \bigg(g(\theta) + \frac{1}{2}\bigg(-\nabla^2\ell(\theta)\frac{\de\theta}{\de t}\bigg)\bigg)\\
-& = \theta_0 - \alpha \nabla\ell(\theta) + \alpha^2 \bigg(g(\theta) + \frac{1}{2}\bigg(\nabla^2\ell(\theta)\bigg(\nabla\ell(\theta) + {\color{red} \alpha g(\theta)}\bigg)\bigg)\bigg)
+& = \theta_0 - \alpha \nabla\ell(\theta) + \alpha^2 \bigg(g(\theta) + \frac{1}{2}\bigg(\nabla^2\ell(\theta)\bigg(\nabla\ell(\theta) + {\color{benred} \alpha g(\theta)}\bigg)\bigg)\bigg)
 \end{align*}
-where the terms in red are of 3rd order in $\alpha$ and disregarded. \\
+
+where the terms in red are of 3rd order in $\alpha$ and disregarded.
 
 Then, we impose $\theta(t) = \theta_{\tau+1}$, obtaining
 \begin{align*}
@@ -90,7 +109,7 @@ Hence, the following continuous time update rule converges to the same value as 
 \end{equation}
 Lastly, we notice that this is the same as applying the usual continuous-time update rule to the modified loss
 \[
-\tilde\ell(\theta) = \ell(\theta) + \frac{1}{4}\alpha\nabla\ell(\theta)^t \nabla\ell(\theta) = \ell(\theta) + \frac{1}{4}\alpha\big\Vert\nabla\ell(\theta) \big\Vert^2
+\tilde\ell(\theta) = \ell(\theta) + \frac{1}{4}\alpha\nabla\ell{(\theta)}^t \nabla\ell(\theta) = \ell(\theta) + \frac{1}{4}\alpha\big\Vert\nabla\ell(\theta) \big\Vert^2
 \]
 \end{proof}
 \end{proposition}
@@ -100,24 +119,26 @@ This result, however, requires to understand the connection between the gradient
 and it can be enriched with additional explanations and intuition.
 
 \paragraph{\bf 2. Which specific notion of \textit{smoothness} does SGD optimize for?}
-I would like to be able to state something on the lines of ``SGD has an implicit bias for learning smoother models, in the sense that it chooses functions with a lower gradient norm / lower total variation of the gradient / others". In this direction, \cite{notions} tests four different notions of smoothness and finds that SGD optimizes for second-order smoothness. While it is a good starting point, I want to identify this notion of smoothness with necessary mathematical implications, rather than deducing it from empirical results.
+I would like to be able to state something on the lines of ``SGD has an implicit bias for learning smoother models, in the sense that it chooses functions with a lower gradient norm / lower total variation of the gradient / others''. In this direction,~\cite{notions} tests four different notions of smoothness and finds that SGD optimizes for second-order smoothness. While it is a good starting point, I want to identify this notion of smoothness with necessary mathematical implications, rather than deducing it from empirical results.
 
 \paragraph{3. If the underlying data distribution is not \textit{smooth} (according to this notion), does SGD still interpolate in a smoother way? And do we still see the second descent?}
+
 The first question bridges previous directions with the following ones, and I believe that the answer is yes, based on the hypothesis that the smooth interpolation is due to an implicit bias that is an intrinsic property of the algorithm.
+
 The second question is very interesting to me and aims at further understanding the phenomenon. My hypothesis is that the answer is yes, because the \textit{smoothness} we are talking about only concerns areas of interpolation between data points, hence if we have a reasonable number of points (a not excessively sparse space), then these areas will be \textit{smooth} independently of the smoothness of the underlying function. Hence, we could try to understand what the algorithm does when a small training set is given and we have greater sparsity.
 %(if I have so little data that I would not learn properly, and in practice I would never try to fit a model, then the result is not meaningful and we could conclude that with a \textit{reasonable} amount of data the double descent curve always happens). This also connects to the following question
 
 
-\paragraph{4. Why does a smoother model generalize better?}
-In the literature (\cite{belkin} and \cite{prince} among others), this is motivated by Occam's razor, saying that the simplest explanation compatible with the observations shall be preferred. This is specially suitable for the learning problems we generally consider, based on real-world data, according to \cite{belkin}. But does this have a mathematical motivation?
-Although I find this question extremely stimulating, I believe it should not be a priority, as the explanation provided by Occam's razor seems widely accepted. \\
+\paragraph{4. Why does a smoother model generalize better?} 
+
+In the literature (~\cite{belkin} and~\cite{prince} among others), this is motivated by Occam's razor, saying that the simplest explanation compatible with the observations shall be preferred. This is specially suitable for the learning problems we generally consider, based on real-world data, according to~\cite{belkin}. But does this have a mathematical motivation?
+Although I find this question extremely stimulating, I believe it should not be a priority, as the explanation provided by Occam's razor seems widely accepted.
 
 \paragraph{Obstacles} The main obstacles I see as of now are two: the wide variety of the combinations of the many design specifications, like initialization and step size, which hinders a universal explanation of the phenomenon; and working in high-dimensional spaces, where it is not clear how smoothness evolves and what happens in the optimization landscape. As for the former, I believe that starting from empirical results can be useful, as these may help discern which theoretical directions to inquire first. For instance, if the second descent changes with different step sizes, ceteris paribus, that would indicate that the step size plays a role. Regarding dimensionality, I believe that we should study the problem with a mathematical mindset and try to generalize from a two-dimensional loss landscape, where the dynamics can be visualized, to a higher-dimensional space relying on tools from functional analysis and geometry (the specific method is not clear to me yet). 
-\\
 
-Overall, I find it interesting to inquire the mathematical roots of the \textit{double descent} phenomenon, as the optimization algorithm, the loss landscape, and the learned model are all ``just math", hence it should be possible to formalize what is happening. Also, it is relevant, because it would enable us to bolster scientific discovery in the area of neural networks and learning. \\ 
+Overall, the aim of this work is to inquire the mathematical roots of the~\textit{double descent} phenomenon, as the optimization algorithm, the loss landscape, and the learned model are all ``just math'', hence it makes sense to deem it possible to formalize the dynamics. Also, this would enable us to bolster scientific discovery in the area of neural networks and learning.
 
-\section{Literature review}
+% \section{Literature review}
 
 
 
