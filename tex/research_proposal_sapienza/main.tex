@@ -1,0 +1,170 @@
+\documentclass[reqno]{amsart}
+\usepackage{graphicx} % Required for inserting images
+\usepackage{fullpage}
+\linespread{1.2}
+\usepackage{hyperref}
+\usepackage{mathtools}
+\usepackage{mathpazo}
+\usepackage{xcolor}
+\usepackage{amssymb}
+\definecolor{benred}{HTML}{8B0000}
+\definecolor{darkblue}{RGB}{0,10,150}
+\usepackage{enumitem}
+\renewcommand{\labelitemi}{$\bullet$}
+
+\input{math}
+
+\title{A mathematical explanation of empirical results in machine learning}
+% On a mathematical explanation of recent developments in the analysis of learning
+
+\author{matilde dolfato\\
+June 2026}
+
+\begin{document}
+\begin{abstract}
+This proposal concerns the development of a mathematical framework for understanding modern machine learning. While recent machine learning models achieve remarkable predictive performance, many of their empirical successes remain unexplained by classical statistical learning theory. In particular, the ability of highly over-parametrized models to generalize well to unseen data challenges traditional notions of overfitting and model complexity.
+The project focuses on the analysis of gradient-based learning algorithms and the phenomenon of generalization in high-dimensional settings. Special attention is devoted to the double descent curve and to the implicit regularization induced by stochastic gradient descent. The proposed methodology combines mathematical analysis with numerical experiments on simple models, with the goal of identifying theoretical principles that are consistent with observed empirical behavior. More broadly, the project aims to contribute to the development of a rigorous mathematical theory capable of explaining key phenomena in modern machine learning.
+
+\end{abstract}
+
+\maketitle
+% \thispagestyle{empty}
+
+% \tableofcontents
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% doc
+% \newpage
+
+\section{Introduction}
+
+In recent years, the field of machine learning has rapidly developed, yielding outstanding results and highly accurate predictive models in the most diverse areas. Yet, today there exists a gap between the empirical advances of the field and the mathematical theories available to explain them~\cite{belkin},~\cite{berner}. Indeed, classical statistical theory and learning theory, as developed for instance in~\cite{hastie} and~\cite{wainwright}, is unable to explain most of recent machine learning results. This has sparked the interest in developing a new mathematical theory that supports the unexpected findings of well-performing models. 
+
+But why should we spend time developing a theory to explain what already works well? As postulated by~\cite{berner}, the first reason is scientific curiosity alone. Then, a theoretical motivation would address the matter of explainability, providing the means to interpret the results obtained by predictive models. Fields like medical diagnosis, self-driving cars, banking, and others are particularly sensitive to the ability of explaining the results obtained by machine learning. Finally, a good theory is a driving force for the future development of a field. Areas like information theory and fluid mechanics, respectively behind the science of communication and aircraft, yacht, and car design, are examples of the gains given by the development of a strong mathematical basis. Also probability, before Kolmogorov~\cite{kolmogorov}, was a collection of heuristic and empirical ideas, that only with measure theory has been formalized with definitions and theorems. This is summarized by~\cite{vapkin}, who claims that {\it\/nothing is more practical than a good theory}. 
+As argued by Liu, such a theory shall be just as complicated as needed to explain empirical results. It shall be avoided to over complicate the mathematics and, instead, one should also provide {\it\/mental pictures} that intuitively explain the concepts, especially when dealing with high-dimensional reasoning that is easily puzzling for the human mind. Another useful idea provided by Liu's article is that a theory shall aim at explaining a phenomenon $X$ with tools independent from $X$.  
+
+Among the various questions arising from machine learning that require a mathematical explanation, we will focus on the {\it\/generalization} capabilities of largely overparametrized models that challenge the classical theory about overfitting the training data when the number of parameters is too high~\cite{zhang},~\cite{berner}. This has to do with the analysis of the dynamics of gradient-based algorithms in high-dimensional spaces, and as we discuss further later this has been studied especially in~\cite{belkindescent},~\cite{volhejn}. 
+
+\section{State of the Art}
+
+The new mathematical research aimed at understanding deep learning is using approximation theory, optimization, high-dimensional probability, and the geometry of learning algorithms~\cite{berner,poggio}.
+
+Current theory has made partial progress on three main fronts. Approximation theory explains why deep architectures can efficiently represent certain high-dimensional and compositional functions~\cite{bolcskei}. Optimization theory studies why highly non-convex objectives can nevertheless be minimized effectively in over-parametrized regimes~\cite{allen-zhu}. Finally, generalization theory seeks to explain why interpolating models can perform well on unseen data, motivating work on implicit bias, algorithm-dependent regularization, and learning dynamics~\cite{neyshabur}. However, these approaches still do not provide a unified theory matching the breadth of empirical practice.
+
+Recent surveys therefore frame the central gap as follows: machine learning practice is driven by architectures, optimization heuristics, scaling laws, and empirical validation, while mathematical theory still explains only selected regimes under simplifying assumptions~\cite{berner,poggio}. Closing this gap requires theories that account simultaneously for data structure, architecture, optimization dynamics, and generalization.
+
+\section{Research Proposal}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.4\linewidth]{ddescent}
+    \caption{Double descent error curve for fully connected neural network on MNIST, from~\cite{belkindescent}.}\label{fig: ddescent}
+\end{figure}
+
+For these reasons and in this spirit, I want to contribute to the development of a mathematical theory of machine learning, with a special focus on learning algorithms and gradient descent. 
+With {\it\/mathematical} explanation we mean using a rigorous structure made of arguments of the type {\it\/definition} $\rightarrow$ {\it\/theorem} $\rightarrow$ {\it\/proof}, similarly to the approach of~\cite{weinan},~\cite{berner}. Specifically, I would like to focus on the {\it\/puzzle of generalization}, regarding the great performance of over-parametrized models on unseen data, contrary to what classical learning theory would predict based on an overfitting argument. This concerns the analysis of gradient-based learning algorithms and their behavior in high-dimensional optimization landscapes.
+% My final aim is to write as theorems the results describing the generalization behavior of over-parametrized machine learning models. 
+To do this, I plan to review classical results with a mathematical formalism that is both adapted to the machine learning case and precise enough to derive logical arguments. The experimental setting will use synthetic data with known underlying distribution and simple enough models to be able to interpret the results, like 2-layer neural networks or random trees. I forecast that the main areas of mathematics involved will be measure and probability theory, functional analysis, and geometry. 
+
+For instance, a phenomenon I propose to formalize is the {\it\/double descent} curve presented in Figure~\ref{fig: ddescent}, that explains the {\it\/puzzle of generalization} mentioned above in the context of gradient descent, and more generally stochastic gradient descent (SGD). The double descent curve describes a first descent in the test error of a predictive model due to the first phase of learning, and, crucially, also a {\it\/second} descent appearing after the overfitting threshold, where classical statistical theory would predict an increase of the error curve on unseen data. One mathematical perspective on this phenomenon concerns the dynamics of gradient-based optimization algorithms, characterized by a discrete step size, as compared to a theoretical, continuous trajectory, corresponding to the gradient flow of the loss function, i.e. the continuous-time limit of the gradient descent update rule. In formulae, given a loss function $\ell$, time $t\in\R_{>0}$, and a step size $\alpha\in\R_{>0}$, we can characterize the gradient descent algorithm and its continuous-time version respectively as
+\[
+\theta_{t+\alpha}=\theta_t - \alpha \nabla\ell(\theta_t)\quad \text{and }\quad \frac{\mathrm{d} \theta}{\de t} = -\nabla\ell(\theta(t)).
+\]
+It is found (\cite{barrett} and~\cite{smith} for SGD) that up to order $\alpha$, gradient descent corresponds to the gradient flow of a modified loss
+\begin{equation}
+\ell_{discr=contin}(\theta) =\ell(\theta)+\frac{\alpha}{4}\big\lVert\nabla\ell(\theta)\big\rVert^2.
+\end{equation}
+This shows that the discrete update rule presents an extra term depending on a norm of the gradient of the loss function, implying an {\it\/implicit regularization} in descent algorithms that determines a bias for learning {\it\/smoother} models that generalize better~\cite{prince}. Relatedly, it has been shown that a large learning rate induces the algorithm to avoid sharp peaks of the loss function~\cite{jastrzkebski},~\cite{cohen}. In this respect, my plan is to fit a simple neural network to test this result on synthetic data, replicating and extending experiments from the literature, and then building on classical learning theory to obtain a new mathematical framework in which this behavior of SGD can be motivated consistently and a precise definition of smoothness is given. 
+
+\subsection{Research Plan and Objectives}
+The project will be organized around the following research objectives:
+
+\begin{itemize}
+    \item Develop a rigorous mathematical formulation of the generalization problem in over-parametrized learning models.
+    
+    \item Reproduce and extend existing numerical experiments on SGD dynamics and double descent using simple, interpretable models such as two-layer neural networks, and synthetic data with known distribution.
+    
+    \item Formulate and test theoretical hypotheses that explain the observed behavior of over-parametrized models, with the goal of obtaining mathematically justified results in simplified settings that may be extended to more complex ones in the future.
+
+    \item Apply this framework to the analysis of implicit regularization in gradient-based optimization algorithms, with particular attention to their continuous-time limits and to the notion of smoothness induced by the optimization dynamics.
+\end{itemize}
+
+The project will proceed iteratively between theory and experiments. 
+After specifying a mathematical framework in which to study machine learning models, I will review the mathematical explanations proposed in the literature for generalization phenomena, formalize them, and test them empirically. Consequently, I will identify possible discrepancies between theoretical predictions and experimental results, and use these discrepancies to refine existing theories and formulate new hypotheses, which will then be tested experimentally again. In the absence of discrepancies, I will extend the experimental setting to a more complex one to test the robustness of the theoretical hypotheses.
+
+\subsection{Foreseeable Obstacles}
+
+The main obstacles this line of research could encounter are two: dealing with high-dimensional optimization landscapes, and taking into account a huge variety of combinations of hyperparameters and other model specifications that drive different performances. 
+
+To address the challenge related to high dimensions, I will rely on the tools provided by functional and geometric analysis and high-dimensional probability, proposed for instance by~\cite{bandeira}. Moreover, I plan to start from lower dimensional settings and try to extend these results to higher dimensional ones. 
+
+To deal with the large number of hyperparameters and architectural choices, I will proceed in a ceteris paribus logic, varying one parameter at a time. The choice of which parameters to focus on first will be indicated by theoretical hypotheses, strengthening the connection between theory and practice.
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% bib
+% \newpage
+\bibliographystyle{plain}
+\bibliography{refs}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% app
+\newpage
+\appendix
+\section{Comparing gradient descent and gradient flow}
+\begin{proposition}\label{app}
+For a step size $\alpha\in\R_{>0}$, $t\in \R_{>0}$
+\[
+\theta_{t+\alpha}=\theta_t - \alpha \nabla\ell(\theta_t)\quad \text{and }\quad \frac{\mathrm{d} \theta}{\de t} = -\nabla\ell(\theta(t))
+\]
+
+Up to order $\alpha$, gradient descent corresponds to gradient flow of:
+\begin{equation*}
+\ell_{discr=contin}(\theta) =\ell(\theta)+\frac{\alpha}{4}\big\lVert\nabla\ell(\theta)\big\rVert^2
+\end{equation*}
+\begin{proof}
+    Consider the usual (discrete-time) update rule:
+    \begin{equation*}
+        \theta_{\tau+1} = \theta_\tau -\alpha\nabla\ell(\theta_\tau)
+    \end{equation*}
+for $\tau \in \N$, $\alpha\in\R_{>0}$ step size.
+\\
+Let $t=\alpha\tau$ and consider the finite-difference
+\[
+\theta_{t+\alpha} - \theta_t = -\alpha\nabla\ell(\theta_t).
+\]
+Now, taking the limit we obtain the continuous-time update rule (where we omit the dependence of $\theta$ on $t$ to ease notation)
+\begin{align*}
+\lim_{\alpha\to0} \frac{\theta_{t+\alpha} - \theta_t}{\alpha} = \frac{\de \theta}{\de t}.
+\end{align*}
+Then,
+\begin{equation}
+    \frac{\de \theta}{\de t}= -\nabla\ell(\theta).
+\end{equation}
+Allowing
+\[
+\frac{\de \theta}{\de t}= -\nabla\ell(\theta) + \alpha g(\theta),
+\]
+we want to find the correction term $g$ such that the continuous and discrete trajectories agree up to order $\alpha$.
+Let us consider the function $\theta(t)$ and inspect its Taylor expansion starting from $\theta_0=\theta(0)$, for a jump $\Delta t=\alpha$ (1 iteration in discrete sense):
+\begin{align*}
+\theta(t) &\approx \theta_0 + \alpha \frac{\de \theta}{\de t}  + \frac{1}{2}\alpha^2 \frac{\de^2 \theta}{\de^2 t} \\
+&= \theta_0 - \alpha \nabla\ell(\theta) + \alpha^2 g(\theta) + \frac{1}{2}\alpha^2 \frac{\de}{\de t} \bigg(-\nabla\ell(\theta) +{\color{magenta}\alpha g(\theta)}\bigg)\\
+&\approx \theta_0 - \alpha \nabla\ell(\theta) + \alpha^2 \bigg(g(\theta) + \frac{1}{2}\bigg(-\nabla^2\ell(\theta)\frac{\de\theta}{\de t}\bigg)\bigg)\\
+& = \theta_0 - \alpha \nabla\ell(\theta) + \alpha^2 \bigg(g(\theta) + \frac{1}{2}\bigg(\nabla^2\ell(\theta)\bigg(\nabla\ell(\theta) + {\color{magenta} \alpha g(\theta)}\bigg)\bigg)\bigg)
+\end{align*}
+where the terms in pink are of 3rd order in $\alpha$, hence disregarded.
+Then, we impose $\theta(t) = \theta_{\tau+1}$, obtaining
+\begin{align*}
+    g(\theta) = -\frac{1}{2}\nabla^2\ell(\theta) \nabla\ell(\theta).
+\end{align*}
+Hence, the following continuous-time update rule agrees with the discrete-time update up to order $\alpha$
+\begin{equation}
+    \frac{\de \theta}{\de t} = -\nabla\ell(\theta) - \frac{1}{2}\alpha\nabla^2\ell(\theta)\nabla\ell(\theta).
+\end{equation}
+Lastly, we notice that this is the same as applying the usual continuous-time update rule to the modified loss
+\begin{equation}
+\tilde\ell(\theta) = \ell(\theta) + \frac{1}{4}\alpha\nabla\ell{(\theta)}^t \nabla\ell(\theta) = \ell(\theta) + \frac{1}{4}\alpha\big\Vert\nabla\ell(\theta) \big\Vert^2
+\end{equation}
+\end{proof}
+\end{proposition}
+\end{document}
+

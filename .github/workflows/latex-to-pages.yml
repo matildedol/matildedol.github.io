@@ -106,6 +106,15 @@ jobs:
           args: -r ../.latexmkrc
           texlive_version: latest
 
+      # --- Sapienza Proposal ---
+      - name: Compile sapienza_proposal
+        uses: xu-cheng/latex-action@v3
+        with:
+          root_file: tex/sapienza_proposal/main.tex
+          work_in_root_file_dir: true
+          args: -r ../.latexmkrc
+          texlive_version: latest
+
       # --- Collect PDFs for Pages ---
       - name: Prepare Pages artifact
         run: |
@@ -120,6 +129,8 @@ jobs:
           cp tex/Information_Geometry/main.pdf      public/files/info_geo.pdf
           cp tex/2descent_proposal/main.pdf         public/files/2descent.pdf
           cp tex/Slides_particlegf/main.pdf         public/files/slides_particlegf.pdf
+          cp tex/sapienza_proposal/main.pdf         public/files/sapienza.pdf
+
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
