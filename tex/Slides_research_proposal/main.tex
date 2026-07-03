@@ -1,0 +1,212 @@
+\documentclass{beamer}
+
+% Set up
+\usepackage{xcolor}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathrsfs}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{mathtools}
+
+% Beamer setup
+\usetheme{default}
+\usecolortheme{default}
+\usefonttheme[onlymath]{serif}
+\setbeamertemplate{navigation symbols}{}
+\setbeamertemplate{footline}[frame number]
+
+% Math commands
+\input{math}
+
+\title{A mathematical explanation of empirical results in machine learning}
+\author{Matilde Dolfato}
+\institute{Research Proposal - PhD in Data Science, Università Sapienza di Roma }
+\date{\today}
+
+\begin{document}
+
+\begin{frame}
+    \titlepage
+\end{frame}
+
+\begin{frame}{Context}
+Modern machine learning achieves outstanding predictive performance, but classical statistical learning theory~\cite{hastie,wainwright} fails to explain many of its successes~\cite{belkin,berner}.
+
+\bigskip
+\begin{block}{Example}
+    % \begin{columns}
+    %     \begin{column}{0.42\textwidth}
+    %         Generalization ability of over-parametrized models
+    %     \end{column}
+    %     \begin{column}{0.05\textwidth}
+    %         vs.
+    %     \end{column}
+    %     \begin{column}{0.42\textwidth}
+    %         classical overfitting arguments
+    %     \end{column}
+    % \end{columns}
+    Generalization ability of over-parametrized models vs. classical overfitting arguments.
+\end{block}
+\pause
+\bigskip
+\centering
+{\color{blue} $\star$ We need new mathematical tools to explain successful results $\star$}
+\end{frame}
+
+\begin{frame}{Why should we bother?}
+\begin{itemize}
+    \item {\bf scientific curiosity}
+    \item {\bf explainability}
+    \item {\bf future developments}
+\end{itemize}
+    \bigskip
+
+    \centering
+    {\color{blue} ``\textit{nothing is more practical than a good theory}''\cite{vapkin}}
+\end{frame}
+
+\begin{frame}{State of the art}
+Current partial progress, on three fronts~\cite{berner,poggio}:
+\begin{itemize}
+    \item {\bf approximation theory}: why deep nets represent complex functions well~\cite{bolcskei}
+    \item {\bf optimization theory}: why non-convex objectives are minimized effectively~\cite{allen-zhu}
+    \item {\bf generalization theory}: why interpolating models still perform well~\cite{neyshabur}
+\end{itemize}
+\bigskip
+$\Rightarrow$ no unified theory yet matching the breadth of empirical practice.
+\end{frame}
+
+\begin{frame}{Research objective}
+    \begin{block}{Research question}
+       Fill the {\bf gap between practice and theory} in deep learning  
+    \end{block}
+\bigskip\pause
+How I intend to do it:
+\begin{enumerate}
+    \item {\bf mathematical framework} and hypotheses
+    \item test hypotheses with {\bf experiments}
+    \item if discrepancies: {\bf develop the theory} further, then retest
+    \item if not: run {\bf more complex experiments} to test robustness
+\end{enumerate}
+    \bigskip\pause
+\begin{itemize} 
+    \item {\it definition $\rightarrow$ theorem $\rightarrow$ proof}~\cite{weinan,berner}
+    \item mental pictures (just enough theory)
+    \item alternation between theory and practice
+\end{itemize}
+\end{frame}
+
+\begin{frame}{Example: the puzzle of generalization}
+\begin{block}{Research question}
+    In the context of gradient-based learning algorithms, {\bf why do over-parametrized models generalize better}? 
+\end{block}
+
+\medskip
+\begin{columns}[T]
+    \pause
+\begin{column}{0.42\textwidth}
+    \centering
+    \includegraphics[width=\linewidth]{ddescent}\\
+    \small Double descent - Belkin et al.~\cite{belkindescent}
+\end{column}
+\begin{column}{0.58\textwidth}
+% Discrete update vs.\ continuous-time limit:
+% \[
+% \theta_{t+\alpha}=\theta_t - \alpha \nabla\ell(\theta_t)\ \text{ vs. }\ \frac{\de \theta}{\de t} = -\nabla\ell(\theta(t))
+% \]
+% Up to order $\alpha$~\cite{barrett,smith}: GD is gradient flow of a {\bf modified loss}
+% \[
+% \ell_{discr=contin}(\theta) =\ell(\theta)+\frac{\alpha}{4}\big\lVert\nabla\ell(\theta)\big\rVert^2
+% \]
+\medskip
+$\rightarrow$ Analysis discrete update vs. continuous-time flow ({\color{blue} implicit regularization})
+% : discrete-step GD is biased towards {\it smoother}, better-generalizing solutions~\cite{prince,jastrzkebski,cohen}}
+\pause 
+\medskip
+\begin{itemize}
+    \item mathematical formalization of the problem
+    \item experiments on gradient-based algorithms dynamics
+    \item formulate and test hypotheses
+    \item apply framework to test implicit regularization argument
+\end{itemize}
+
+\end{column}
+\end{columns}
+\end{frame}
+
+
+
+\begin{frame}{Thank you}
+\centering
+\Large Questions?
+\end{frame}
+
+
+\begin{frame}[allowframebreaks,noframenumbering]{References}
+    \bibliographystyle{plain}
+    \bibliography{refs}
+\end{frame}
+
+\begin{frame}[allowframebreaks, noframenumbering]{Appendix}
+\begin{block}{Proposition [Comparing discrete and continuous trajectories]}
+For a step size $\alpha\in\R_{>0}$, $t\in \R_{>0}$
+\[
+\theta_{t+\alpha}=\theta_t - \alpha \nabla\ell(\theta_t)\quad \text{and }\quad \frac{\mathrm{d} \theta}{\de t} = -\nabla\ell(\theta(t))
+\]
+
+Up to order $\alpha$, gradient descent corresponds to gradient flow of:
+\begin{equation*}
+\ell_{discr=contin}(\theta) =\ell(\theta)+\frac{\alpha}{4}\big\lVert\nabla\ell(\theta)\big\rVert^2
+\end{equation*}
+\end{block}
+
+Proof:
+
+    Consider the usual (discrete-time) update rule:
+    \begin{equation*}
+        \theta_{\tau+1} = \theta_\tau -\alpha\nabla\ell(\theta_\tau)
+    \end{equation*}
+for $\tau \in \N$, $\alpha\in\R_{>0}$ step size.
+\\
+Let $t=\alpha\tau$ and consider the finite-difference
+\[
+\theta_{t+\alpha} - \theta_t = -\alpha\nabla\ell(\theta_t).
+\]
+Now, taking the limit we obtain the continuous-time update rule (where we omit the dependence of $\theta$ on $t$ to ease notation)
+\begin{align*}
+\lim_{\alpha\to0} \frac{\theta_{t+\alpha} - \theta_t}{\alpha} = \frac{\de \theta}{\de t}.
+\end{align*}
+Then,
+\begin{equation}
+    \frac{\de \theta}{\de t}= -\nabla\ell(\theta).
+\end{equation}
+Allowing
+\[
+\frac{\de \theta}{\de t}= -\nabla\ell(\theta) + \alpha g(\theta),
+\]
+we want to find the correction term $g$ such that the continuous and discrete trajectories agree up to order $\alpha$.
+Let us consider the function $\theta(t)$ and inspect its Taylor expansion starting from $\theta_0=\theta(0)$, for a jump $\Delta t=\alpha$ (1 iteration in discrete sense):
+\begin{align*}
+\theta(t) &\approx \theta_0 + \alpha \frac{\de \theta}{\de t}  + \frac{1}{2}\alpha^2 \frac{\de^2 \theta}{\de^2 t} \\
+&= \theta_0 - \alpha \nabla\ell(\theta) + \alpha^2 g(\theta) + \frac{1}{2}\alpha^2 \frac{\de}{\de t} \bigg(-\nabla\ell(\theta) +{\color{magenta}\alpha g(\theta)}\bigg)\\
+&\approx \theta_0 - \alpha \nabla\ell(\theta) + \alpha^2 \bigg(g(\theta) + \frac{1}{2}\bigg(-\nabla^2\ell(\theta)\frac{\de\theta}{\de t}\bigg)\bigg)\\
+& = \theta_0 - \alpha \nabla\ell(\theta) + \alpha^2 \bigg(g(\theta) + \frac{1}{2}\bigg(\nabla^2\ell(\theta)\bigg(\nabla\ell(\theta) + {\color{magenta} \alpha g(\theta)}\bigg)\bigg)\bigg)
+\end{align*}
+where the terms in pink are of 3rd order in $\alpha$, hence disregarded.
+Then, we impose $\theta(t) = \theta_{\tau+1}$, obtaining
+\begin{align*}
+    g(\theta) = -\frac{1}{2}\nabla^2\ell(\theta) \nabla\ell(\theta).
+\end{align*}
+Hence, the following continuous-time update rule agrees with the discrete-time update up to order $\alpha$
+\begin{equation}
+    \frac{\de \theta}{\de t} = -\nabla\ell(\theta) - \frac{1}{2}\alpha\nabla^2\ell(\theta)\nabla\ell(\theta).
+\end{equation}
+Lastly, we notice that this is the same as applying the usual continuous-time update rule to the modified loss
+\begin{equation}
+\tilde\ell(\theta) = \ell(\theta) + \frac{1}{4}\alpha\nabla\ell{(\theta)}^t \nabla\ell(\theta) = \ell(\theta) + \frac{1}{4}\alpha\big\Vert\nabla\ell(\theta) \big\Vert^2
+\end{equation}
+\end{frame}
+
+\end{document}
