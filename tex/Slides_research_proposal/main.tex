@@ -65,18 +65,22 @@ Modern machine learning achieves outstanding predictive performance, but classic
 
     \centering
     {\color{blue} ``\textit{nothing is more practical than a good theory}''\cite{vapkin}}
+    \bigskip
+    \begin{itemize}
+        \item[$\bullet$] SOTA: multiple currents, but no unified theory as broad as empirical practice
+    \end{itemize}
 \end{frame}
 
-\begin{frame}{State of the art}
-Current partial progress, on three fronts~\cite{berner,poggio}:
-\begin{itemize}
-    \item {\bf approximation theory}: why deep nets represent complex functions well~\cite{bolcskei}
-    \item {\bf optimization theory}: why non-convex objectives are minimized effectively~\cite{allen-zhu}
-    \item {\bf generalization theory}: why interpolating models still perform well~\cite{neyshabur}
-\end{itemize}
-\bigskip
-$\Rightarrow$ no unified theory yet matching the breadth of empirical practice.
-\end{frame}
+% \begin{frame}{State of the art}
+% Current partial progress, on three fronts~\cite{berner,poggio}:
+% \begin{itemize}
+%     \item {\bf approximation theory}: why deep nets represent complex functions well~\cite{bolcskei}
+%     \item {\bf optimization theory}: why non-convex objectives are minimized effectively~\cite{allen-zhu}
+%     \item {\bf generalization theory}: why interpolating models still perform well~\cite{neyshabur}
+% \end{itemize}
+% \bigskip
+% $\Rightarrow$ no unified theory yet matching the breadth of empirical practice.
+% \end{frame}
 
 \begin{frame}{Research objective}
     \begin{block}{Research question}
@@ -93,12 +97,13 @@ How I intend to do it:
     \bigskip\pause
 \begin{itemize} 
     \item {\it definition $\rightarrow$ theorem $\rightarrow$ proof}~\cite{weinan,berner}
-    \item mental pictures (just enough theory)
-    \item alternation between theory and practice
+    \item mental pictures 
+    \item just enough theory
 \end{itemize}
 \end{frame}
 
 \begin{frame}{Example: the puzzle of generalization}
+    \pause
 \begin{block}{Research question}
     In the context of gradient-based learning algorithms, {\bf why do over-parametrized models generalize better}? 
 \end{block}
