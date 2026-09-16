@@ -117,15 +117,19 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \theoremstyle{plain}
-\newtheorem{definition}{Definition}[section]
-\newtheorem{proposition}[definition]{Proposition}
-\newtheorem{theorem}[definition]{Theorem}
-\newtheorem{corollary}[definition]{Corollary}
-\newtheorem{lemma}[definition]{Lemma}
+\makeatletter
+\@ifundefined{c@definition}{\newtheorem{definition}{Definition}[section]}{}
+\@ifundefined{c@proposition}{\newtheorem{proposition}[definition]{Proposition}}{}
+\@ifundefined{c@theorem}{\newtheorem{theorem}[definition]{Theorem}}{}
+\@ifundefined{c@corollary}{\newtheorem{corollary}[definition]{Corollary}}{}
+\@ifundefined{c@lemma}{\newtheorem{lemma}[definition]{Lemma}}{}
+\makeatother
 
 \theoremstyle{remark}
-\newtheorem*{example}{Example}
-\newtheorem*{remark}{Remark}
+\makeatletter
+\@ifundefined{example}{\newtheorem*{example}{Example}}{}
+\@ifundefined{remark}{\newtheorem*{remark}{Remark}}{}
+\makeatother
 
 
 \title{Notes on Ricci curvature of finite markov chains}
