@@ -50,12 +50,16 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \theoremstyle{plain}
-\newtheorem{definition}{Definition}[section]
-\newtheorem{proposition}[definition]{Proposition}
-\newtheorem{theorem}[definition]{Theorem}
-\newtheorem{corollary}[definition]{Corollary}
-\newtheorem{lemma}[definition]{Lemma}
+\makeatletter
+\ifcsname c@definition\endcsname\else\newtheorem{definition}{Definition}[section]\fi
+\ifcsname c@proposition\endcsname\else\newtheorem{proposition}{Proposition}[section]\fi
+\ifcsname c@theorem\endcsname\else\newtheorem{theorem}{Theorem}[section]\fi
+\ifcsname c@corollary\endcsname\else\newtheorem{corollary}{Corollary}[section]\fi
+\ifcsname c@lemma\endcsname\else\newtheorem{lemma}{Lemma}[section]\fi
+\makeatother
 
 \theoremstyle{remark}
-\newtheorem*{example}{Example}
-\newtheorem*{remark}{Remark}
+\makeatletter
+\ifcsname example\endcsname\else\newtheorem*{example}{Example}\fi
+\ifcsname remark\endcsname\else\newtheorem*{remark}{Remark}\fi
+\makeatother

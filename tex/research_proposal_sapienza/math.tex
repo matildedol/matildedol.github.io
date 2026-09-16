@@ -55,15 +55,17 @@
 \def\proj{\mathop{\mathrm{proj}}\nolimits}
 
 \theoremstyle{plain}
-\newtheorem{theorem}{Theorem}[section]
-\newtheorem{proposition}[theorem]{Proposition}
-\newtheorem{lemma}[theorem]{Lemma}
-\newtheorem{corollary}[theorem]{Corollary}
-\newtheorem{remark}[theorem]{Remark}
-\newtheorem{question}[theorem]{Question}
-\newtheorem{definition}[theorem]{Definition}
-\newtheorem{exercise}[theorem]{Exercise}
-\newtheorem{example}[theorem]{Example}
+\makeatletter
+\ifcsname c@theorem\endcsname\else\newtheorem{theorem}{Theorem}[section]\fi
+\ifcsname c@proposition\endcsname\else\newtheorem{proposition}{Proposition}[section]\fi
+\ifcsname c@lemma\endcsname\else\newtheorem{lemma}{Lemma}[section]\fi
+\ifcsname c@corollary\endcsname\else\newtheorem{corollary}{Corollary}[section]\fi
+\ifcsname c@remark\endcsname\else\newtheorem{remark}{Remark}[section]\fi
+\ifcsname c@question\endcsname\else\newtheorem{question}{Question}[section]\fi
+\ifcsname c@definition\endcsname\else\newtheorem{definition}{Definition}[section]\fi
+\ifcsname c@exercise\endcsname\else\newtheorem{exercise}{Exercise}[section]\fi
+\ifcsname c@example\endcsname\else\newtheorem{example}{Example}[section]\fi
+\makeatother
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
